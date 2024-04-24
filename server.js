@@ -6,48 +6,101 @@ const app = express();
 
 app.use(bodyParser.json());
 
-const alunos = [];
+const competitors = [];
 
+const weights = [100, 200, 400, 800, 1600];
 
-app.post('/resposta', (req, res) => {
-    const { nome, concluiu, tempo, p1, p2, p3, p4, p5 } = req.body;
+app.post('/ready', async (req, res) => {
+    const { name, w1, w2, w3, w4, w5 } = req.body;
 
-    let pontuacoes = {
-        p1: p1 || 0,
-        p2: p2 || 0,
-        p3: p3 || 0,
-        p4: p4 || 0,
-        p5: p5 || 0
+    let done = false;
+    let time = '';
+
+    let score = {
+        w1: w1 || 0,
+        w2: w2 || 0,
+        w3: w3 || 0,
+        w4: w4 || 0,
+        w5: w5 || 0
     };
 
-    alunos.push({ nome, concluiu, tempo, ...pontuacoes });
+    let code = await generate();
+
+    competitors.push({ name, done, time, ...score, code });
 
     res.send('Dados recebidos com sucesso!');
 });
 
-app.post('/pesos', (req, res) => {
-    let { plate1, plate2 } = req.body;
+app.patch('/update-weights/:code', (req, res) => {
+    const { code } = req.params;
+    const { w1, w2, w3, w4, w5 } = req.body;
 
-    plate1 = plate1 ?? 0;
-    plate2 = plate2 ?? 0;
+    const competitorIndex = competitors.findIndex(competitor => competitor.code === code);
 
-    plate1 = parseFloat(plate1);
-    plate2 = parseFloat(plate2);
+    if (competitorIndex === -1) {
+        return res.status(404).send('Competidor não encontrado.');
+    }
+
+    competitors[competitorIndex].w1 = w1 || competitors[competitorIndex].w1;
+    competitors[competitorIndex].w2 = w2 || competitors[competitorIndex].w2;
+    competitors[competitorIndex].w3 = w3 || competitors[competitorIndex].w3;
+    competitors[competitorIndex].w4 = w4 || competitors[competitorIndex].w4;
+    competitors[competitorIndex].w5 = w5 || competitors[competitorIndex].w5;
+
+    res.send(competitors[competitorIndex]);
+});
+
+app.patch('/final-answer/:code', (req, res) => {
+    const { code } = req.params;
+    const { w1, w2, w3, w4, w5 } = req.body;
+
+    const competitorIndex = competitors.findIndex(competitor => competitor.code === code);
+
+    if (competitorIndex === -1) {
+        return res.status(404).send('Competidor não encontrado.');
+    }
+
+    competitors[competitorIndex].w1 = w1 || competitors[competitorIndex].w1;
+    competitors[competitorIndex].w2 = w2 || competitors[competitorIndex].w2;
+    competitors[competitorIndex].w3 = w3 || competitors[competitorIndex].w3;
+    competitors[competitorIndex].w4 = w4 || competitors[competitorIndex].w4;
+    competitors[competitorIndex].w5 = w5 || competitors[competitorIndex].w5;
+
+    competitors[competitorIndex].done = true;
+
+    const elapsedTime = Date.now() - startTime;
+
+    const minutes = Math.floor(elapsedTime / 60000);
+    const seconds = Math.floor((elapsedTime % 60000) / 1000);
+
+    competitors[competitorIndex].time = `${minutes}:${seconds}`;
+
+    res.send(competitors[competitorIndex]);
+});
+
+app.post('/scales', (req, res) => {
+    let { quantities } = req.body; 
+    
+    let plate1 = 0;
+    let plate2 = 0;
+
+    for (let i = 0; i < 5; i++) {
+        plate1 += quantities[i] * weights[i];
+        plate2 += quantities[i + 5] * weights[i];
+    }
 
     if (plate1 > plate2)
         res.send('-1');
-
     else if (plate1 === plate2)
         res.send('0');
-
     else
         res.send('1');
 });
 
-app.get('/resultado', (req, res) => {
-    res.json(alunos);
-});
 
+app.get('/competitors', (req, res) => {
+    res.json(competitors);
+});
 
 let startTime; 
 let timer; 
@@ -67,29 +120,29 @@ app.post('/start-timer', (req, res) => {
     res.send('Cronômetro de 1 hora iniciado.');
 });
 
-app.post('/finalizar', (req, res) => {
-    saveExcel();
-
-    res.send('Atividade finalizada.');
-});
-
 app.get('/check-timer', (req, res) => {
     if (!timer) {
         return res.send('O cronômetro não está em execução.');
     }
-
+    
     const elapsedTime = Date.now() - startTime;
-
+    
     const remainingTime = Math.max(0, 3600000 - elapsedTime);
-
+    
     const hours = Math.floor(remainingTime / 3600000);
     const minutes = Math.floor((remainingTime % 3600000) / 60000);
     const seconds = Math.floor((remainingTime % 60000) / 1000);
-
+    
     if (hours > 0)
         res.send(`Tempo restante no cronômetro - ${hours}:${minutes}:${seconds}`);
 
     res.send(`Tempo restante no cronômetro - ${minutes}:${seconds}`);
+});
+
+app.post('/finish', (req, res) => {
+    saveExcel();
+
+    res.send('Atividade finalizada.');
 });
 
 app.use((req, res, next) => {
@@ -101,14 +154,26 @@ async function saveExcel() {
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet('Alunos');
 
-    worksheet.addRow(['Nome', 'Concluiu', 'Tempo', 'P1', 'P2', 'P3', 'P4', 'P5']);
+    worksheet.addRow(['Nome', 'Concluiu', 'Tempo', 'Peso 1', 'Peso 2', 'Peso 3', 'Peso 4', 'Peso 5']);
 
-    alunos.forEach(aluno => {
-        worksheet.addRow([aluno.nome, aluno.concluiu, aluno.tempo, aluno.p1, aluno.p2, aluno.p3, aluno.p4, aluno.p5]);
+    competitors.forEach(competitor => {
+        worksheet.addRow([competitor.name, competitor.done, competitor.time, competitor.w1, competitor.w2, competitor.w3, competitor.w4, competitor.w5]);
     });
 
-    await workbook.xlsx.writeFile('alunos.xlsx');
-    console.log('Alunos salvos em alunos.xlsx');
+    await workbook.xlsx.writeFile('processo.xlsx');
+    console.log('planilha salva em processo.xlsx');
+}
+
+async function generate() {
+    let secretcode = '';
+    const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'; 
+    
+    for (let i = 0; i < 6; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      secretcode += characters.charAt(randomIndex);
+    }
+    
+    return secretcode;
 }
 
 const PORT = process.env.PORT || 3000;
