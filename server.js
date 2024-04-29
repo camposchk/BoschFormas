@@ -6,7 +6,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.set('views', './src/views');
+app.set('view', './src/view');
 app.set('view engine', 'ejs');
 
 app.use(express.static('public'));
@@ -153,9 +153,6 @@ app.post('/finish', (req, res) => {
 app.get('/game', (req, res) => {
     res.render('GamePage/Index')
 })
-
-
-
 
 app.use((req, res, next) => {
     console.log('Dados recebidos:', req.body);

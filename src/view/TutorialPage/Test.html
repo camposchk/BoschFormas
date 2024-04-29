@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="icon" href="../../assets/Images/favicon.ico">
-    <link rel="stylesheet" href="./variables.css">
-    <link rel="stylesheet" href="./css/Game.css">
-    <title>Game</title>
+    <link rel="icon" href="../../../public/assets/Images/favicon.ico">
+    <link rel="stylesheet" href="../../../public/variables.css">
+    <link rel="stylesheet" href="./css/Test.css">
+    <title>Tutorial</title>
 </head>
 
 <body>
@@ -17,7 +17,7 @@
         <div class="cont-canvas">
             <canvas id="canvas" width="1080" height="720"></canvas>
         </div>
-        <div class="col-sm-3 mb-5 content">
+        <div class="col-sm-3 content">
             <!-- lista de cars (pcs conectados) -->
             <div class="card mb-5" style="border: 0cap;">
                 <div class="card-body card_connected_comp">
@@ -27,32 +27,32 @@
                         <form action="post" name="form-res" id="form-res" class="form">
                             <div class="input-group mt-3 mb-3">
                                 <span class="input-group-text" id="inputGroup-sizing-default">
-                                    <img src="../../assets/formas/triangulo.png" class="mini-icon tri">
+                                    <img src="../../../public/assets/formas/triangulo.png" class="mini-icon tri">
                                 </span>
                                 <input style="width: 90px;" placeholder="500g" disabled type="text" class="form-control"
                                     aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                             </div>
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="inputGroup-sizing-default"><img
-                                        src="../../assets/formas/quadrado.png" class="mini-icon"></span>
+                                        src="../../../public/assets/formas/quadrado.png" class="mini-icon"></span>
                                 <input style="width: 90px;" type="number" class="form-control"
                                     aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                             </div>
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="inputGroup-sizing-default"><img
-                                        src="../../assets/formas/ellipse.png" class="mini-icon"></span>
+                                        src="../../../public/assets/formas/ellipse.png" class="mini-icon"></span>
                                 <input style="width: 90px;" type="number" class="form-control"
                                     aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                             </div>
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="inputGroup-sizing-default"><img
-                                        src="../../assets/formas/star.png" class="mini-icon"></span>
+                                        src="../../../public/assets/formas/star.png" class="mini-icon"></span>
                                 <input style="width: 90px;" type="number" class="form-control"
                                     aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                             </div>
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="inputGroup-sizing-default"><img
-                                        src="../../assets/formas/pentagono.png" class="mini-icon"></span>
+                                        src="../../../public/assets/formas/pentagono.png" class="mini-icon"></span>
                                 <input style="width: 90px;" type="number" class="form-control"
                                     aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                             </div>
@@ -60,8 +60,16 @@
                     </div>
                 </div>
             </div>
-            <button class="btn btn-success btn-send" type="button" data-bs-toggle="modal"
-                data-bs-target="#JanelaModal">Finalizar</button>
+            <button class="btn btn-primary btn-send" type="button"
+                style="color: rgb(250, 250, 250); font-weight: bold">Reiniciar</button>
+            <form class="form-participant">
+                <label for="name">Nome Completo:</label>
+                <input name="name" class="input-participant input-name" type="text">
+                <label for="dataNasc">Data de Nascimento:</label>
+                <input name="dataNasc" class="input-participant input-date" type="date">
+            </form>
+            <input class="btn btn-send mt-2 btn-ready" type="button" data-bs-toggle="modal"
+            data-bs-target="#JanelaModal" id="amarelo" onclick="get_ready()" value="Estou Pronto!"/>
         </div>
     </div>
 
@@ -76,25 +84,10 @@
                 </div>
                 <div class="modal-body rounded">
 
-                    <h3 class="text-center mx-auto">Confirme a entrega da atividade</h3>
-
-                    <div class="hide alerta" id="error">
-                        <span>Incorreto</span>
-                        <button id="alertabutton">&times;</button>
-                    </div>
-
+                    <h3 class="text-center mx-auto">Confirme o inicio da atividade</h3>
                     <form action="/" method="post" id="login">
-
-                        <div class="col-6 mt-5 mx-auto">
-                            <label for="senha" class="form-label text-center">
-                                <h5>algo para validar</h5>
-                            </label>
-                            <div class="validation_position">
-                                <input class="form-control mx-auto" type="text" id="validation" name="validation">
-                            </div>
-                        </div>
-                        <div class="col-6 my-5 mx-auto">
-                            <input type="button" class="btn btn-danger mx-auto btn-lg" value="Finalizar" id="finalizar">
+                        <div class="col-4 mt-5 mx-auto">
+                            <input type="button" data-bs-dismiss="modal" width="100%" class="btn btn-danger mx-auto btn-lg" onclick="validation()" value="Estou Pronto" id="iniciar">
                         </div>
                     </form>
 
@@ -103,31 +96,29 @@
         </div>
     </div>
 
-
     <div class="container-fluid">
-        <div class="row justify-content-center mt-5 mb-5">
+        <div class="row justify-content-center mt-4">
             <div class="col-sm-12 col-md-6">
                 <div class="d-flex justify-content-evenly pb-3 list-items">
                     <div id="triangle">
-                        <img class="img-fluid medium-icon mb-5" src="../../assets/formas/triangulo.png">
+                        <img class="img-fluid medium-icon mb-5" src="../../../public/assets/formas/triangulo.png">
                     </div>
                     <div id="square">
-                        <img class="img-fluid medium-icon" src="../../assets/formas/quadrado.png">
+                        <img class="img-fluid medium-icon" src="../../../public/assets/formas/quadrado.png">
                     </div>
                     <div id="ellipse">
-                        <img class="img-fluid medium-icon" src="../../assets/formas/ellipse.png">
+                        <img class="img-fluid medium-icon" src="../../../public/assets/formas/ellipse.png">
                     </div>
                     <div id="star">
-                        <img class="img-fluid medium-icon" src="../../assets/formas/star.png">
+                        <img class="img-fluid medium-icon" src="../../../public/assets/formas/star.png">
                     </div>
                     <div id="pentagon">
-                        <img class="img-fluid medium-icon" src="../../assets/formas/pentagono.png">
+                        <img class="img-fluid medium-icon" src="../../../public/assets/formas/pentagono.png">
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -144,15 +135,24 @@
 
         $('#canvas').droppable({
             drop: function (event, ui) {
+                //ui.draggable.remove()
+                //console.log(ui.draggable.attr('id'))
                 addFig(event, ui.draggable.attr('id'))
             }
         })
     });
+
+    /*var a = $("body").droppable({
+        drop: function(event, ui) {
+            var formaArrastada = ui.draggable.attr('id');
+            
+            addFig(formaArrastada)
+        }
+    });*/
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
-<script src="./js/Game.js"></script>
-<script src="./js/jquery.js"></script>
+<script src="./js/Test.js"></script>
 
 </html>
