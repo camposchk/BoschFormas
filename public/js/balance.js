@@ -109,7 +109,7 @@ export function renderSquare(count, ctx, gravitable) {
   renderBubble(ctx, w, h, count)
 
   ctx.rotate(gravitable.rot / 10);
-  ctx.fillStyle = "red";
+  ctx.fillStyle = "#E00420";
   ctx.fillRect(-w, -h, w * 2, h * 2);
   ctx.restore();
 }
@@ -126,7 +126,7 @@ export function renderTriangle(count, ctx, gravitable) {
   renderBubble(ctx, w, h, count)
 
   ctx.rotate(gravitable.rot / 10);
-  ctx.fillStyle = "purple";
+  ctx.fillStyle = "#B14EFF";
   ctx.beginPath()
   ctx.moveTo(0, -h)
   ctx.lineTo(w, h)
@@ -147,7 +147,7 @@ export function renderStar(count, ctx, gravitable) {
   renderBubble(ctx, w, h, count)
 
   ctx.rotate(gravitable.rot / 10);
-  ctx.fillStyle = "orange";
+  ctx.fillStyle = "#EC9513";
   ctx.beginPath()
   var step = Math.PI * 2 * 0.2
   for (let i = 0; i < 5; i++) {
@@ -155,7 +155,7 @@ export function renderStar(count, ctx, gravitable) {
       ctx.moveTo(Math.sin(i * step) * h, Math.cos(i * step) * h)
     else
       ctx.lineTo(Math.sin(i * step) * h, Math.cos(i * step) * h)
-    ctx.lineTo(Math.sin(step * (i + 0.5)) * h * 0.5, Math.cos((i + 0.5) * step) * h * 0.5)
+    ctx.lineTo(Math.sin(step * (i + 0.5)) * h * 0.55, Math.cos((i + 0.5) * step) * h * 0.55)
   }
   // ctx.lineTo(-w, h)
   ctx.fill()
@@ -173,7 +173,7 @@ export function renderPentagon(count, ctx, gravitable) {
   renderBubble(ctx, w, h, count)
 
   ctx.rotate(gravitable.rot / 10);
-  ctx.fillStyle = "blue";
+  ctx.fillStyle = "#1F93FF";
   ctx.beginPath()
   var step = Math.PI * 2 * 0.2
   for (let i = 0; i < 5; i++) {
@@ -198,7 +198,7 @@ export function renderBall(count, ctx, gravitable) {
   renderBubble(ctx, w, h, count)
 
   ctx.rotate(gravitable.rot / 10);
-  ctx.fillStyle = "green";
+  ctx.fillStyle = "#00C92C";
   ctx.beginPath();
   ctx.arc(0, 0, h, 0, 2 * Math.PI);
   ctx.fill();

@@ -316,3 +316,11 @@ body {
     display: flex;
     justify-content: center;
 }
+
+.list-items div {
+    cursor: grab;
+}
+
+.list-items div:active {
+    cursor: grabbing;
+}
