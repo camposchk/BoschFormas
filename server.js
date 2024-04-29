@@ -1,9 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const ExcelJS = require('exceljs');
+const cors = require('cors');
 
 const app = express();
 
+app.use(cors({origin: '*'}));
 app.use(bodyParser.json());
 
 app.set('views', './src/views');
@@ -84,8 +86,12 @@ app.patch('/final-answer/:code', (req, res) => {
 });
 
 app.post('/scales', (req, res) => {
-    let { quantities } = req.body; 
-    
+    let { quantities } = req.form; 
+    if (!quantities)
+        return res.status(402).send({message: 'vazio'})
+    console.log(quantities)
+    quantities = JSON.parse(quantities)
+    console.log(quantities)
     let plate1 = 0;
     let plate2 = 0;
 

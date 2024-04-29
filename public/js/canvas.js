@@ -57,14 +57,18 @@ function addFigure(fig)
     var tilt1x = ((Math.abs(pos1) * 50) * scale)
     var tilt1y = pos1 * 75;
 
-    if (cursor.x < width / 6)
-      balance1.leftPlate.push(
-        new Gravitable(cursor.x - (plate1Off + offX - 50 * scale + tilt1x), cursor.y + (-210 + tilt1y) * scale, figSize, figSize, func)
-      );
-    else if (cursor.x > width / 3)
+    if (cursor.x < width / 6) {
+      if(!balance1.leftPlate[fig]) {
+        balance1.leftPlate[fig] = new Gravitable(cursor.x - (plate1Off + offX - 50 * scale + tilt1x), cursor.y + (-210 + tilt1y) * scale, figSize, figSize, func)
+      }
+      balance1.leftPlate[fig].count++;
+    }
+    else if (cursor.x > width / 3) 
       balance1.rightPlate.push(
         new Gravitable(cursor.x - (plate1Off - offX - 50 * scale - tilt1x), cursor.y - (210 + tilt1y) * scale, figSize, figSize, func)
       );
+
+    
   }
   else{
     var pos2 = balance2.currPos / 2;
@@ -149,4 +153,20 @@ window.addFig = (e, fig) => {
   // addFigure(fig)
   getCursorPosition(e)
   addFigure(fig)
+}
+
+const figures = ['square', 'ellipse', 'triangle', 'pentagon', 'star']
+window.getPlatesBal1 = () => {
+  let counts = []
+  for (let i = 0; i < figures.length; i++) {
+    if(balance1.leftPlate[figures[i]])
+      counts.push(balance1.leftPlate[figures[i]].count)
+    else counts.push(0)
+  }
+  for (let i = 0; i < figures.length; i++) {
+    if(balance1.rightPlate[figures[i]])
+      counts.push(balance1.rightPlate[figures[i]].count)
+    else counts.push(0)
+  }
+  return counts
 }

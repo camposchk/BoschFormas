@@ -145,6 +145,9 @@
         $('#canvas').droppable({
             drop: function (event, ui) {
                 addFig(event, ui.draggable.attr('id'))
+                let quants = getPlatesBal1()
+                console.log(quants)
+                $.post( "http://localhost:3000/scales", {quantities: JSON.stringify(quants)}).done((data) => console.log(data));
             }
         })
     });

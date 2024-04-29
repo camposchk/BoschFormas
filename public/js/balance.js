@@ -2,8 +2,8 @@ export class Balance {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.leftPlate = [];
-    this.rightPlate = [];
+    this.leftPlate = {};
+    this.rightPlate = {};
     this.currPos = 0;
     this.bal = 0;
     this.tilt = (step) => {
@@ -30,6 +30,7 @@ export class Gravitable {
     this.bounciness = 0.6;
     this.width = width;
     this.height = height;
+    this.count = 0;
     this.bottom = () => {
       return this.y + this.height;
     };
@@ -210,16 +211,28 @@ export function gravity(ctx, x, y, width, height, gravitables) {
   ctx.translate(x, y);
 
   // ctx.strokeRect(0, 0, width, height);
-  gravitables.forEach((gravitable) => {
-    gravitable.draw(1, ctx, gravitable);
+  // gravitables.forEach((gravitable) => {
+  //   gravitable.draw(1, ctx, gravitable);
 
+  //   gravitable.move(0, 0.1);
+  //   if (gravitable.bottom() > height)
+  //     gravitable.bounceY(height - gravitable.height);
+  //   if (gravitable.right() > width)
+  //     gravitable.bounceX(width - gravitable.width);
+  //   if (gravitable.x < gravitable.width) gravitable.bounceX(gravitable.width);
+  // });
+
+  for (const [key, gravitable] of Object.entries(gravitables)) {
+    gravitable.draw(gravitable.count, ctx, gravitable);
+  
     gravitable.move(0, 0.1);
     if (gravitable.bottom() > height)
       gravitable.bounceY(height - gravitable.height);
     if (gravitable.right() > width)
       gravitable.bounceX(width - gravitable.width);
     if (gravitable.x < gravitable.width) gravitable.bounceX(gravitable.width);
-  });
+  }
+
   ctx.restore();
 }
 
