@@ -1,0 +1,12 @@
+:root {
+    --participant: #a7a7a7;
+    --participantReady: rgb(50, 205, 50);
+    --participantDoing: rgb(228, 208, 10);
+
+    --red-color: #E00420;
+    --lightgray-color: #DFE2E4;
+    --mediumgray-color: #B6BBBE;
+    --mediumgray2-color: #9DA5A8;
+    --darkgray-color: #737A80;
+    --darkdarkgray-color: #31343A;
+}

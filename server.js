@@ -6,6 +6,11 @@ const app = express();
 
 app.use(bodyParser.json());
 
+app.set('views', './src/views');
+app.set('view engine', 'ejs');
+
+app.use(express.static('public'));
+
 const competitors = [];
 
 const weights = [100, 200, 400, 800, 1600];
@@ -144,6 +149,13 @@ app.post('/finish', (req, res) => {
 
     res.send('Atividade finalizada.');
 });
+
+app.get('/game', (req, res) => {
+    res.render('GamePage/Index')
+})
+
+
+
 
 app.use((req, res, next) => {
     console.log('Dados recebidos:', req.body);
