@@ -13,6 +13,7 @@
 </head>
 
 <body>
+    <script>var url = "<%= data.url %>";</script>
     <div class="respostas">
         <div class="cont-canvas">
             <canvas id="canvas" width="1080" height="720"></canvas>
@@ -69,7 +70,7 @@
                 <input name="dataNasc" class="input-participant input-date" type="date">
             </form>
             <input class="btn btn-send mt-2 btn-ready" type="button" data-bs-toggle="modal"
-            data-bs-target="#JanelaModal" id="amarelo" onclick="get_ready()" value="Estou Pronto!"/>
+            data-bs-target="#JanelaModal" id="amarelo" onclick="" value="Estou Pronto!"/>
         </div>
     </div>
 
@@ -125,9 +126,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script type="module" src="./js/canvas_test.js"></script>
 <script>
+    console.log(url)
     const reqWeigths = (quantities) => {
         $.ajax({
-            url: "http://localhost:3000/scales",
+            url: `http://${url}:3000/scales`,
             type: "POST",
             contentType: "application/json",
             data: JSON.stringify({quantities: quantities}),
@@ -152,7 +154,7 @@
         $('#canvas').droppable({
             drop: function (event, ui) {
                 addFig(event, ui.draggable.attr('id'))
-                reqWeigths(getPlatesBal1())
+                reqWeigths(getPlatesBal())
             }
         })
 

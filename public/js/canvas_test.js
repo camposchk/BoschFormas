@@ -24,6 +24,7 @@ var plate1Off = balX1 - balX2;
 var plate2Off = balX1 + balX2;
 var figCount = 0;
 var figSize = 15;
+var currBal = 0;
 
 function getCursorPosition(event) {
   const rect = CANVAS.getBoundingClientRect();
@@ -54,6 +55,7 @@ function addFigure(fig) {
     var pos1 = balance1.currPos / 2;
     var tilt1x = Math.abs(pos1) * 50 * scale;
     var tilt1y = pos1 * 75;
+    currBal = 1
 
     if (cursor.x < width / 6) {
       if (!balance1.leftPlate[fig]) {
@@ -84,6 +86,7 @@ function addFigure(fig) {
     var pos2 = balance2.currPos / 2;
     var tilt2x = Math.abs(pos2) * 50 * scale;
     var tilt2y = pos2 * 75;
+    currBal = 2
 
     if (cursor.x < (width * 2) / 3) {
       if (!balance2.leftPlate[fig]) {
@@ -185,20 +188,20 @@ resizeCanvas();
 init();
 
 window.tilt = (value) => {
+  let balance = currBal == 1 ? balance1 : balance2
   switch (value) {
     case -1:
-      balance1.bal = -1;
+      balance.bal = -1;
       break;
     case 0:
-      balance1.bal = 0;
+      balance.bal = 0;
       break;
     case 1:
-      balance1.bal = 1;
+      balance.bal = 1;
       break;
     default:
       break;
   }
-  console.log(balance2.bal);
 };
 window.addFig = (e, fig) => {
   // addFigure(fig)
@@ -207,16 +210,17 @@ window.addFig = (e, fig) => {
 };
 
 const figures = ["square", "ellipse", "triangle", "pentagon", "star"];
-window.getPlatesBal1 = () => {
+window.getPlatesBal = () => {
   let counts = [];
+  let balance = currBal == 1 ? balance1 : balance2
   for (let i = 0; i < figures.length; i++) {
-    if (balance1.leftPlate[figures[i]])
-      counts.push(balance1.leftPlate[figures[i]].count);
+    if (balance.leftPlate[figures[i]])
+      counts.push(balance.leftPlate[figures[i]].count);
     else counts.push(0);
   }
   for (let i = 0; i < figures.length; i++) {
-    if (balance1.rightPlate[figures[i]])
-      counts.push(balance1.rightPlate[figures[i]].count);
+    if (balance.rightPlate[figures[i]])
+      counts.push(balance.rightPlate[figures[i]].count);
     else counts.push(0);
   }
   return counts;

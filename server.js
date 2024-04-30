@@ -2,6 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const ExcelJS = require('exceljs');
 const cors = require('cors');
+require('dotenv').config();
+
+const data = {url: process.env.CURR_IP}
 
 const app = express();
 
@@ -158,10 +161,10 @@ app.post('/finish', (req, res) => {
 });
 
 app.get('/game', (req, res) => {
-    res.render('Game')
+    res.render('Game', {data: data})
 })
 app.get('/test', (req, res) => {
-    res.render('Test')
+    res.render('Test', {data: data})
 })
 app.get('/dashboard', (req, res) => {
     res.render('Dashboard')
@@ -210,5 +213,5 @@ async function generate() {
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log(`http://localhost:${PORT}/game`);
+  console.log(`http://${process.env.CURR_IP}:${PORT}/game`);
 });

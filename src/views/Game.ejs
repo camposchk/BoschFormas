@@ -13,6 +13,7 @@
 </head>
 
 <body>
+    <script>var url = "<%= data.url %>";</script>
     <div class="respostas">
         <div class="cont-canvas">
             <canvas id="canvas" width="1080" height="720"></canvas>
@@ -150,7 +151,7 @@
                 let quantities = getPlatesBal1()
                 console.log(quantities)
                 $.ajax({
-                    url: "http://localhost:3000/scales",
+                    url: `http://${url}:3000/scales`,
                     type: "POST",
                     contentType: "application/json",
                     data: JSON.stringify({quantities: quantities}),

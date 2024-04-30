@@ -5,7 +5,7 @@ function waitOnQueue() {
     $.get("/started", function (data) {
         console.log(data)
         if (data)
-            window.location.replace("//localhost:3000/game");
+            window.location.replace(`//${url}:3000/game`);
     })
 }
 
@@ -19,7 +19,7 @@ function validation() {
     btn_open_modal.value = "Aguardando outros participantes...";
 
     $.ajax({
-        url: "http://localhost:3000/ready",
+        url: `http://${url}:3000/ready`,
         type: "POST",
         dataType: 'application/x-www-form-urlencoded; charset=UTF-8',
         data: $("#form-participant").serialize(),
