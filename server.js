@@ -162,10 +162,10 @@ app.post("/finish", (req, res) => {
 
 app.get("/game/:code", (req, res) => {
   const code = req.params.code;
-  // var result = competitors.find((cp) => cp.code === code);
-  // if (!result) return res.send("nao existe");
-  // if (result.accessed) return res.send("ja era");
-  // result.accessed = true
+  var result = competitors.find((cp) => cp.code === code);
+  if (!result) return res.send("nao existe");
+  if (result.accessed) return res.send("ja era");
+  result.accessed = true
 
   res.render("Game", { data: data });
 });
