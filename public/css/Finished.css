@@ -12,12 +12,12 @@ body {
 
 @font-face {
     font-family: "Bosch Sans";
-    src: local(Bosch) url(../../../../public/assets/fonts/boschsans-medium.woff);
+    src: local(Bosch) url(../assets/fonts/boschsans-medium.woff);
 }
 
 .detail {
     position:absolute;
-    background: url(../../../../public//assets/Images/rainbow.svg);
+    background: url(../assets/Images/rainbow.svg);
     height: 6px;
     width: 100%;
     margin:none;

@@ -6,18 +6,20 @@ const cors = require('cors');
 const app = express();
 
 app.use(cors({origin: '*'}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.set('view', './src/view');
+app.set('views', './src/views');
 app.set('view engine', 'ejs');
 
 app.use(express.static('public'));
 
+var started = false
 const competitors = [];
-
 const weights = [100, 200, 400, 800, 1600];
 
 app.post('/ready', async (req, res) => {
+    console.log(req.body)
     const { name, w1, w2, w3, w4, w5 } = req.body;
 
     let done = false;
@@ -97,7 +99,6 @@ app.post('/scales', (req, res) => {
         plate1 += quantities[i] * weights[i];
         plate2 += quantities[i + 5] * weights[i];
     }
-    console.log(plate1, plate2)
 
     if (plate1 > plate2)
         res.send('-1');
@@ -127,6 +128,7 @@ app.post('/start-timer', (req, res) => {
         saveExcel()
     }, 3600000); 
 
+    started = true
     res.send('Cronômetro de 1 hora iniciado.');
 });
 
@@ -156,10 +158,22 @@ app.post('/finish', (req, res) => {
 });
 
 app.get('/game', (req, res) => {
-    res.render('GamePage/Index')
+    res.render('Game')
 })
 app.get('/test', (req, res) => {
-    res.render('TutorialPage/Test')
+    res.render('Test')
+})
+app.get('/dashboard', (req, res) => {
+    res.render('Dashboard')
+})
+app.get('/finished', (req, res) => {
+    res.render('Finished')
+})
+app.get('/home', (req, res) => {
+    res.render('Home')
+})
+app.get('/started', (req, res) => {
+    res.send(started)
 })
 
 app.use((req, res, next) => {

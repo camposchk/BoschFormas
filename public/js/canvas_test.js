@@ -221,3 +221,13 @@ window.getPlatesBal1 = () => {
   }
   return counts;
 };
+
+function emptyBalance(balance) {
+    balance.leftPlate = {}
+    balance.rightPlate = {}
+}
+
+window.emptyBalances = () => {
+    emptyBalance(balance1)
+    emptyBalance(balance2)
+}

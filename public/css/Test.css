@@ -9,7 +9,6 @@ body {
 .respostas {
     display: flex;
     justify-content: end;
-    margin-top: 0;
 }
 
 .content {
@@ -22,6 +21,7 @@ body {
     width: 100%;
 }
 
+
 .card_connected_comp {
     background-color: rgb(247, 247, 247);
     border-radius: 10px;
@@ -29,7 +29,7 @@ body {
     box-shadow: 2px 2px 5px 1px rgba(128, 128, 128, 0.20);
 }
 
-.mini-icon .tri {
+.tri {
     height: 32px;
 }
 
@@ -37,13 +37,29 @@ body {
     height: 36px;
 }
 
+.form-participant {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.input-participant {
+    background-color: rgb(247, 247, 247);
+    border-style: solid;
+    border-color: var(--mediugray-color);
+    border-width: 1px;
+    border-radius: 5px;
+    height: 35px;
+    padding: 0px 10px 0px 10px;
+}
+
 .trap {
     position: absolute;
 }
 
-
 .list-items {
-    background-image: url("../../../../public/assets/images/trapezio.png");
+    background-image: url("../assets/images/trapezio.png" );
     background-position: center center;
     background-size: contain;
     background-repeat: no-repeat;
@@ -51,6 +67,16 @@ body {
 
 .medium-icon {
     height: 80px;
+}
+
+.btn-ready{
+    background-color: rgb(58, 167, 72);
+    color: aliceblue;
+}
+
+.btn-ready:hover{
+    background-color: rgb(46, 134, 58);
+    color: aliceblue;
 }
 
 /* AVISOS */
@@ -124,22 +150,15 @@ body {
     width: 100%;
 }
 
+.form-content {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
 .trap-pai {
     margin-bottom: 1%;
-}
-
-.draggable {
-    position: relative;
-    top: 0px;
-    left: 0px;
-    transition: transform 0.3s linear z-index 0.3 linear;
-    z-index: 0;
-}
-
-.dragging {
-    transform: scale(1.1);
-    z-index: 999;
-    cursor: grab;
 }
 
 .cont-canvas {
@@ -222,9 +241,9 @@ body {
         width: 100%;
     }
 
-    .input {
-        width: 30%;
-    }
+  .input{
+    width: 30%;
+  }
 
 }
 
@@ -251,9 +270,9 @@ body {
         height: 30px;
     }
 
-    .input {
+    .input{
         width: 20%;
-    }
+      }
 }
 
 @media (max-width: 736px) {

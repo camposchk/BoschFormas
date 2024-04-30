@@ -43,7 +43,7 @@ body {
 
 
 .list-items {
-    background-image: url("../../../assets/images/trapezio.png" );
+    background-image: url("../assets/images/trapezio.png");
     background-position: center center;
     background-size: contain;
     background-repeat: no-repeat;
@@ -55,11 +55,12 @@ body {
 
 /* AVISOS */
 
-.hide{
+.hide {
     opacity: 0 !important;
     transition: 200ms;
 }
-.alerta{
+
+.alerta {
     opacity: 1;
     display: flex;
     background-color: rgba(199, 0, 0, 0.3);
@@ -71,7 +72,8 @@ body {
     width: auto;
     transition: 200ms;
 }
-.alerta button{
+
+.alerta button {
     border-radius: 20%;
     background-color: transparent;
     border-style: solid;
@@ -79,15 +81,18 @@ body {
     border-color: rgba(100, 0, 0, 0.3);
     width: 6%;
 }
-.alerta button:hover{
-    background-color: rgba(199, 0, 0, 0.3);;
+
+.alerta button:hover {
+    background-color: rgba(199, 0, 0, 0.3);
+    ;
     transition: 200ms;
 }
-.alerta span{
+
+.alerta span {
     width: 100%;
 }
 
-.alerta-bom{
+.alerta-bom {
     opacity: 1;
     display: flex;
     background-color: rgba(27, 145, 23, 0.404);
@@ -100,7 +105,8 @@ body {
     transition: 200ms;
     /* justify-content: center; */
 }
-.alerta-bom button{
+
+.alerta-bom button {
     border-radius: 20%;
     background-color: transparent;
     border-style: solid;
@@ -108,11 +114,13 @@ body {
     border-color: rgba(14, 70, 12, 0.404);
     width: 6%;
 }
-.alerta-bom button:hover{
+
+.alerta-bom button:hover {
     background-color: rgba(27, 145, 23, 0.404);
     transition: 200ms;
 }
-.alerta-bom span{
+
+.alerta-bom span {
     width: 100%;
 }
 
@@ -132,9 +140,15 @@ body {
     transform: scale(1.1);
     z-index: 999;
     cursor: grab;
-  }
+}
 
-  @media (max-width: 1670px) {
+.cont-canvas {
+    display: flex;
+    justify-content: center;
+}
+
+
+@media (max-width: 1670px) {
     .trap {
         width: 65%;
     }
@@ -208,9 +222,9 @@ body {
         width: 100%;
     }
 
-  .input{
-    width: 30%;
-  }
+    .input {
+        width: 30%;
+    }
 
 }
 
@@ -237,9 +251,9 @@ body {
         height: 30px;
     }
 
-    .input{
+    .input {
         width: 20%;
-      }
+    }
 }
 
 @media (max-width: 736px) {
@@ -310,17 +324,4 @@ body {
     .title {
         font-size: small;
     }
-}
-
-.cont-canvas {
-    display: flex;
-    justify-content: center;
-}
-
-.list-items div {
-    cursor: grab;
-}
-
-.list-items div:active {
-    cursor: grabbing;
 }
