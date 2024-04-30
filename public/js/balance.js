@@ -84,9 +84,9 @@ export function renderPlate(ctx, plateX, plateY, size, items, string) {
 }
 
 export function renderBubble(ctx, x, y, count) {
-  ctx.save()
-  ctx.fillStyle = "black"
-  ctx.strokeStyle = "black"
+  ctx.save();
+  ctx.fillStyle = "black";
+  ctx.strokeStyle = "black";
   ctx.font = "11px arial";
   ctx.fillText(count, x - 3, y - 26);
   ctx.fillStyle = "rgb(255, 255, 255, 0.85)";
@@ -95,7 +95,7 @@ export function renderBubble(ctx, x, y, count) {
   ctx.ellipse(x, y - 30, 10, 7, 0, 0, 2 * Math.PI);
   ctx.stroke();
   ctx.fill();
-  ctx.restore()
+  ctx.restore();
 }
 
 export function renderSquare(count, ctx, gravitable) {
@@ -107,7 +107,7 @@ export function renderSquare(count, ctx, gravitable) {
   ctx.translate(gravitable.x, gravitable.y);
   // ctx.strokeRect(-h, -w, h * 2, w * 2)
 
-  renderBubble(ctx, w, h, count)
+  renderBubble(ctx, w, h, count);
 
   ctx.rotate(gravitable.rot / 10);
   ctx.fillStyle = "#E00420";
@@ -124,15 +124,15 @@ export function renderTriangle(count, ctx, gravitable) {
   ctx.translate(gravitable.x, gravitable.y);
   // ctx.strokeRect(-h, -w, h * 2, w * 2)
 
-  renderBubble(ctx, w, h, count)
+  renderBubble(ctx, w, h, count);
 
   ctx.rotate(gravitable.rot / 10);
   ctx.fillStyle = "#B14EFF";
-  ctx.beginPath()
-  ctx.moveTo(0, -h)
-  ctx.lineTo(w, h)
-  ctx.lineTo(-w, h)
-  ctx.fill()
+  ctx.beginPath();
+  ctx.moveTo(0, -h);
+  ctx.lineTo(w, h);
+  ctx.lineTo(-w, h);
+  ctx.fill();
   ctx.restore();
 }
 
@@ -145,21 +145,22 @@ export function renderStar(count, ctx, gravitable) {
   ctx.translate(gravitable.x, gravitable.y);
   // ctx.strokeRect(-h, -w, h * 2, w * 2)
 
-  renderBubble(ctx, w, h, count)
+  renderBubble(ctx, w, h, count);
 
   ctx.rotate(gravitable.rot / 10);
   ctx.fillStyle = "#EC9513";
-  ctx.beginPath()
-  var step = Math.PI * 2 * 0.2
+  ctx.beginPath();
+  var step = Math.PI * 2 * 0.2;
   for (let i = 0.5; i < 5; i++) {
-    if(i == 0)
-      ctx.moveTo(Math.sin(i * step) * h, Math.cos(i * step) * h)
-    else
-      ctx.lineTo(Math.sin(i * step) * h, Math.cos(i * step) * h)
-    ctx.lineTo(Math.sin(step * (i + 0.5)) * h * 0.55, Math.cos((i + 0.5) * step) * h * 0.55)
+    if (i == 0) ctx.moveTo(Math.sin(i * step) * h, Math.cos(i * step) * h);
+    else ctx.lineTo(Math.sin(i * step) * h, Math.cos(i * step) * h);
+    ctx.lineTo(
+      Math.sin(step * (i + 0.5)) * h * 0.55,
+      Math.cos((i + 0.5) * step) * h * 0.55
+    );
   }
   // ctx.lineTo(-w, h)
-  ctx.fill()
+  ctx.fill();
   ctx.restore();
 }
 export function renderPentagon(count, ctx, gravitable) {
@@ -171,20 +172,18 @@ export function renderPentagon(count, ctx, gravitable) {
   ctx.translate(gravitable.x, gravitable.y);
   // ctx.strokeRect(-h, -w, h * 2, w * 2)
 
-  renderBubble(ctx, w, h, count)
+  renderBubble(ctx, w, h, count);
 
   ctx.rotate(gravitable.rot / 10);
   ctx.fillStyle = "#1F93FF";
-  ctx.beginPath()
-  var step = Math.PI * 2 * 0.2
+  ctx.beginPath();
+  var step = Math.PI * 2 * 0.2;
   for (let i = 0.5; i < 5; i++) {
-    if(i == 0)
-      ctx.moveTo(Math.sin(i * step) * h, Math.cos(i * step) * h)
-    else
-      ctx.lineTo(Math.sin(i * step) * h, Math.cos(i * step) * h)
+    if (i == 0) ctx.moveTo(Math.sin(i * step) * h, Math.cos(i * step) * h);
+    else ctx.lineTo(Math.sin(i * step) * h, Math.cos(i * step) * h);
   }
   // ctx.lineTo(-w, h)
-  ctx.fill()
+  ctx.fill();
   ctx.restore();
 }
 
@@ -194,9 +193,9 @@ export function renderBall(count, ctx, gravitable) {
   ctx.save();
 
   ctx.translate(gravitable.x, gravitable.y);
-//   ctx.strokeRect(-h, -w, 2 * h, 2 * w)
+  //   ctx.strokeRect(-h, -w, 2 * h, 2 * w)
 
-  renderBubble(ctx, w, h, count)
+  renderBubble(ctx, w, h, count);
 
   ctx.rotate(gravitable.rot / 10);
   ctx.fillStyle = "#00C92C";
@@ -209,10 +208,10 @@ export function renderBall(count, ctx, gravitable) {
 export function gravity(ctx, x, y, width, height, gravitables) {
   ctx.save();
   ctx.translate(x, y);
-  
+
   for (const [key, gravitable] of Object.entries(gravitables)) {
     gravitable.draw(gravitable.count, ctx, gravitable);
-  
+
     gravitable.move(0, 0.1);
     if (gravitable.bottom() > height)
       gravitable.bounceY(height - gravitable.height);
@@ -226,19 +225,19 @@ export function gravity(ctx, x, y, width, height, gravitables) {
 export function renderBalance(ctx, x, y, scale, balance) {
   balance.tilt(0.05);
   var pos = balance.currPos / 2;
-  
+
   var xOffSet = Math.abs(pos) * 50 - 100;
   var yOffSet = pos * 75;
-  
+
   var scaledX = balance.x * scale;
   var scaledY = balance.y * scale;
-  
+
   var bs = [-50 * scale, 0 * scale, 80 * scale, 50 * scale];
   var plateSize = 100 * scale;
 
-  ctx.save()
-  ctx.translate(x, y)
-  
+  ctx.save();
+  ctx.translate(x, y);
+
   // AXIS
   ctx.save();
   ctx.translate(scaledX, scaledY);
@@ -284,5 +283,5 @@ export function renderBalance(ctx, x, y, scale, balance) {
   );
   ctx.fill();
 
-  ctx.restore()
+  ctx.restore();
 }

@@ -1,64 +1,62 @@
 body {
-    overflow-x: hidden;
-    
-    background-color: rgba(240, 239, 239, 0.808);
-    
+  overflow-x: hidden;
+
+  background-color: rgba(240, 239, 239, 0.808);
 }
 
 .detail {
-    position:absolute;
-    background: url(../assets/Images/rainbow.svg);
-    height: 6px;
-    width: 100%;
-    margin:none;
-    background-repeat: no-repeat;
-    background-size: cover;
+  position: absolute;
+  background: url(../assets/Images/rainbow.svg);
+  height: 6px;
+  width: 100%;
+  margin: none;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .infos {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .timeCounter {
-    display: flex;
-    justify-content: center;
-    margin: 20px 0px 10px 0px;
+  display: flex;
+  justify-content: center;
+  margin: 20px 0px 10px 0px;
 }
 
 .counters {
-    display: flex;
-    justify-content: center;
-    margin: 20px 0px 20px 12px;
+  display: flex;
+  justify-content: center;
+  margin: 20px 0px 20px 12px;
 }
 
 .list-group {
-    margin: 0px 10px 0px 10px;
+  margin: 0px 10px 0px 10px;
 }
 
 .row {
-    justify-content: space-evenly;
-
+  justify-content: space-evenly;
 }
 
 .card {
-    margin: 20px 20px 0px 20px;
-    width: max;
+  margin: 20px 20px 0px 20px;
+  width: max;
 }
 
 .cardHeader {
-    background-color: var(--participantReady);
-    border-radius: 5px 5px 0px 0px;
+  background-color: var(--participantReady);
+  border-radius: 5px 5px 0px 0px;
 }
 
 .buttonEnd {
-    display: flex;
-    justify-content: center;
-    margin: 20px 20px 20px 20px;
+  display: flex;
+  justify-content: center;
+  margin: 20px 20px 20px 20px;
 }
 
 .btn-resp {
-    width: 100%;
+  width: 100%;
 }

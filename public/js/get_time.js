@@ -1,5 +1,5 @@
-var card = document.getElementById("")
-var date_time = document.getElementById('date_time');
+var card = document.getElementById("");
+var date_time = document.getElementById("date_time");
 var gettime = new Date();
 var format = gettime.toLocaleString();
 

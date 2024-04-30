@@ -49,7 +49,7 @@ function addFigure(fig) {
     default:
       break;
   }
-  
+
   if (cursor.x < width / 2) {
     var pos1 = balance1.currPos / 2;
     var tilt1x = Math.abs(pos1) * 50 * scale;
@@ -66,7 +66,7 @@ function addFigure(fig) {
         );
       }
       balance1.leftPlate[fig].count++;
-      return 1
+      return 1;
     } else if (cursor.x > width / 3) {
       if (!balance1.rightPlate[fig]) {
         balance1.rightPlate[fig] = new Gravitable(
@@ -78,7 +78,7 @@ function addFigure(fig) {
         );
       }
       balance1.rightPlate[fig].count++;
-      return 1
+      return 1;
     }
   } else {
     var pos2 = balance2.currPos / 2;
@@ -96,7 +96,7 @@ function addFigure(fig) {
         );
       }
       balance2.leftPlate[fig].count++;
-      return 2
+      return 2;
     } else if (cursor.x > (width * 5) / 6) {
       if (!balance2.rightPlate[fig]) {
         balance2.rightPlate[fig] = new Gravitable(
@@ -108,7 +108,7 @@ function addFigure(fig) {
         );
       }
       balance2.rightPlate[fig].count++;
-      return 2
+      return 2;
     }
   }
 }
@@ -163,22 +163,22 @@ function draw() {
 }
 
 function arrangeFigs(gravitables) {
-    let step = 100 * scale / 6
-    let count = step
-    for (const [key, gravitable] of Object.entries(gravitables)) {
-        gravitable.x = count
-        gravitable.rot = 0
-        console.log(count)  
-        count += step
-    }
+  let step = (100 * scale) / 6;
+  let count = step;
+  for (const [key, gravitable] of Object.entries(gravitables)) {
+    gravitable.x = count;
+    gravitable.rot = 0;
+    console.log(count);
+    count += step;
+  }
 }
 
 window.arrangeBalances = () => {
-    arrangeFigs(balance1.leftPlate)
-    arrangeFigs(balance1.rightPlate)
-    arrangeFigs(balance2.leftPlate)
-    arrangeFigs(balance2.rightPlate)
-}
+  arrangeFigs(balance1.leftPlate);
+  arrangeFigs(balance1.rightPlate);
+  arrangeFigs(balance2.leftPlate);
+  arrangeFigs(balance2.rightPlate);
+};
 
 resizeCanvas();
 
