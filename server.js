@@ -8,7 +8,7 @@ const app = express();
 app.use(cors({origin: '*'}));
 app.use(bodyParser.json());
 
-app.set('views', './src/views');
+app.set('view', './src/view');
 app.set('view engine', 'ejs');
 
 app.use(express.static('public'));
