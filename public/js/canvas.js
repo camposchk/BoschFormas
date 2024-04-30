@@ -206,7 +206,7 @@ window.tilt = (value) => {
 window.addFig = (e, fig) => {
   // addFigure(fig)
   getCursorPosition(e);
-  addFigure(fig);
+  return addFigure(fig);
 };
 
 const figures = ["square", "ellipse", "triangle", "pentagon", "star"];

@@ -566,6 +566,7 @@
         drop: function (event, ui) {
           var formaArrastada = ui.draggable.attr("forma");
           var addedTo = addFig(event, formaArrastada);
+          console.log(addedTo)
           reqWeigths(getPlatesBal());
 
           if (addedTo) {
