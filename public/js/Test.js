@@ -2,9 +2,9 @@ var btn_open_modal = document.getElementById("amarelo");
 var btnconfirm = document.getElementById("iniciar");
 
 function waitOnQueue() {
-  $.get("/started", function (data) {
+  $.get(`http://${url}:3000/started`, function (data) {
     console.log(data);
-    if (data) window.location.replace(`//${url}:3000/game`);
+    if (data) window.location.replace(`http://${url}:3000/game`);
   });
 }
 

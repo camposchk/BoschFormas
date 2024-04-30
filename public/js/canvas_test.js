@@ -206,7 +206,7 @@ window.tilt = (value) => {
 window.addFig = (e, fig) => {
   // addFigure(fig)
   getCursorPosition(e);
-  addFigure(fig);
+  return addFigure(fig);
 };
 
 const figures = ["square", "ellipse", "triangle", "pentagon", "star"];
@@ -233,5 +233,7 @@ function emptyBalance(balance) {
 
 window.emptyBalances = () => {
   emptyBalance(balance1);
+  balance1.bal = 0;
   emptyBalance(balance2);
+  balance2.bal = 0
 };
