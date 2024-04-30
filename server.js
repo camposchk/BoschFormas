@@ -40,7 +40,7 @@ app.post("/ready", async (req, res) => {
 
   competitors.push({ name, done, time, ...score, code });
 
-  res.send("Dados recebidos com sucesso!");
+  res.send({message: "Dados recebidos com sucesso!", code: code});
 });
 
 app.patch("/update-weights/:code", (req, res) => {
@@ -159,7 +159,7 @@ app.post("/finish", (req, res) => {
   res.send("Atividade finalizada.");
 });
 
-app.get("/game", (req, res) => {
+app.get("/game/:code", (req, res) => {
   res.render("Game", { data: data });
 });
 app.get("/test", (req, res) => {
