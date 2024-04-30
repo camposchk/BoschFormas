@@ -166,7 +166,6 @@ app.get("/game/:code", (req, res) => {
   if (!result) return res.send("nao existe");
   if (result.accessed) return res.send("ja era");
   result.accessed = true
-  console.log(result);
 
   res.render("Game", { data: data });
 });
