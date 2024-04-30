@@ -166,7 +166,7 @@ app.get("/test", (req, res) => {
   res.render("Test", { data: data });
 });
 app.get("/dashboard", (req, res) => {
-  res.render("Dashboard");
+  res.render("Dashboard", { data: competitors });
 });
 app.get("/finished", (req, res) => {
   res.render("Finished");

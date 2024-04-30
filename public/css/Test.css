@@ -21,11 +21,12 @@ body {
   width: 100%;
 }
 
+
 .card_connected_comp {
   background-color: rgb(247, 247, 247);
   border-radius: 10px;
   border: none;
-  box-shadow: 2px 2px 5px 1px rgba(128, 128, 128, 0.2);
+  box-shadow: 2px 2px 5px 1px rgba(128, 128, 128, 0.20);
 }
 
 .tri {
@@ -58,7 +59,7 @@ body {
 }
 
 .list-items {
-  background-image: url("../assets/images/trapezio.png");
+  background-image: url("../../../../public/assets/images/trapezio.png" );
   background-position: center center;
   background-size: contain;
   background-repeat: no-repeat;
@@ -68,14 +69,37 @@ body {
   height: 80px;
 }
 
-.btn-ready {
+.btn-ready{
   background-color: rgb(58, 167, 72);
   color: aliceblue;
 }
 
-.btn-ready:hover {
+.btn-ready:hover{
   background-color: rgb(46, 134, 58);
   color: aliceblue;
+}
+
+.button_tutorial{
+  border: none;
+  background-color: transparent;
+}
+
+.button_tutorial i {
+  color: rgb(0, 0, 0);
+  font-size: 30px;
+}
+
+.text_content{
+  text-align: justify;
+}
+
+.good_luck {
+  text-align: center;
+  font-weight: bold;
+  background: rgb(255,0,0);
+  background: linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(74,5,116,1) 31%, rgba(9,9,121,1) 55%, rgba(23,148,138,1) 76%, rgba(43,124,62,1) 99%);
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 /* AVISOS */
@@ -109,6 +133,7 @@ body {
 
 .alerta button:hover {
   background-color: rgba(199, 0, 0, 0.3);
+  ;
   transition: 200ms;
 }
 
@@ -164,173 +189,181 @@ body {
   justify-content: center;
 }
 
+
 @media (max-width: 1670px) {
   .trap {
-    width: 65%;
+      width: 65%;
   }
 
   .medium-icon {
-    height: 60px;
+      height: 60px;
   }
 
   .forminput {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
   }
 
   .date {
-    width: 100%;
+      width: 100%;
   }
 }
 
 @media (max-width: 1400px) {
   .medium-icon {
-    height: 50px;
+      height: 50px;
   }
 
   .forminput {
-    display: flex;
+      display: flex;
+
   }
 
   .forminput {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
   }
 
   .date {
-    width: 100%;
+      width: 100%;
   }
+
 }
 
 @media (max-width: 1040px) {
   .input-group {
-    display: flex;
-    flex-direction: column;
-    width: 90px;
+      display: flex;
+      flex-direction: column;
+      width: 90px;
   }
 
   .mini-icon {
-    height: 28px;
+      height: 28px;
   }
 
   .tri {
-    height: 25.5px;
+      height: 25.5px;
   }
 
   .title {
-    font-size: medium;
+      font-size: medium;
   }
 
   .medium-icon {
-    height: 40px;
+      height: 40px;
   }
 
   .forminput {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
   }
 
-  .input {
-    width: 30%;
-  }
+.input{
+  width: 30%;
+}
+
 }
 
 @media (max-width: 940px) {
   .input-group {
-    display: flex;
-    flex-direction: column;
-    width: 90px;
+      display: flex;
+      flex-direction: column;
+      width: 90px;
   }
 
   .mini-icon {
-    height: 28px;
+      height: 28px;
   }
 
   .tri {
-    height: 25.5px;
+      height: 25.5px;
   }
 
   .title {
-    font-size: medium;
+      font-size: medium;
   }
 
   .medium-icon {
-    height: 30px;
+      height: 30px;
   }
 
-  .input {
-    width: 20%;
-  }
+  .input{
+      width: 20%;
+    }
 }
 
 @media (max-width: 736px) {
   .input-group {
-    display: flex;
-    /* flex-direction: column; */
-    width: 100%;
+      display: flex;
+      /* flex-direction: column; */
+      width: 100%;
   }
 
   .mini-icon {
-    height: 15px;
+      height: 15px;
+
   }
 
   .tri {
-    height: 13px;
+      height: 13px;
   }
 
   .title {
-    font-size: small;
+      font-size: small;
   }
 }
 
 @media (max-width: 942px) {
   .tri {
-    height: 28px;
+      height: 28px;
   }
 }
 
 @media (max-width: 696px) {
   .input-group {
-    display: flex;
-    width: 90px;
+      display: flex;
+      width: 90px;
   }
 
   .mini-icon {
-    height: 10px;
+      height: 10px;
   }
 
   .title {
-    font-size: small;
+      font-size: small;
   }
 }
 
+
 @media (max-width: 660px) {
+
   .form {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
+      display: flex;
+      flex-direction: column;
+      align-items: start;
   }
 
   .list-items {
-    left: 0%;
+      left: 0%;
   }
 
   .input-group {
-    display: flex;
-    width: 20px;
+      display: flex;
+      width: 20px;
+
   }
 
   .mini-icon {
-    height: 10px;
+      height: 10px;
   }
 
   .title {
-    font-size: small;
+      font-size: small;
   }
 }
