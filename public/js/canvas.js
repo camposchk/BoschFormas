@@ -188,20 +188,20 @@ resizeCanvas();
 init();
 
 window.tilt = (value) => {
+  let balance = currBal == 1 ? balance1 : balance2;
   switch (value) {
     case -1:
-      balance1.bal = -1;
+      balance.bal = -1;
       break;
     case 0:
-      balance1.bal = 0;
+      balance.bal = 0;
       break;
     case 1:
-      balance1.bal = 1;
+      balance.bal = 1;
       break;
     default:
       break;
   }
-  console.log(balance2.bal);
 };
 window.addFig = (e, fig) => {
   // addFigure(fig)
