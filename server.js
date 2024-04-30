@@ -25,6 +25,7 @@ app.post("/ready", async (req, res) => {
   console.log(req.body);
   const { name, w1, w2, w3, w4, w5 } = req.body;
 
+  let accessed = false;
   let done = false;
   let time = "";
 
@@ -38,9 +39,9 @@ app.post("/ready", async (req, res) => {
 
   let code = await generate();
 
-  competitors.push({ name, done, time, ...score, code });
+  competitors.push({ name, done, time, ...score, code, accessed });
 
-  res.send({message: "Dados recebidos com sucesso!", code: code});
+  res.send({ message: "Dados recebidos com sucesso!", code: code });
 });
 
 app.patch("/update-weights/:code", (req, res) => {
@@ -131,7 +132,7 @@ app.post("/start-timer", (req, res) => {
   }, 3600000);
 
   started = true;
-  res.send("Cronômetro de 1 hora iniciado.");
+  res.send("Cronôme tro de 1 hora iniciado.");
 });
 
 app.get("/check-timer", (req, res) => {
@@ -160,6 +161,13 @@ app.post("/finish", (req, res) => {
 });
 
 app.get("/game/:code", (req, res) => {
+  const code = req.params.code;
+  var result = competitors.find((cp) => cp.code === code);
+  if (!result) return res.send("nao existe");
+  if (result.accessed) return res.send("ja era");
+  result.accessed = true
+  console.log(result);
+
   res.render("Game", { data: data });
 });
 app.get("/test", (req, res) => {
