@@ -151,7 +151,7 @@ export function renderStar(count, ctx, gravitable) {
   ctx.fillStyle = "#EC9513";
   ctx.beginPath()
   var step = Math.PI * 2 * 0.2
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0.5; i < 5; i++) {
     if(i == 0)
       ctx.moveTo(Math.sin(i * step) * h, Math.cos(i * step) * h)
     else
@@ -177,7 +177,7 @@ export function renderPentagon(count, ctx, gravitable) {
   ctx.fillStyle = "#1F93FF";
   ctx.beginPath()
   var step = Math.PI * 2 * 0.2
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0.5; i < 5; i++) {
     if(i == 0)
       ctx.moveTo(Math.sin(i * step) * h, Math.cos(i * step) * h)
     else
@@ -194,7 +194,7 @@ export function renderBall(count, ctx, gravitable) {
   ctx.save();
 
   ctx.translate(gravitable.x, gravitable.y);
-  // ctx.strokeRect(-h, -w, 2 * h, 2 * w)
+//   ctx.strokeRect(-h, -w, 2 * h, 2 * w)
 
   renderBubble(ctx, w, h, count)
 
@@ -209,19 +209,7 @@ export function renderBall(count, ctx, gravitable) {
 export function gravity(ctx, x, y, width, height, gravitables) {
   ctx.save();
   ctx.translate(x, y);
-
-  // ctx.strokeRect(0, 0, width, height);
-  // gravitables.forEach((gravitable) => {
-  //   gravitable.draw(1, ctx, gravitable);
-
-  //   gravitable.move(0, 0.1);
-  //   if (gravitable.bottom() > height)
-  //     gravitable.bounceY(height - gravitable.height);
-  //   if (gravitable.right() > width)
-  //     gravitable.bounceX(width - gravitable.width);
-  //   if (gravitable.x < gravitable.width) gravitable.bounceX(gravitable.width);
-  // });
-
+  
   for (const [key, gravitable] of Object.entries(gravitables)) {
     gravitable.draw(gravitable.count, ctx, gravitable);
   
@@ -232,12 +220,11 @@ export function gravity(ctx, x, y, width, height, gravitables) {
       gravitable.bounceX(width - gravitable.width);
     if (gravitable.x < gravitable.width) gravitable.bounceX(gravitable.width);
   }
-
   ctx.restore();
 }
 
 export function renderBalance(ctx, x, y, scale, balance) {
-  balance.tilt(0.2);
+  balance.tilt(0.05);
   var pos = balance.currPos / 2;
   
   var xOffSet = Math.abs(pos) * 50 - 100;

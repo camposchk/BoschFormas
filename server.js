@@ -86,12 +86,10 @@ app.patch('/final-answer/:code', (req, res) => {
 });
 
 app.post('/scales', (req, res) => {
-    let { quantities } = req.form; 
+    let { quantities } = req.body; 
     if (!quantities)
-        return res.status(402).send({message: 'vazio'})
-    console.log(quantities)
-    quantities = JSON.parse(quantities)
-    console.log(quantities)
+        return res.status(400).send({message: 'vazio'})
+    
     let plate1 = 0;
     let plate2 = 0;
 
@@ -99,6 +97,7 @@ app.post('/scales', (req, res) => {
         plate1 += quantities[i] * weights[i];
         plate2 += quantities[i + 5] * weights[i];
     }
+    console.log(plate1, plate2)
 
     if (plate1 > plate2)
         res.send('-1');
@@ -159,9 +158,9 @@ app.post('/finish', (req, res) => {
 app.get('/game', (req, res) => {
     res.render('GamePage/Index')
 })
-
-
-
+app.get('/test', (req, res) => {
+    res.render('TutorialPage/Test')
+})
 
 app.use((req, res, next) => {
     console.log('Dados recebidos:', req.body);
@@ -197,5 +196,5 @@ async function generate() {
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
+  console.log(`http://localhost:${PORT}/game`);
 });

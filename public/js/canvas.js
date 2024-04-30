@@ -6,7 +6,7 @@ import {
   renderSquare,
   renderTriangle,
   renderStar,
-  renderPentagon
+  renderPentagon,
 } from "./balance.js";
 
 const CANVAS = document.getElementById("canvas");
@@ -20,10 +20,10 @@ var width = window.innerWidth - 50;
 var height = window.innerHeight - 100;
 var scale = width / 750;
 var offX = 0;
-var plate1Off = balX1 - balX2
-var plate2Off = balX1 + balX2
-var figCount = 0
-var figSize = 15
+var plate1Off = balX1 - balX2;
+var plate2Off = balX1 + balX2;
+var figCount = 0;
+var figSize = 15;
 
 function getCursorPosition(event) {
   const rect = CANVAS.getBoundingClientRect();
@@ -31,82 +31,104 @@ function getCursorPosition(event) {
   cursor.y = event.clientY - rect.top;
 }
 
-function addFigure(fig)
-{
-  var func = renderBall
+function addFigure(fig) {
+  var func = renderBall;
   switch (fig) {
-    case 'square':
-      func = renderSquare
+    case "square":
+      func = renderSquare;
       break;
-    case 'triangle':
-      func = renderTriangle
+    case "triangle":
+      func = renderTriangle;
       break;
-    case 'star':
-      func = renderStar
+    case "star":
+      func = renderStar;
       break;
-    case 'pentagon':
-      func = renderPentagon
+    case "pentagon":
+      func = renderPentagon;
       break;
     default:
       break;
   }
-
-  if (cursor.x < width / 2)
-  {
+  
+  if (cursor.x < width / 2) {
     var pos1 = balance1.currPos / 2;
-    var tilt1x = ((Math.abs(pos1) * 50) * scale)
+    var tilt1x = Math.abs(pos1) * 50 * scale;
     var tilt1y = pos1 * 75;
 
     if (cursor.x < width / 6) {
-      if(!balance1.leftPlate[fig]) {
-        balance1.leftPlate[fig] = new Gravitable(cursor.x - (plate1Off + offX - 50 * scale + tilt1x), cursor.y + (-210 + tilt1y) * scale, figSize, figSize, func)
+      if (!balance1.leftPlate[fig]) {
+        balance1.leftPlate[fig] = new Gravitable(
+          cursor.x - (plate1Off + offX - 50 * scale + tilt1x),
+          cursor.y + (-210 + tilt1y) * scale,
+          figSize,
+          figSize,
+          func
+        );
       }
       balance1.leftPlate[fig].count++;
+    } else if (cursor.x > width / 3) {
+      if (!balance1.rightPlate[fig]) {
+        balance1.rightPlate[fig] = new Gravitable(
+          cursor.x - (plate1Off - offX - 50 * scale - tilt1x),
+          cursor.y - (210 + tilt1y) * scale,
+          figSize,
+          figSize,
+          func
+        );
+      }
+      balance1.rightPlate[fig].count++;
     }
-    else if (cursor.x > width / 3) 
-      balance1.rightPlate.push(
-        new Gravitable(cursor.x - (plate1Off - offX - 50 * scale - tilt1x), cursor.y - (210 + tilt1y) * scale, figSize, figSize, func)
-      );
-
-    
-  }
-  else{
+  } else {
     var pos2 = balance2.currPos / 2;
-    var tilt2x = ((Math.abs(pos2) * 50) * scale)
+    var tilt2x = Math.abs(pos2) * 50 * scale;
     var tilt2y = pos2 * 75;
 
-    if (cursor.x < width * 2 / 3)
-      balance2.leftPlate.push(
-        new Gravitable(cursor.x - (plate2Off + offX - 50 * scale + tilt2x), cursor.y + (-210 + tilt2y) * scale, figSize, figSize, func)
-      );
-    else if (cursor.x > width * 5 / 6)
-      balance2.rightPlate.push(
-        new Gravitable(cursor.x - (plate2Off - offX - 50 * scale + tilt2y), cursor.y - (210 + tilt2y) * scale, figSize, figSize, func)
-      );
+    if (cursor.x < (width * 2) / 3) {
+      if (!balance2.leftPlate[fig]) {
+        balance2.leftPlate[fig] = new Gravitable(
+          cursor.x - (plate2Off + offX - 50 * scale + tilt2x),
+          cursor.y + (-210 + tilt2y) * scale,
+          figSize,
+          figSize,
+          func
+        );
+      }
+      balance2.leftPlate[fig].count++;
+    } else if (cursor.x > (width * 5) / 6) {
+      if (!balance2.rightPlate[fig]) {
+        balance2.rightPlate[fig] = new Gravitable(
+          cursor.x - (plate2Off - offX - 50 * scale + tilt2y),
+          cursor.y - (210 + tilt2y) * scale,
+          figSize,
+          figSize,
+          func
+        );
+      }
+      balance2.rightPlate[fig].count++;
+    }
   }
 }
 
 function resizeCanvas() {
-  if (window.innerHeight > 720)
-    height = window.innerHeight * 0.8;
+  if (window.innerHeight > 720) height = window.innerHeight * 0.8;
   width = (height * 4) / 3;
   // width = window.innerWidth * 0.75;
   CANVAS.width = width;
   CANVAS.height = height;
   // scale = width / 750;
   scale = width / 740;
-  offX = -100 * scale
+  offX = -100 * scale;
 
   balX1 = width / 2;
   balX2 = 200 * scale;
   balY = height / 3;
-  plate1Off = balX1 - balX2 
-  plate2Off = balX1 + balX2 
+  plate1Off = balX1 - balX2;
+  plate2Off = balX1 + balX2;
 }
 window.addEventListener("resize", resizeCanvas, false);
 CANVAS.addEventListener("mousemove", function (e) {
   getCursorPosition(e);
-  figCount++
+  figCount++;
 });
 
 function init() {
@@ -120,8 +142,7 @@ function draw() {
 
   ctx.fillStyle = "darkgoldenrod";
   ctx.strokeStyle = "darkgoldenrod";
-  
-  
+
   renderBalance(ctx, plate1Off, balY, scale, balance1);
   renderBalance(ctx, plate2Off, balY, scale, balance2);
 
@@ -137,36 +158,62 @@ function draw() {
   window.requestAnimationFrame(draw);
 }
 
+function arrangeFigs(gravitables) {
+    let step = 100 * scale / 6
+    let count = step
+    for (const [key, gravitable] of Object.entries(gravitables)) {
+        gravitable.x = count
+        gravitable.rot = 0
+        console.log(count)  
+        count += step
+    }
+}
+
+window.arrangeBalances = () => {
+    arrangeFigs(balance1.leftPlate)
+    arrangeFigs(balance1.rightPlate)
+    arrangeFigs(balance2.leftPlate)
+    arrangeFigs(balance2.rightPlate)
+}
+
 resizeCanvas();
+
 init();
 
-window.tiltRight = () => {
-  balance1.bal = 1;
-};
-window.unTilt = () => {
-  balance1.bal = 0;
-};
-window.tiltLeft = () => {
-  balance1.bal = -1;
+window.tilt = (value) => {
+  switch (value) {
+    case -1:
+      balance1.bal = -1;
+      break;
+    case 0:
+      balance1.bal = 0;
+      break;
+    case 1:
+      balance1.bal = 1;
+      break;
+    default:
+      break;
+  }
+  console.log(balance2.bal);
 };
 window.addFig = (e, fig) => {
   // addFigure(fig)
-  getCursorPosition(e)
-  addFigure(fig)
-}
+  getCursorPosition(e);
+  addFigure(fig);
+};
 
-const figures = ['square', 'ellipse', 'triangle', 'pentagon', 'star']
+const figures = ["square", "ellipse", "triangle", "pentagon", "star"];
 window.getPlatesBal1 = () => {
-  let counts = []
+  let counts = [];
   for (let i = 0; i < figures.length; i++) {
-    if(balance1.leftPlate[figures[i]])
-      counts.push(balance1.leftPlate[figures[i]].count)
-    else counts.push(0)
+    if (balance1.leftPlate[figures[i]])
+      counts.push(balance1.leftPlate[figures[i]].count);
+    else counts.push(0);
   }
   for (let i = 0; i < figures.length; i++) {
-    if(balance1.rightPlate[figures[i]])
-      counts.push(balance1.rightPlate[figures[i]].count)
-    else counts.push(0)
+    if (balance1.rightPlate[figures[i]])
+      counts.push(balance1.rightPlate[figures[i]].count);
+    else counts.push(0);
   }
-  return counts
-}
+  return counts;
+};

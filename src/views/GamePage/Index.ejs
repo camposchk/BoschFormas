@@ -145,9 +145,21 @@
         $('#canvas').droppable({
             drop: function (event, ui) {
                 addFig(event, ui.draggable.attr('id'))
-                let quants = getPlatesBal1()
-                console.log(quants)
-                $.post( "http://localhost:3000/scales", {quantities: JSON.stringify(quants)}).done((data) => console.log(data));
+                let quantities = getPlatesBal1()
+                console.log(quantities)
+                $.ajax({
+                    url: "http://localhost:3000/scales",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({quantities: quantities}),
+                    success: function(response) {
+                        tilt(Number(response));
+                        console.log(response)
+                    },
+                    error: function(xhr, status, error) {
+                        console.log("Error:", error);
+                    }
+                });
             }
         })
     });
