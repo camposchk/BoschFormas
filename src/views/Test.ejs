@@ -9,6 +9,7 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="icon" href="./assets/Images/favicon.ico" />
     <link rel="stylesheet" href="./variables.css" />
     <link rel="stylesheet" href="./css/Test.css" />
@@ -101,6 +102,9 @@
             </div>
           </div>
         </div>
+        <button class="button_tutorial mb-2" type="button"
+        style="color: rgb(250, 250, 250); font-weight: bold" data-bs-toggle="modal"
+        data-bs-target="#TutorialModal"><i class="bi bi-question-circle"></i></button>
         <button
           class="btn btn-primary btn-send"
           type="button"
@@ -161,6 +165,37 @@
         </div>
       </div>
     </div>
+
+    <!-- modal tutorial -->
+    <div id="TutorialModal" class="modal fade">
+      <div class="modal-dialog border-rounded">
+          <div class="modal-content strongbg">
+
+
+              <div class="modal-header border-0">
+                  <button type="button" class="btn btn-close " data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body rounded">
+
+                  <h3 class="text-center mx-auto">Bosch Formas</h3>
+                  <form action="/" method="post" id="login">
+                      <div class="col-5 mt-5 mx-auto text_content">
+                          <p><strong>1</strong>. O objetivo do jogo é descobrir os valores de peso de cada peça, sabe-se que o  <strong>triângulo vale 400g.</strong></p>
+                          <p><strong>2</strong>. Atualmente existem cinco(5) figuras de valor único e cada figura possui cinco(5) exemplos disponíveis para uso.</p>
+                          <p><strong>3</strong>. Para adivinhar o peso das peças, você pode usar a balança, porém há algumas regras sobre seu uso:</p>
+
+                          <p><strong>Regra 1</strong> - Ao inserir um peso na balança ele não pode ser retirado.</p>
+
+                          <div class="good_luck">
+                              <p><strong>Boa sorte candidato(a)!</strong></p>
+                          </div>
+                      </div>
+                  </form>
+
+              </div>
+          </div>
+      </div>
+  </div>
 
     <div class="container-fluid">
       <div class="row justify-content-center mt-4">
