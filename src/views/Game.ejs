@@ -314,10 +314,11 @@
                     style="width: 90px"
                     value="400"
                     readonly
-                    type="text"
+                    type="number"
                     class="form-control"
                     aria-label="Sizing example input"
                     aria-describedby="inputGroup-sizing-default"
+                    name="w1"
                   />
                 </div>
                 <div class="input-group mb-3">
@@ -330,6 +331,7 @@
                     class="form-control"
                     aria-label="Sizing example input"
                     aria-describedby="inputGroup-sizing-default"
+                    name="w2"
                   />
                 </div>
                 <div class="input-group mb-3">
@@ -342,6 +344,7 @@
                     class="form-control"
                     aria-label="Sizing example input"
                     aria-describedby="inputGroup-sizing-default"
+                    name="w3"
                   />
                 </div>
                 <div class="input-group mb-3">
@@ -354,6 +357,7 @@
                     class="form-control"
                     aria-label="Sizing example input"
                     aria-describedby="inputGroup-sizing-default"
+                    name="w4"
                   />
                 </div>
                 <div class="input-group mb-3">
@@ -366,6 +370,7 @@
                     class="form-control"
                     aria-label="Sizing example input"
                     aria-describedby="inputGroup-sizing-default"
+                    name="w5"
                   />
                 </div>
               </form>
@@ -453,7 +458,7 @@
         data: JSON.stringify({ quantities: quantities }),
         success: function (response) {
           tilt(Number(response));
-          console.log(response);
+          // console.log(response);
         },
         error: function (xhr, status, error) {
           console.log("Error:", error);
@@ -473,18 +478,18 @@
         drop: function (event, ui) {
           var formaArrastada = ui.draggable.attr("forma");
           var addedTo = addFig(event, formaArrastada);
-          console.log(addedTo)
+          // console.log(addedTo)
           reqWeigths(getPlatesBal());
 
           if (addedTo) {
-            console.log("Forma arrastada: " + formaArrastada);
+            // console.log("Forma arrastada: " + formaArrastada);
 
             var arrastos = parseInt(ui.draggable.attr("arrastos"));
 
             arrastos--;
 
             ui.draggable.attr("arrastos", arrastos);
-            console.log("Arrastos do " + formaArrastada + " = " + arrastos);
+            // console.log("Arrastos do " + formaArrastada + " = " + arrastos);
             animate(arrastos, formaArrastada);
 
             if (arrastos === 0) {

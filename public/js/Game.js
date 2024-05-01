@@ -1,6 +1,12 @@
 const finishAtv = "FINALIZAR";
-const code = window.location.href.split('/').slice(-1)
+const code = window.location.href.split('/').slice(-1)[0]
 console.log(code)
+
+const nameInput = $('#form-res input[type="number"]')
+
+nameInput.on( "focusout", function() {
+  updateWeights()
+})
 
 function finish() {
   var inputFinish = $("#validation").val();

@@ -168,7 +168,6 @@ function arrangeFigs(gravitables) {
   for (const [key, gravitable] of Object.entries(gravitables)) {
     gravitable.x = count;
     gravitable.rot = 0;
-    console.log(count);
     count += step;
   }
 }

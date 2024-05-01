@@ -477,7 +477,6 @@
   <script type="module" src="./js/canvas_test.js"></script>
   <script src="./js/morphshapes.js"></script>
   <script>
-    console.log(url);
     const reqWeigths = (quantities) => {
       $.ajax({
         url: `http://${url}:3000/scales`,
@@ -486,7 +485,7 @@
         data: JSON.stringify({ quantities: quantities }),
         success: function (response) {
           tilt(Number(response));
-          console.log(response);
+          // console.log(response);
         },
         error: function (xhr, status, error) {
           console.log("Error:", error);
@@ -509,14 +508,14 @@
           reqWeigths(getPlatesBal());
 
           if(addedTo){
-            console.log("Forma arrastada: " + formaArrastada);
+            // console.log("Forma arrastada: " + formaArrastada);
   
             var arrastos = parseInt(ui.draggable.attr("arrastos"));
   
             arrastos--;
   
             ui.draggable.attr("arrastos", arrastos);
-            console.log("Arrastos do " + formaArrastada + " = " + arrastos);
+            // console.log("Arrastos do " + formaArrastada + " = " + arrastos);
             animate(arrastos, formaArrastada);
   
             if (arrastos === 0) {
