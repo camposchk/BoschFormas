@@ -2,6 +2,16 @@ body {
   background-color: rgb(255, 255, 255);
 }
 
+.detail {
+  position: absolute;
+  background: url(../assets/Images/rainbow.svg);
+  height: 6px;
+  width: 100%;
+  margin: none;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 ::-webkit-scrollbar {
   display: none;
 }
@@ -59,7 +69,7 @@ body {
 }
 
 .list-items {
-  background-image: url("../../../../public/assets/images/trapezio.png" );
+  background-image: url("../assets/images/trapezio.png" );
   background-position: center center;
   background-size: contain;
   background-repeat: no-repeat;
@@ -367,3 +377,7 @@ body {
       font-size: small;
   }
 }
+
+.error {
+    outline: 1px solid red;
+} 

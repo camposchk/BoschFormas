@@ -1,13 +1,11 @@
-import {
-  Balance,
-  Gravitable,
-  renderBalance,
-  renderBall,
-  renderSquare,
-  renderTriangle,
-  renderStar,
-  renderPentagon,
-} from "./balance.js";
+import Balance from "./balance/Balance.js"
+import Gravitable from "./balance/Gravitable.js"
+import renderBalance from "./balance/renderBalance.js"
+import renderBall from "./balance/renderBall.js"
+import renderSquare from "./balance/renderSquare.js"
+import renderTriangle from "./balance/renderTriangle.js"
+import renderStar from "./balance/renderStar.js"
+import renderPentagon from "./balance/renderPentagon.js"
 
 const CANVAS = document.getElementById("canvas");
 var balance1 = new Balance(0, 0);
@@ -117,8 +115,11 @@ function addFigure(fig) {
 }
 
 function resizeCanvas() {
-  if (window.innerHeight > 720) height = window.innerHeight * 0.8;
-  width = (height * 4) / 3;
+  // if (window.innerHeight > 720) height = window.innerHeight * 0.5;
+  // width = (height * 6) / 3;
+  if (window.innerWidth > 720) width = window.innerWidth * 0.5;
+  height = (width * 3) / 6;
+
   // width = window.innerWidth * 0.75;
   CANVAS.width = width;
   CANVAS.height = height;

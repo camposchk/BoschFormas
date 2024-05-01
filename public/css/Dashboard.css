@@ -60,3 +60,11 @@ body {
 .btn-resp {
   width: 100%;
 }
+
+.greenBg {
+  background-color: rgb(50, 205, 50)
+}
+
+.yellowBg {
+  background-color: rgb(241, 209, 26)
+}

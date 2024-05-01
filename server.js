@@ -22,8 +22,9 @@ const competitors = [];
 const weights = [100, 200, 400, 800, 1600];
 
 app.post("/ready", async (req, res) => {
-  console.log(req.body);
-  const { name, w1, w2, w3, w4, w5 } = req.body;
+  const { name, dataNasc, w1, w2, w3, w4, w5 } = req.body;
+  if(!dataNasc)
+    return res.status(400).send("Sem data de nascimento")
 
   let accessed = false;
   let done = false;
@@ -39,7 +40,7 @@ app.post("/ready", async (req, res) => {
 
   let code = await generate();
 
-  competitors.push({ name, done, time, ...score, code, accessed });
+  competitors.push({ name, dataNasc, done, time, ...score, code, accessed });
 
   res.send({ message: "Dados recebidos com sucesso!", code: code });
 });
@@ -121,7 +122,7 @@ let timer;
 
 app.post("/start-timer", (req, res) => {
   if (timer) {
-    return res.status(400).send("O cronômetro já está em execução.");
+    return res.send({startTime: startTime, message: "O cronômetro já está em execução."});
   }
 
   startTime = Date.now();
@@ -132,12 +133,12 @@ app.post("/start-timer", (req, res) => {
   }, 3600000);
 
   started = true;
-  res.send("Cronôme tro de 1 hora iniciado.");
+  res.send({startTime: startTime, message: "Cronômetro de 1 hora iniciado."});
 });
 
 app.get("/check-timer", (req, res) => {
   if (!timer) {
-    return res.send("O cronômetro não está em execução.");
+    return res.status(409).send("O cronômetro não está em execução.");
   }
 
   const elapsedTime = Date.now() - startTime;
@@ -149,9 +150,8 @@ app.get("/check-timer", (req, res) => {
   const seconds = Math.floor((remainingTime % 60000) / 1000);
 
   if (hours > 0)
-    res.send(`Tempo restante no cronômetro - ${hours}:${minutes}:${seconds}`);
-
-  res.send(`Tempo restante no cronômetro - ${minutes}:${seconds}`);
+    return res.send({startTime: startTime, leftTime: `${hours}:${minutes}:${seconds}`});
+  return res.send({startTime: startTime, leftTime: `${minutes}:${seconds}`});
 });
 
 app.post("/finish", (req, res) => {
@@ -173,7 +173,7 @@ app.get("/test", (req, res) => {
   res.render("Test", { data: data });
 });
 app.get("/dashboard", (req, res) => {
-  res.render("Dashboard", { data: competitors });
+  res.render("Dashboard", { data: competitors, url: data.url });
 });
 app.get("/finished", (req, res) => {
   res.render("Finished");
