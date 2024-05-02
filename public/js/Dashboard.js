@@ -137,7 +137,7 @@ setInterval(() => {
               }-time">Tempo: ${response[i].time}
               </li>
               <li class="list-group-item">
-                <button type="button" class="btn btn-primary btn-resp" data-bs-toggle="modal"
+                <button type="button" class="btn btn-warning btn-resp" data-bs-toggle="modal"
                   data-bs-target="#${response[i].code}-modal">
                   Respostas
                 </button>

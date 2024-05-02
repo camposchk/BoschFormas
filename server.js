@@ -196,6 +196,7 @@ async function saveExcel() {
 
   worksheet.addRow([
     "Nome",
+    "Data de Nascimento",
     "Concluiu",
     "Tempo",
     "Peso 1",
@@ -208,6 +209,7 @@ async function saveExcel() {
   competitors.forEach((competitor) => {
     worksheet.addRow([
       competitor.name,
+      competitor.dataNasc,
       competitor.done,
       competitor.time,
       competitor.w1,

@@ -136,7 +136,7 @@ body {
   margin-bottom: 1%;
 }
 
-.draggable {
+/* .draggable {
   position: relative;
   top: 0px;
   left: 0px;
@@ -148,7 +148,7 @@ body {
   transform: scale(1.1);
   z-index: 999;
   cursor: grab;
-}
+} */
 
 .cont-canvas {
   display: flex;
@@ -324,4 +324,12 @@ body {
   .title {
     font-size: small;
   }
+}
+
+.list-items div {
+  cursor: grab;
+}
+
+.list-items div:active {
+  cursor: grabbing;
 }

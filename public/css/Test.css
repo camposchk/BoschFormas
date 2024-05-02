@@ -54,7 +54,7 @@ body {
   width: 100%;
 }
 
-.input-participant {
+/* .input-participant {
   background-color: rgb(247, 247, 247);
   border-style: solid;
   border-color: var(--mediugray-color);
@@ -62,7 +62,7 @@ body {
   border-radius: 5px;
   height: 35px;
   padding: 0px 10px 0px 10px;
-}
+} */
 
 .trap {
   position: absolute;
@@ -381,3 +381,11 @@ body {
 .error {
     outline: 1px solid red;
 } 
+
+.list-items div {
+  cursor: grab;
+}
+
+.list-items div:active {
+  cursor: grabbing;
+}
