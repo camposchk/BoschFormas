@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const ExcelJS = require("exceljs");
 const cors = require("cors");
+const { createProxyMiddleware } = require('http-proxy-middleware');
 require("dotenv").config();
 
 const data = { url: process.env.CURR_IP };
@@ -11,6 +12,8 @@ const app = express();
 app.use(cors({ origin: "*" }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+
 
 app.set("views", "./src/views");
 app.set("view engine", "ejs");
@@ -198,6 +201,9 @@ app.use((req, res, next) => {
 });
 
 async function saveExcel() {
+  const today = new Date();
+  const dateFormatted = today.toISOString().slice(0, 10).replace(/-/g, '');
+
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet("Alunos");
 
@@ -227,9 +233,11 @@ async function saveExcel() {
     ]);
   });
 
-  await workbook.xlsx.writeFile("processo.xlsx");
-  console.log("planilha salva em processo.xlsx");
+  const fileName = `processo_${dateFormatted}.xlsx`;
+  await workbook.xlsx.writeFile(fileName);
+  console.log(`Planilha salva em ${fileName}`);
 }
+
 
 async function generate() {
   let secretcode = "";
@@ -244,6 +252,11 @@ async function generate() {
 }
 
 const PORT = process.env.PORT || 3000;
+
+app.use('/api', createProxyMiddleware({ 
+  target: `$http://disrct:etstech31415@rb-proxy-ca1.bosch.com:8080:${PORT}/`,
+  changeOrigin: true
+}));
 
 app.listen(PORT, () => {
   console.log(`http://${process.env.CURR_IP}:${PORT}/game`);
