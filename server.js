@@ -122,6 +122,8 @@ app.get("/competitors", (req, res) => {
 
 let startTime;
 let timer;
+let startPause;
+let pauseTime = 0;
 
 var finished = false;
 
@@ -142,12 +144,27 @@ app.post("/start-timer", (req, res) => {
   res.send({startTime: startTime, message: "Cronômetro de 1 hora iniciado."});
 });
 
+app.get("/pause-timer", (req, res) => {
+  if (startPause) {
+    pauseTime += Date.now() - startPause
+    startPause = null
+    return res.send({pauseTime: pauseTime, paused: false});
+  }
+
+  startPause = Date.now();
+
+  res.send({pauseTime: pauseTime, paused: true});
+});
+
 app.get("/check-timer", (req, res) => {
   if (!timer) {
     return res.status(409).send("O cronômetro não está em execução.");
   }
 
-  const elapsedTime = Date.now() - startTime;
+  var elapsedTime = (Date.now() - startTime) - pauseTime;
+  if (startPause) {
+    elapsedTime -= Date.now() - startPause
+  }
 
   const remainingTime = Math.max(0, 3600000 - elapsedTime);
 
@@ -156,8 +173,8 @@ app.get("/check-timer", (req, res) => {
   const seconds = Math.floor((remainingTime % 60000) / 1000);
 
   if (hours > 0)
-    return res.send({startTime: startTime, leftTime: `${hours}:${minutes}:${seconds}`});
-  return res.send({startTime: startTime, leftTime: `${minutes}:${seconds}`});
+    return res.send({startTime: startTime, leftTime: `00:${minutes}:${seconds}`, paused: startPause ? true : false});
+  return res.send({startTime: startTime, leftTime: `${hours}:${minutes}:${seconds}`, paused: startPause ? true : false});
 });
 
 app.post("/finish", (req, res) => {
@@ -225,11 +242,11 @@ async function saveExcel() {
       competitor.dataNasc,
       competitor.done,
       competitor.time,
-      competitor.w1,
       competitor.w2,
       competitor.w3,
-      competitor.w4,
+      competitor.w1,
       competitor.w5,
+      competitor.w4,
     ]);
   });
 

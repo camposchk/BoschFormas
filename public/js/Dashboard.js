@@ -3,16 +3,23 @@ const myInput = document.getElementById("myInput");
 const competitorsDiv = $("#competitors");
 const finishedDiv = $("#finished");
 const ongoingDiv = $("#ongoing");
+var hideBt = true
 var startTime = null;
+var pauseTime = 0;
 var finished = 0;
 var ongoing = 0;
+var paused = false
 var modals = {};
 // myModal.addEventListener("shown.bs.modal", () => {
 //   myInput.focus();
 // });
 
-function toggleActivity() {
-  var button = document.getElementById("toggleButton");
+function toggleActivityStart() {
+  var button = document.getElementById("toggleButtonStart");
+  if(hideBt) {
+    document.getElementById("toggleButtonPause").classList.remove("d-none");
+    hideBt = false
+  }
 
   if (button.classList.contains("btn-success")) {
       button.classList.remove("btn-success");
@@ -27,15 +34,48 @@ function toggleActivity() {
   }
 }
 
+function toggleActivityPause() {
+  var button = document.getElementById("toggleButtonPause");
+  pauseTimer()
+
+  if (button.classList.contains("btn-success")) {
+      button.classList.remove("btn-success");
+      button.classList.add("btn-danger");
+      button.innerHTML = "Retomar Prova";
+      paused = true
+    } else {
+      button.classList.remove("btn-danger");
+      button.classList.add("btn-success");
+      button.innerHTML = "Pausar Prova";
+      paused = false
+  }
+}
+
 function atualizarTempoRestante() {
   $.ajax({
     url: `http://${url}:3000/check-timer`,
     type: "GET",
     success: function (response) {
-      $("#tempoRestante").text(response);
+      $("#tempoRestante").text(response.leftTime);
+      startTime = response.startTime
+      setInterval(atualizarTempoRestanteFrontend, 1000)
+      var button = document.getElementById("toggleButtonStart");
+      button.classList.remove("btn-success");
+      button.classList.add("btn-danger");
+      button.innerHTML = "Finalizar Prova";
+      document.getElementById("toggleButtonPause").classList.remove("d-none");
+
+      if(response.paused){
+        button = document.getElementById("toggleButtonPause");
+        button.classList.remove("d-none");
+        button.classList.remove("btn-success");
+        button.classList.add("btn-danger");
+        button.innerHTML = "Retomar Prova";
+        paused = true
+        document.getElementById("toggleButtonPause").classList.remove("d-none");
+      }
     },
     error: function (xhr, status, error) {
-      console.log("Error:", error);
     },
   });
 }
@@ -45,8 +85,22 @@ function startTimer() {
     url: `http://${url}:3000/start-timer`,
     type: "POST",
     success: function (response) {
-      startTime = response.startTime;
+      startTime = response.startTime; 
       setInterval(atualizarTempoRestanteFrontend, 1000);
+    },
+    error: function (xhr, status, error) {
+      console.log(error);
+    },
+  });
+}
+
+function pauseTimer() {
+  $.ajax({
+    url: `http://${url}:3000/pause-timer`,
+    type: "GET",
+    success: function (response) {
+      pauseTime = response.pauseTime;
+      paused = response.paused
     },
     error: function (xhr, status, error) {
       console.log(error);
@@ -60,6 +114,7 @@ function finishActivity() {
     type: "POST",
     success: function (response) {
       console.log("finalizado");
+      paused = true
     },
     error: function (xhr, status, error) {
       console.log(error);
@@ -241,7 +296,9 @@ setInterval(() => {
 }, 5000);
 
 function atualizarTempoRestanteFrontend() {
-  const elapsedTime = Date.now() - startTime;
+  if(paused)
+    return
+  const elapsedTime = (Date.now() - startTime) - pauseTime;
 
   const remainingTime = Math.max(0, 3600000 - elapsedTime);
 
@@ -255,3 +312,5 @@ function atualizarTempoRestanteFrontend() {
 
   $("#tempoRestante").text(tempoFormatado);
 }
+
+atualizarTempoRestante()
