@@ -11,6 +11,22 @@ var modals = {};
 //   myInput.focus();
 // });
 
+function toggleActivity() {
+  var button = document.getElementById("toggleButton");
+
+  if (button.classList.contains("btn-success")) {
+      button.classList.remove("btn-success");
+      button.classList.add("btn-danger");
+      button.innerHTML = "Finalizar Prova";
+      startTimer();
+  } else {
+      button.classList.remove("btn-danger");
+      button.classList.add("btn-success");
+      button.innerHTML = "Iniciar Prova";
+      finishActivity();
+  }
+}
+
 function atualizarTempoRestante() {
   $.ajax({
     url: `http://${url}:3000/check-timer`,
@@ -31,6 +47,19 @@ function startTimer() {
     success: function (response) {
       startTime = response.startTime;
       setInterval(atualizarTempoRestanteFrontend, 1000);
+    },
+    error: function (xhr, status, error) {
+      console.log(error);
+    },
+  });
+}
+
+function finishActivity() {
+  $.ajax({
+    url: `http://${url}:3000/finish`,
+    type: "POST",
+    success: function (response) {
+      console.log("finalizado");
     },
     error: function (xhr, status, error) {
       console.log(error);

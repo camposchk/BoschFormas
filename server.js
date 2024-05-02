@@ -36,7 +36,7 @@ app.post("/ready", async (req, res) => {
     w3: w3 || 0,
     w4: w4 || 0,
     w5: w5 || 0,
-  };
+  }; 
 
   let code = await generate();
 
