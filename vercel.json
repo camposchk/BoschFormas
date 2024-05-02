@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "builds": [{ "src": "index.js", "use": "@vercel/node" }],
+  "routes": [
+      { "src": "/", "dest": "/" },
+      { "src": "/game", "dest": "/" },
+      { "src": "/test", "dest": "/" },
+      { "src": "/dashboard", "dest": "/" },
+      { "src": "/finished", "dest": "/" },
+      { "src": "/home", "dest": "/" }
+  ]
+}
