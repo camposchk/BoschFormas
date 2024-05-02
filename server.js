@@ -120,6 +120,8 @@ app.get("/competitors", (req, res) => {
 let startTime;
 let timer;
 
+var finished = false;
+
 app.post("/start-timer", (req, res) => {
   if (timer) {
     return res.send({startTime: startTime, message: "O cronômetro já está em execução."});
@@ -129,6 +131,7 @@ app.post("/start-timer", (req, res) => {
 
   timer = setTimeout(() => {
     console.log("Tempo encerrado.");
+    finished = true;
     saveExcel();
   }, 3600000);
 
@@ -155,6 +158,7 @@ app.get("/check-timer", (req, res) => {
 });
 
 app.post("/finish", (req, res) => {
+  finished = true;
   saveExcel();
 
   res.send("Atividade finalizada.");
@@ -183,6 +187,9 @@ app.get("/home", (req, res) => {
 });
 app.get("/started", (req, res) => {
   res.send(started);
+});
+app.get("/done", (req, res) => {
+  res.send(finished);
 });
 
 app.use((req, res, next) => {

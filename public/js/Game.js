@@ -8,6 +8,15 @@ nameInput.on( "focusout", function() {
   updateWeights()
 })
 
+function end() {
+  $.get(`http://${url}:3000/done`, function (data) {
+    console.log(data);
+    if (data) window.location.replace(`http://${url}:3000/finished`);
+  });
+}
+
+setInterval(end, 5000);
+
 function finish() {
   var inputFinish = $("#validation").val();
   console.log(inputFinish)
