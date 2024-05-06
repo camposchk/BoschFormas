@@ -117,7 +117,7 @@ function draw() {
   ctx.fillStyle = "darkgoldenrod";
   ctx.strokeStyle = "darkgoldenrod";
 
-  renderBalance(ctx, (width / 2), balY, scale, balance1);
+  renderBalance(ctx, ((width / 2) + 6.625), balY, scale, balance1);
   ctx.font = "20px arial";
 
   // if(lastFig)
