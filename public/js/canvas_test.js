@@ -53,7 +53,7 @@ function addFigure(fig) {
     if (!balance1.leftPlate[fig]) {
       balance1.leftPlate[fig] = new Gravitable(
         cursor.x - (plate1Off + offX - 50 * scale + tilt1x),
-        cursor.y + (-210 + tilt1y) * scale,
+        cursor.y + (-105 * scale + tilt1y) * scale,
         figSize,
         figSize,
         func
@@ -65,8 +65,8 @@ function addFigure(fig) {
   } else {
     if (!balance1.rightPlate[fig]) {
       balance1.rightPlate[fig] = new Gravitable(
-        cursor.x - (plate1Off - offX - 50 * scale - tilt1x),
-        cursor.y - (210 + tilt1y) * scale,
+        cursor.x - (plate1Off + offX - 150 * scale - tilt1x),
+        cursor.y - (105 * scale + tilt1y) * scale,
         figSize,
         figSize,
         func
@@ -94,7 +94,7 @@ function resizeCanvas() {
   offX = -100 * scale;
 
   balX1 = width / 2;
-  balX2 = 200 * scale;
+  balX2 = 0;
   balY = height / 3;
   plate1Off = balX1 + balX2;
   plate2Off = balX1 - balX2;
@@ -120,17 +120,21 @@ function draw() {
   renderBalance(ctx, (width / 2), balY, scale, balance1);
   ctx.font = "20px arial";
 
-  // if(lastFig)
-  // {
-  //   ctx.fillText(lastFig.x, 10, 20);
-  //   ctx.fillText(lastFig.y, 10, 40);
-  //   ctx.fillText(lastFig.vx, 10, 60);
-  //   ctx.fillText(lastFig.vy, 10, 80);
-  // }
+  // ctx.save();
+  // ctx.fillStyle = "lime"
+  // var pos1 = balance1.currPos / 2;
+  // var tilt1x = Math.abs(pos1) * 50 * scale;
+  // let temp = (plate1Off + offX + 150 * scale - tilt1x)
+  
+  // ctx.beginPath();
+  // ctx.arc(temp, 0, 20, 0, 2 * Math.PI);
+  // ctx.fill();
 
+  // ctx.fillText(cursor.x, 10, 40);
+  // ctx.fillText(temp, 10, 60);
+  // ctx.fillText(cursor.x - temp, 10, 80);
+  // ctx.restore();
 
-  // ctx.fillText(cursor.y, 10, 40);
-  // ctx.fillText(plate1Off + (offX - 50 * scale), 10, 60);
   // ctx.fillText(plate2Off - (offX + 50 * scale), 10, 80);
   // ctx.fillText(figCount, 10, 100);
 
