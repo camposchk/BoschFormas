@@ -41,9 +41,12 @@ app.post("/ready", async (req, res) => {
     w5: w5 || 0,
   }; 
 
+  let tentativas = 0;
+  let pieces = 0;
+
   let code = await generate();
 
-  competitors.push({ name, dataNasc, done, time, ...score, code, accessed });
+  competitors.push({ name, dataNasc, done, time, ...score, tentativas, pieces, code, accessed });
 
   res.send({ message: "Dados recebidos com sucesso!", code: code });
 });
@@ -102,19 +105,25 @@ app.patch("/final-answer/:code", (req, res) => {
 app.post("/scales", (req, res) => {
   let { quantities } = req.body;
   if (!quantities) return res.status(400).send({ message: "vazio" });
-
-  let plate1 = 0;
-  let plate2 = 0;
-
-  for (let i = 0; i < 5; i++) {
-    plate1 += quantities[i] * weights[i];
-    plate2 += quantities[i + 5] * weights[i];
+  
+  let results = []
+  for (let i = 0; i < quantities.length; i++) {
+    const bal = quantities[i];
+    let plate1 = 0;
+    let plate2 = 0;
+    
+    for (let j = 0; j < 5; j++) {
+      plate1 += bal[j] * weights[j];
+      plate2 += bal[j + 5] * weights[j];
+    }
+    if (plate1 > plate2) results.push(-1);
+    else if (plate1 === plate2) results.push(0);
+    else results.push(1);
   }
 
-  if (plate1 > plate2) res.send("-1");
-  else if (plate1 === plate2) res.send("0");
-  else res.send("1");
+  res.send({ results });
 });
+
 
 app.get("/competitors", (req, res) => {
   res.json(competitors);
@@ -187,8 +196,8 @@ app.post("/finish", (req, res) => {
 app.get("/game/:code", (req, res) => {
   const code = req.params.code;
   var result = competitors.find((cp) => cp.code === code);
-  if (!result) return res.send("nao existe");
-  if (result.accessed) return res.send("ja era");
+  // if (!result) return res.send("nao existe");
+  // if (result.accessed) return res.send("ja era");
   result.accessed = true
 
   res.render("Game", { data: data });
@@ -234,6 +243,8 @@ async function saveExcel() {
     "Peso 3",
     "Peso 4",
     "Peso 5",
+    "Tentativas",
+    "N Peças"
   ]);
 
   competitors.forEach((competitor) => {
@@ -247,6 +258,8 @@ async function saveExcel() {
       competitor.w1,
       competitor.w5,
       competitor.w4,
+      competitor.tentativas,
+      competitor.pieces
     ]);
   });
 

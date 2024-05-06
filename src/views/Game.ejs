@@ -377,13 +377,23 @@
             </div>
           </div>
         </div>
-        <button
-          class="btn btn-light btn-send"
-          type="button"
-          onclick="arrangeBalances()"
-        >
-          Arranjar
-        </button>
+        <div style="display: flex; flex-direction: row;">
+          <button
+            class="btn btn-danger btn-send"
+            type="button"
+            onclick="reqWeights(getPlatesBal())"
+            style="margin-right: 5px;"
+          >
+            Pesar
+          </button>
+          <button
+            class="btn btn-light btn-send"
+            type="button"
+            onclick="arrangeBalances()"
+          >
+            Arranjar
+          </button>
+        </div>
         <br/>
         <button
           class="btn btn-success btn-send"
@@ -450,21 +460,21 @@
   <script type="module" src="../js/canvas.js"></script>
   <script src="../js/morphshapes.js"></script>
   <script>
-    const reqWeigths = (quantities) => {
+    const reqWeights = (quantities) => {
       $.ajax({
         url: `http://${url}:3000/scales`,
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify({ quantities: quantities }),
         success: function (response) {
-          tilt(Number(response));
-          // console.log(response);
+          tilt(response.results);
         },
         error: function (xhr, status, error) {
           console.log("Error:", error);
         },
       });
     };
+
 
     $(document).ready(function () {
       $(".list-items div").draggable({
@@ -479,7 +489,7 @@
           var formaArrastada = ui.draggable.attr("forma");
           var addedTo = addFig(event, formaArrastada);
           // console.log(addedTo)
-          reqWeigths(getPlatesBal());
+          // reqWeigths(getPlatesBal());
 
           if (addedTo) {
             // console.log("Forma arrastada: " + formaArrastada);

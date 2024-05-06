@@ -184,20 +184,8 @@ resizeCanvas();
 init();
 
 window.tilt = (value) => {
-  let balance = currBal == 1 ? balance1 : balance2;
-  switch (value) {
-    case -1:
-      balance.bal = -1;
-      break;
-    case 0:
-      balance.bal = 0;
-      break;
-    case 1:
-      balance.bal = 1;
-      break;
-    default:
-      break;
-  }
+  balance1.bal = value[0]
+  balance2.bal = value[1]
 };
 window.addFig = (e, fig) => {
   // addFigure(fig)
@@ -207,18 +195,20 @@ window.addFig = (e, fig) => {
 
 const figures = ["square", "ellipse", "triangle", "pentagon", "star"];
 window.getPlatesBal = () => {
-  let counts = [];
-  let balance = currBal == 1 ? balance1 : balance2;
-  for (let i = 0; i < figures.length; i++) {
-    if (balance.leftPlate[figures[i]])
-      counts.push(balance.leftPlate[figures[i]].count);
-    else counts.push(0);
+  let counts1 = [];
+  let counts2 = [];
+  
+  for (let i = 0; i < figures.length; i++){
+    counts1.push(balance1.leftPlate[figures[i]] ? balance1.leftPlate[figures[i]].count : 0);
+    counts2.push(balance2.leftPlate[figures[i]] ? balance2.leftPlate[figures[i]].count : 0);
   }
+  
   for (let i = 0; i < figures.length; i++) {
-    if (balance.rightPlate[figures[i]])
-      counts.push(balance.rightPlate[figures[i]].count);
-    else counts.push(0);
+    counts1.push(balance1.rightPlate[figures[i]] ? balance1.rightPlate[figures[i]].count : 0);
+    counts2.push(balance2.rightPlate[figures[i]] ? balance2.rightPlate[figures[i]].count : 0);
   }
-  return counts;
+
+  return [counts1, counts2];
 };
+
 
