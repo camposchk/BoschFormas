@@ -139,14 +139,14 @@ app.post("/scales/:code", (req, res) => {
   if (!quantities) return res.status(400).send({ message: "vazio" });
 
   let results = []
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < quantities.length; i++) {
     const bal = quantities[i];
     let plate1 = 0;
     let plate2 = 0;
 
     for (let j = 0; j < 5; j++) {
-      plate1 += bal[j] * competitors[code].realScore[i];
-      plate2 += bal[j+5] * competitors[code].realScore[i];
+      plate1 += bal[j] * competitors[code].realScore[j];
+      plate2 += bal[j+5] * competitors[code].realScore[j];
     }
 
     if (plate1 > plate2) results.push(-1);
