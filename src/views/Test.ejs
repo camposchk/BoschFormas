@@ -490,7 +490,7 @@
   <script>
     const reqWeigths = (quantities) => {
       $.ajax({
-        url: `http://${url}:3000/scales`,
+        url: `http://${url}:3000/testscales`,
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify({ quantities: quantities }),

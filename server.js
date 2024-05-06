@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const ExcelJS = require("exceljs");
 const cors = require("cors");
 const { createProxyMiddleware } = require('http-proxy-middleware');
+const { shuffle } = require('./utils');
 require("dotenv").config();
 
 const data = { url: process.env.CURR_IP };
@@ -13,15 +14,13 @@ app.use(cors({ origin: "*" }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-
-
 app.set("views", "./src/views");
 app.set("view engine", "ejs");
 
 app.use(express.static("public"));
 
 var started = false;
-const competitors = [];
+const competitors = {};
 const weights = [100, 200, 400, 800, 1600];
 
 app.post("/ready", async (req, res) => {
@@ -39,11 +38,23 @@ app.post("/ready", async (req, res) => {
     w3: w3 || 0,
     w4: w4 || 0,
     w5: w5 || 0,
-  }; 
+  };
+
+  let realWeights = [0, 1, 3, 4]
+  shuffle(realWeights)
+
+  let realScore = [
+    weights[realWeights[0]],
+    weights[realWeights[1]],
+    weights[2],
+    weights[realWeights[2]],
+    weights[realWeights[3]],
+  ];
 
   let code = await generate();
 
-  competitors.push({ name, dataNasc, done, time, ...score, code, accessed });
+  competitors[code] = { name, dataNasc, done, time, realScore, ...score, code, accessed };
+  console.log(competitors[code])
 
   res.send({ message: "Dados recebidos com sucesso!", code: code });
 });
@@ -52,55 +63,48 @@ app.patch("/update-weights/:code", (req, res) => {
   const { code } = req.params;
   const { w1, w2, w3, w4, w5 } = req.body;
 
-  const competitorIndex = competitors.findIndex(
-    (competitor) => competitor.code === code
-  );
-
-  if (competitorIndex === -1) {
+  if (!competitors[code]) {
     return res.status(404).send("Competidor não encontrado.");
   }
 
-  competitors[competitorIndex].w1 = w1 || competitors[competitorIndex].w1;
-  competitors[competitorIndex].w2 = w2 || competitors[competitorIndex].w2;
-  competitors[competitorIndex].w3 = w3 || competitors[competitorIndex].w3;
-  competitors[competitorIndex].w4 = w4 || competitors[competitorIndex].w4;
-  competitors[competitorIndex].w5 = w5 || competitors[competitorIndex].w5;
+  competitors[code].w1 = w1 || competitors[code].w1;
+  competitors[code].w2 = w2 || competitors[code].w2;
+  competitors[code].w3 = w3 || competitors[code].w3;
+  competitors[code].w4 = w4 || competitors[code].w4;
+  competitors[code].w5 = w5 || competitors[code].w5;
 
-  res.send(competitors[competitorIndex]);
+  res.send(competitors[code]);
 });
 
 app.patch("/final-answer/:code", (req, res) => {
   const { code } = req.params;
   const { w1, w2, w3, w4, w5 } = req.body;
 
-  const competitorIndex = competitors.findIndex(
-    (competitor) => competitor.code === code
-  );
-
-  if (competitorIndex === -1) {
+  if (!competitors[code]) {
     return res.status(404).send("Competidor não encontrado.");
   }
 
-  competitors[competitorIndex].w1 = w1 || competitors[competitorIndex].w1;
-  competitors[competitorIndex].w2 = w2 || competitors[competitorIndex].w2;
-  competitors[competitorIndex].w3 = w3 || competitors[competitorIndex].w3;
-  competitors[competitorIndex].w4 = w4 || competitors[competitorIndex].w4;
-  competitors[competitorIndex].w5 = w5 || competitors[competitorIndex].w5;
+  competitors[code].w1 = w1 || competitors[code].w1;
+  competitors[code].w2 = w2 || competitors[code].w2;
+  competitors[code].w3 = w3 || competitors[code].w3;
+  competitors[code].w4 = w4 || competitors[code].w4;
+  competitors[code].w5 = w5 || competitors[code].w5;
 
-  competitors[competitorIndex].done = true;
+  competitors[code].done = true;
 
   const elapsedTime = Date.now() - startTime;
 
   const minutes = Math.floor(elapsedTime / 60000);
   const seconds = Math.floor((elapsedTime % 60000) / 1000);
 
-  competitors[competitorIndex].time = `${minutes}:${seconds}`;
+  competitors[code].time = `${minutes}:${seconds}`;
 
-  res.send(competitors[competitorIndex]);
+  res.send(competitors[code]);
 });
 
-app.post("/scales", (req, res) => {
+app.post("/testscales", (req, res) => {
   let { quantities } = req.body;
+
   if (!quantities) return res.status(400).send({ message: "vazio" });
 
   let plate1 = 0;
@@ -109,6 +113,29 @@ app.post("/scales", (req, res) => {
   for (let i = 0; i < 5; i++) {
     plate1 += quantities[i] * weights[i];
     plate2 += quantities[i + 5] * weights[i];
+  }
+
+  if (plate1 > plate2) res.send("-1");
+  else if (plate1 === plate2) res.send("0");
+  else res.send("1");
+});
+
+app.post("/scales/:code", (req, res) => {
+  const { code } = req.params;
+  let { quantities } = req.body;
+
+  if (!competitors[code]) {
+    return res.status(404).send("Competidor não encontrado.");
+  }
+
+  if (!quantities) return res.status(400).send({ message: "vazio" });
+
+  let plate1 = 0;
+  let plate2 = 0;
+
+  for (let i = 0; i < 5; i++) {
+    plate1 += quantities[i] * competitors[code].realScore[i];
+    plate2 += quantities[i + 5] * competitors[code].realScore[i];
   }
 
   if (plate1 > plate2) res.send("-1");
@@ -185,13 +212,13 @@ app.post("/finish", (req, res) => {
 });
 
 app.get("/game/:code", (req, res) => {
-  const code = req.params.code;
-  var result = competitors.find((cp) => cp.code === code);
-  if (!result) return res.send("nao existe");
-  if (result.accessed) return res.send("ja era");
-  result.accessed = true
+  const { code } = req.params;
+  if (!competitors[code])
+    return res.send("nao existe");
+  if (competitors[code].accessed) return res.send("ja era");
+  competitors[code].accessed = true
 
-  res.render("Game", { data: data });
+  res.render("Game", { data: data, code: code });
 });
 app.get("/test", (req, res) => {
   res.render("Test", { data: data });
@@ -276,5 +303,6 @@ app.use('/api', createProxyMiddleware({
 }));
 
 app.listen(PORT, () => {
-  console.log(`http://${process.env.CURR_IP}:${PORT}/game`);
+  console.log(`http://${process.env.CURR_IP}:${PORT}/test`);
+  console.log(`http://${process.env.CURR_IP}:${PORT}/dashboard`);
 });
