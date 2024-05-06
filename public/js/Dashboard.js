@@ -129,76 +129,76 @@ setInterval(() => {
     success: function (response) {
       var s = Date.now();
 
-      if (response.length > 0) {
-        finished = response.reduce(
+      if (Object.keys(response).length > 0) {
+        finished = Object.values(response).reduce(
           (counter, { done }) => (done === true ? (counter += 1) : counter),
           0
         );
-        ongoing = response.length - finished;
+        ongoing = Object.keys(response).length - finished;
 
         ongoingDiv.text(ongoing);
         finishedDiv.text(finished);
 
-        for (let i = 0; i < response.length; i++) {
+        for (const [key, value] of Object.entries(response))  {
           var hasChildWithId =
-            competitorsDiv.find("#" + response[i].code).length > 0;
+            competitorsDiv.find("#" + value.code).length > 0;
           if (hasChildWithId) {
-            response[i].done
-              ? $(`#${response[i].code}-bg`)
+            value.done
+              ? $(`#${value.code}-bg`)
                   .addClass("greenBg")
                   .removeClass("yellowBg")
-              : $(`#${response[i].code}-bg`)
+              : $(`#${value.code}-bg`)
                   .addClass("yellowBg")
                   .removeClass("greenBg");
-            $(`#${response[i].code}-icon`).attr(
+            $(`#${value.code}-icon`).attr(
               "src",
-              response[i].done
+              value.done
                 ? "./assets/icons/checkmark-frame.png"
                 : "./assets/icons/alarm-clock.png"
             );
-            $(`#${response[i].code}-done`).text(
-              `Status: ${response[i].done ? "Concluído" : "Executando"}`
+            $(`#${value.code}-done`).text(
+              `Status: ${value.done ? "Concluído" : "Executando"}`
             );
-            $(`#${response[i].code}-time`).text(`Tempo: ${response[i].time}`);
-            $(`#${response[i].code}-w1`).val(response[i].w1);
-            $(`#${response[i].code}-w2`).val(response[i].w2);
-            $(`#${response[i].code}-w3`).val(response[i].w3);
-            $(`#${response[i].code}-w4`).val(response[i].w4);
-            $(`#${response[i].code}-w5`).val(response[i].w5);
+            $(`#${value.code}-time`).text(`Tempo: ${value.time}`);
+            $(`#${value.code}-w1`).val(value.w1);
+            $(`#${value.code}-w2`).val(value.w2);
+            $(`#${value.code}-w3`).val(value.w3);
+            $(`#${value.code}-w4`).val(value.w4);
+            $(`#${value.code}-w5`).val(value.w5);
           } else {
             competitorsDiv.append(`
-          <div class="col" id="${response[i].code}">
+          <div class="col" id="${value.code}">
           <div class="card">
             <div class="cardHeader ${
-              response[i].done ? "greenBg" : "yellowBg"
-            }" id="${response[i].code}-bg">
+              value.done ? "greenBg" : "yellowBg"
+            }" id="${value.code}-bg">
               <img class="image-bosch-pattern" src="${
-                response[i].done
+                value.done
                   ? "./assets/icons/checkmark-frame.png"
                   : "./assets/icons/alarm-clock.png"
-              }" alt="Bosch color pattern" id="${response[i].code}-icon" />
+              }" alt="Bosch color pattern" id="${value.code}-icon" />
             </div>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item" id="${response[i].code}-name">Nome: ${
-              response[i].name
+              <li class="list-group-item" id="${value.code}-name">Nome: ${
+              value.name
             }
               </li>
               <li class="list-group-item" id="${
-                response[i].code
-              }-done">Status: ${response[i].done ? "Concluído" : "Executando"}
+                value.code
+              }-done">Status: ${value.done ? "Concluído" : "Executando"}
               </li>
               <li class="list-group-item" id="${
-                response[i].code
-              }-time">Tempo: ${response[i].time}
+                value.code
+              }-time">Tempo: ${value.time}
               </li>
               <li class="list-group-item">
                 <button type="button" class="btn btn-warning btn-resp" data-bs-toggle="modal"
-                  data-bs-target="#${response[i].code}-modal">
+                  data-bs-target="#${value.code}-modal">
                   Respostas
                 </button>
 
                 <div class="modal fade" id="${
-                  response[i].code
+                  value.code
                 }-modal" tabindex="-1" aria-labelledby="exampleModalLabel"
                   aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
@@ -222,9 +222,9 @@ setInterval(() => {
                                   <span class="input-group-text" id="inputGroup-sizing-default"><img
                                     src="../../assets/formas/triangulo.png" class="mini-icon" /></span>
                                   <input disabled value="${
-                                    response[i].w1
+                                    value.w1
                                   }" id="${
-              response[i].code
+              value.code
             }-w1" type="number"  class="form-control"
                                   aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
                                 </div>
@@ -233,9 +233,9 @@ setInterval(() => {
                                   <span class="input-group-text" id="inputGroup-sizing-default"><img
                                       src="../../assets/formas/quadrado.png" class="mini-icon" /></span>
                                   <input disabled value="${
-                                    response[i].w2
+                                    value.w2
                                   }" id="${
-              response[i].code
+              value.code
             }-w2" type="number" class="form-control"
                                   aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
                                 </div>
@@ -244,9 +244,9 @@ setInterval(() => {
                                   <span class="input-group-text" id="inputGroup-sizing-default"><img
                                       src="../../assets/formas/ellipse.png" class="mini-icon" /></span>
                                   <input disabled value="${
-                                    response[i].w3
+                                    value.w3
                                   }" id="${
-              response[i].code
+              value.code
             }-w3" type="number" class="form-control"
                                   aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
                                 </div>
@@ -255,9 +255,9 @@ setInterval(() => {
                                   <span class="input-group-text" id="inputGroup-sizing-default"><img
                                       src="../../assets/formas/star.png" class="mini-icon" /></span>
                                   <input disabled value="${
-                                    response[i].w4
+                                    value.w4
                                   }" id="${
-              response[i].code
+              value.code
             }-w4" type="number" class="form-control"
                                   aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
                                 </div>
@@ -266,9 +266,9 @@ setInterval(() => {
                                   <span class="input-group-text" id="inputGroup-sizing-default"><img
                                       src="../../assets/formas/pentagono.png" class="mini-icon" /></span>
                                   <input disabled value="${
-                                    response[i].w5
+                                    value.w5
                                   }" id="${
-              response[i].code
+              value.code
             }-w5" type="number" class="form-control"
                                   aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
                                 </div>

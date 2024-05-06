@@ -91,7 +91,7 @@
                 border-color: var(--participantReady);
                 border-width: 2px 2px 2px 1px; 
               " class="list-group-item" id="finished">
-              <% var finished = data.reduce((counter, { done }) => done === true ? counter += 1 : counter, 0); %>
+              <% var finished = Object.values(data).reduce((counter, { done }) => done ? counter += 1 : counter, 0); %>
               <%= finished %>
           </li>
         </ul>
@@ -106,45 +106,45 @@
                 border-color: var(--participantDoing);
                 border-width: 2px 2px 2px 1px;
               " class="list-group-item" id="ongoing">
-            <%= data.length - finished %>
+            <%= Object.keys(data).length - finished %>
           </li>
         </ul>
       </div>
     </div>
 
     <div class="row row-cols-3 row-cols-md-4 g-4" id="competitors">
-      <% for (let i=0; i < data.length; i++) { %>
-        <div class="col" id="<%=data[i].code%>">
+      <% for (const [key, value] of Object.entries(data)) { %>
+        <div class="col" id="<%=value.code%>">
           <div class="card">
             <div class="cardHeader <%=
-              data[i].done ? "greenBg" : "yellowBg"
-            %>" id="<%=data[i].code%>-bg">
+              value.done ? "greenBg" : "yellowBg"
+            %>" id="<%=value.code%>-bg">
               <img class="image-bosch-pattern" src="<%=
-                data[i].done
+                value.done
                   ? "./assets/icons/checkmark-frame.png"
                   : "./assets/icons/alarm-clock.png"
-              %>" alt="Bosch color pattern" id="<%=data[i].code%>-icon" />
+              %>" alt="Bosch color pattern" id="<%=value.code%>-icon" />
             </div>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item" id="<%=data[i].code%>-name">Nome: <%=
-              data[i].name
+              <li class="list-group-item" id="<%=value.code%>-name">Nome: <%=
+              value.name
             %>
               </li>
               <li class="list-group-item" id="<%=
-                data[i].code
-              %>-done">Status: <%=data[i].done ? "Concluído" : "Executando"%>
+                value.code
+              %>-done">Status: <%=value.done ? "Concluído" : "Executando"%>
               </li>
               <li class="list-group-item" id="<%=
-                data[i].code
-              %>-time">Tempo: <%=data[i].time%>
+                value.code
+              %>-time">Tempo: <%=value.time%>
               </li>
               <li class="list-group-item">
                 <button type="button" class="btn btn-warning btn-resp" data-bs-toggle="modal"
-                  data-bs-target="#<%=data[i].code%>-modal">
+                  data-bs-target="#<%=value.code%>-modal">
                   Respostas
                 </button>
 
-                <div class="modal fade" id="<%=data[i].code%>-modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                <div class="modal fade" id="<%=value.code%>-modal" tabindex="-1" aria-labelledby="exampleModalLabel"
                   aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
@@ -167,8 +167,8 @@
                                   <span class="input-group-text" id="inputGroup-sizing-default"><img
                                     src="../../assets/formas/triangulo.png" class="mini-icon" /></span>
                                   <input disabled value="<%=
-                                    data[i].w1
-                                  %>" id="<%=data[i].code%>-w1" type="number"  class="form-control"
+                                    value.w1
+                                  %>" id="<%=value.code%>-w1" type="number"  class="form-control"
                                   aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
                                 </div>
 
@@ -176,8 +176,8 @@
                                   <span class="input-group-text" id="inputGroup-sizing-default"><img
                                       src="../../assets/formas/quadrado.png" class="mini-icon" /></span>
                                   <input disabled value="<%=
-                                    data[i].w2
-                                  %>" id="<%=data[i].code%>-w2" type="number" class="form-control"
+                                    value.w2
+                                  %>" id="<%=value.code%>-w2" type="number" class="form-control"
                                   aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
                                 </div>
 
@@ -185,8 +185,8 @@
                                   <span class="input-group-text" id="inputGroup-sizing-default"><img
                                       src="../../assets/formas/ellipse.png" class="mini-icon" /></span>
                                   <input disabled value="<%=
-                                    data[i].w3
-                                  %>" id="<%=data[i].code%>-w3" type="number" class="form-control"
+                                    value.w3
+                                  %>" id="<%=value.code%>-w3" type="number" class="form-control"
                                   aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
                                 </div>
 
@@ -194,8 +194,8 @@
                                   <span class="input-group-text" id="inputGroup-sizing-default"><img
                                       src="../../assets/formas/star.png" class="mini-icon" /></span>
                                   <input disabled value="<%=
-                                    data[i].w4
-                                  %>" id="<%=data[i].code%>-w4" type="number" class="form-control"
+                                    value.w4
+                                  %>" id="<%=value.code%>-w4" type="number" class="form-control"
                                   aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
                                 </div>
 
@@ -203,8 +203,8 @@
                                   <span class="input-group-text" id="inputGroup-sizing-default"><img
                                       src="../../assets/formas/pentagono.png" class="mini-icon" /></span>
                                   <input disabled value="<%=
-                                    data[i].w5
-                                  %>" id="<%=data[i].code%>-w5" type="number" class="form-control"
+                                    value.w5
+                                  %>" id="<%=value.code%>-w5" type="number" class="form-control"
                                   aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
                                 </div>
                               </form>
