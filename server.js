@@ -44,11 +44,11 @@ app.post("/ready", async (req, res) => {
   shuffle(realWeights)
 
   let realScore = [
-    weights[realWeights[0]],
-    weights[realWeights[1]],
-    weights[2],
-    weights[realWeights[2]],
-    weights[realWeights[3]],
+    realWeights[0],
+    realWeights[1],
+    2,
+    realWeights[2],
+    realWeights[3],
   ];
 
   let tentativas = 0;
@@ -148,8 +148,8 @@ app.post("/scales/:code", (req, res) => {
     let plate2 = 0;
 
     for (let j = 0; j < 5; j++) {
-      plate1 += bal[j] * competitors[code].realScore[j];
-      plate2 += bal[j+5] * competitors[code].realScore[j];
+      plate1 += bal[j] * weights[competitors[code].realScore[j]];
+      plate2 += bal[j+5] * weights[competitors[code].realScore[j]];
       competitors[code].pieces += bal[j] + bal[j+5];
     }
 
@@ -291,11 +291,16 @@ async function saveExcel() {
         competitor.dataNasc,
         competitor.done,
         competitor.time,
+        weights[competitor.realScore[0]],
+        weights[competitor.realScore[1]],
+        weights[competitor.realScore[2]],
+        weights[competitor.realScore[3]],
+        weights[competitor.realScore[4]],
+        competitor.w1,
         competitor.w2,
         competitor.w3,
-        competitor.w1,
-        competitor.w5,
         competitor.w4,
+        competitor.w5,
         competitor.tentativas,
         competitor.pieces
       ]);
