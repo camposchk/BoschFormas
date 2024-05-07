@@ -269,7 +269,7 @@ async function saveExcel() {
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet("Alunos");
 
-  const row = worksheet.addRow([
+  worksheet.addRow([
     "Nome",
     "Data de Nascimento",
     "Concluiu",
@@ -291,7 +291,7 @@ async function saveExcel() {
   for (const key in competitors) {
     if (Object.hasOwnProperty.call(competitors, key)) {
       const competitor = competitors[key];
-      worksheet.addRow([
+      const row = worksheet.addRow([
         competitor.name,
         competitor.dataNasc,
         competitor.done,
