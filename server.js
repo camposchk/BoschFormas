@@ -269,11 +269,13 @@ async function saveExcel() {
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet("Alunos");
 
-  worksheet.addRow([
+  const headerRow = worksheet.addRow([
     "Nome",
     "Data de Nascimento",
     "Concluiu",
     "Tempo",
+    "Tentativas",
+    "N Peças",
     "Peso 1",
     "Peso 2",
     "Peso 3",
@@ -283,10 +285,19 @@ async function saveExcel() {
     "R2",
     "R3",
     "R4",
-    "R5",
-    "Tentativas",
-    "N Peças"
+    "R5"
   ]);
+
+  headerRow.eachCell((cell) => {
+    cell.fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: 'FFA0A0A0' } // Cinza
+    };
+    cell.font = {
+      color: { argb: 'FFFFFFFF' } // Branco
+    };
+  });
 
   for (const key in competitors) {
     if (Object.hasOwnProperty.call(competitors, key)) {
@@ -296,6 +307,8 @@ async function saveExcel() {
         competitor.dataNasc,
         competitor.done,
         competitor.time,
+        competitor.tentativas,
+        competitor.pieces,
         competitor.w1,
         competitor.w2,
         competitor.w3,
@@ -305,9 +318,7 @@ async function saveExcel() {
         weights[competitor.realScore[1]],
         weights[competitor.realScore[2]],
         weights[competitor.realScore[3]],
-        weights[competitor.realScore[4]],
-        competitor.tentativas,
-        competitor.pieces
+        weights[competitor.realScore[4]]
       ]);
 
       [competitor.w1, competitor.w2, competitor.w3, competitor.w4, competitor.w5].forEach((weight, index) => {
