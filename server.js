@@ -1,4 +1,5 @@
 const express = require("express");
+const fs = require('fs');
 const bodyParser = require("body-parser");
 const ExcelJS = require("exceljs");
 const cors = require("cors");
@@ -264,6 +265,7 @@ app.use((req, res, next) => {
 
 async function saveExcel() {
   const today = new Date();
+  const hour = today.getHours();
   const dateFormatted = today.toISOString().slice(0, 10).replace(/-/g, '');
 
   const workbook = new ExcelJS.Workbook();
@@ -322,7 +324,7 @@ async function saveExcel() {
       ]);
 
       [competitor.w1, competitor.w2, competitor.w3, competitor.w4, competitor.w5].forEach((weight, index) => {
-        const cell = row.getCell(index + 5); 
+        const cell = row.getCell(index + 7); 
 
         if (weight == weights[competitor.realScore[index]]) {
           cell.fill = {
@@ -341,7 +343,20 @@ async function saveExcel() {
     }
   }
 
-  const fileName = `processo_${dateFormatted}.xlsx`;
+  let fileName;
+  let count = 1;
+
+  
+  do {
+    if (hour < 12) {
+      fileName = `processo_manha${count}_${dateFormatted}.xlsx`;
+    } else {
+      fileName = `processo_tarde${count}_${dateFormatted}.xlsx`;
+    }
+    
+    count++;
+  } while (fs.existsSync(fileName));
+  
   await workbook.xlsx.writeFile(fileName);
   console.log(`Planilha salva em ${fileName}`);
 }
