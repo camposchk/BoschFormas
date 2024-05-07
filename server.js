@@ -21,7 +21,8 @@ app.use(express.static("public"));
 
 var started = false;
 const competitors = {};
-const weights = [100, 200, 400, 800, 1600];
+var testWeights = [100, 200, 500];
+var weights = [100, 200, 400, 800, 1600];
 
 app.post("/ready", async (req, res) => {
   const { name, dataNasc, w1, w2, w3, w4, w5 } = req.body;
@@ -115,11 +116,15 @@ app.post("/testscales", (req, res) => {
     const bal = quantities[i];
     let plate1 = 0;
     let plate2 = 0;
+
+    console.log(bal)
     
-    for (let j = 0; j < 5; j++) {
-      plate1 += bal[j] * weights[j];
-      plate2 += bal[j + 5] * weights[j];
+    for (let j = 0; j < 3; j++) {
+      plate1 += bal[j] * testWeights[2 - j];
+      plate2 += bal[j + 5] * testWeights[2 - j];
+      console.log(plate1, plate2)
     }
+
     if (plate1 > plate2) results.push(-1);
     else if (plate1 === plate2) results.push(0);
     else results.push(1);
@@ -229,6 +234,30 @@ app.post("/finish", (req, res) => {
   res.send("Atividade finalizada.");
 });
 
+app.post("/set-weigths/:target", (req, res) => {
+  const { w1, w2, w3, w4, w5 } = req.body;
+  const { target } = req.params;  
+  
+  if (target == "test")
+  {
+    testWeights[1] = w3 || testWeights[1];
+    testWeights[0] = w2 || testWeights[0];
+    testWeights[2] = w1 || testWeights[2];
+    return res.send("Pesos do test atualizados");
+  }
+  if (target == "game")
+  {
+    weights[2] = w1 || weights[2];
+    weights[0] = w2 || weights[0];
+    weights[1] = w3 || weights[1];
+    weights[3] = w4 || weights[3];
+    weights[4] = w5 || weights[4];
+    return res.send("Pesos do jogo atualizados");
+  }
+  
+  return res.send("Inválido")
+});
+
 app.get("/game/:code", (req, res) => {
   const { code } = req.params;
   if (!competitors[code])
@@ -236,10 +265,10 @@ app.get("/game/:code", (req, res) => {
   if (competitors[code].accessed) return res.send("ja era");
   competitors[code].accessed = true
 
-  res.render("Game", { data: data, code: code });
+  res.render("Game", { data: data, defaultWeigth: weights[2], code: code });
 });
 app.get("/test", (req, res) => {
-  res.render("Test", { data: data });
+  res.render("Test", { data: data, defaultWeigth: testWeights[1] });
 });
 app.get("/dashboard", (req, res) => {
   res.render("Dashboard", { data: competitors, url: data.url });
