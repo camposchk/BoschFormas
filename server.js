@@ -111,6 +111,8 @@ app.post("/testscales", (req, res) => {
 
   if (!quantities) return res.status(400).send({ message: "vazio" });
   
+  // TODO: fix
+
   let results = []
   for (let i = 0; i < quantities.length; i++) {
     const bal = quantities[i];
