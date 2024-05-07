@@ -192,7 +192,7 @@ setInterval(() => {
               }-time">Tempo: ${value.time}
               </li>
               <li class="list-group-item">
-                <button type="button" class="btn btn-warning btn-resp" data-bs-toggle="modal"
+                <button type="button" class="btn btn-light btn-resp" data-bs-toggle="modal"
                   data-bs-target="#${value.code}-modal">
                   Respostas
                 </button>

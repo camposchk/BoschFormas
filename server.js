@@ -44,11 +44,11 @@ app.post("/ready", async (req, res) => {
   shuffle(realWeights)
 
   let realScore = [
+    2,
     realWeights[0],
     realWeights[1],
-    2,
     realWeights[2],
-    realWeights[3],
+    realWeights[3]
   ];
 
   let tentativas = 0;
@@ -269,7 +269,7 @@ async function saveExcel() {
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet("Alunos");
 
-  worksheet.addRow([
+  const row = worksheet.addRow([
     "Nome",
     "Data de Nascimento",
     "Concluiu",
@@ -279,6 +279,11 @@ async function saveExcel() {
     "Peso 3",
     "Peso 4",
     "Peso 5",
+    "R1",
+    "R2",
+    "R3",
+    "R4",
+    "R5",
     "Tentativas",
     "N Peças"
   ]);
@@ -291,19 +296,37 @@ async function saveExcel() {
         competitor.dataNasc,
         competitor.done,
         competitor.time,
-        weights[competitor.realScore[0]],
-        weights[competitor.realScore[1]],
-        weights[competitor.realScore[2]],
-        weights[competitor.realScore[3]],
-        weights[competitor.realScore[4]],
         competitor.w1,
         competitor.w2,
         competitor.w3,
         competitor.w4,
         competitor.w5,
+        weights[competitor.realScore[0]],
+        weights[competitor.realScore[1]],
+        weights[competitor.realScore[2]],
+        weights[competitor.realScore[3]],
+        weights[competitor.realScore[4]],
         competitor.tentativas,
         competitor.pieces
       ]);
+
+      [competitor.w1, competitor.w2, competitor.w3, competitor.w4, competitor.w5].forEach((weight, index) => {
+        const cell = row.getCell(index + 5); 
+
+        if (weight == weights[competitor.realScore[index]]) {
+          cell.fill = {
+            type: 'pattern',
+            pattern: 'solid',
+            fgColor: { argb: 'FF00FF00' } // Verde
+          };
+        } else {
+          cell.fill = {
+            type: 'pattern',
+            pattern: 'solid',
+            fgColor: { argb: 'FFFF0000' } // Vermelho
+          };
+        }
+      });
     }
   }
 
