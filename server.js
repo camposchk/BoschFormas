@@ -76,7 +76,7 @@ app.patch("/update-weights/:code", (req, res) => {
   competitors[code].w4 = w4 || competitors[code].w4;
   competitors[code].w5 = w5 || competitors[code].w5;
 
-  res.send(competitors[code]);
+  res.send("OK");
 });
 
 app.patch("/final-answer/:code", (req, res) => {
@@ -102,7 +102,7 @@ app.patch("/final-answer/:code", (req, res) => {
 
   competitors[code].time = `${minutes}:${seconds}`;
 
-  res.send(competitors[code]);
+  res.send("OK");
 });
 
 app.post("/testscales", (req, res) => {

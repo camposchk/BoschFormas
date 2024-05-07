@@ -369,9 +369,9 @@
         url: `http://${url}:3000/testscales`,
         type: "POST",
         contentType: "application/json",
-        data: JSON.stringify({ quantities: quantities }),
+        data: JSON.stringify({ quantities: [quantities] }),
         success: function (response) {
-          tilt(Number(response));
+          tilt(Number(response.results[0]));
           // console.log(response);
         },
         error: function (xhr, status, error) {
