@@ -29,6 +29,7 @@ body {
 .btn-send {
   width: 100%;
   margin-right: 10px;
+  margin-left: 20px;
 }
 
 .card_connected_comp {
@@ -48,10 +49,8 @@ body {
   height: 36px;
 }
 
-.form-participant {
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
+
+.input-name{
   width: 100%;
 }
 

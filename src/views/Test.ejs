@@ -37,18 +37,20 @@
   </header>
   <div class="respostas">
     <div class="col-sm-9 d-flex flex-column justify-content-between">
-      <div style="display: flex; flex-direction: row; justify-content: space-around;">
-        <button class="btn btn-warning mt-2 btn-send" type="button" id="pesar" style="font-weight: bold; color: rgb(43, 43, 43);">
+      <div style="display: flex; flex-direction: row; justify-content: space-around;"  >
+        <button class="btn btn-warning mt-2 btn-send" type="button" id="pesar"
+          style="font-weight: bold; color: rgb(43, 43, 43);">
           Pesar
         </button>
-        <button class="btn btn-primary mt-2 btn-send" type="button" id="reset" style="font-weight: bold">
+        <button class="btn btn-primary mt-2 btn-send" onclick="arrangeBalances()" type="button"
+          style="font-weight: bold">
           Ordenar peças
         </button>
         <button class="btn  btn-danger mt-2 btn-send" type="button" id="reset" style="font-weight: bold">
           Reiniciar
         </button>
         <input class="btn btn-send mt-2 btn-ready" type="button" data-bs-toggle="modal" data-bs-target="#JanelaModal"
-          id="amarelo" onclick="" value="Estou Pronto!" style="font-weight: bold;"/>
+          id="amarelo" onclick="" value="Estou Pronto!" style="font-weight: bold;" />
       </div>
 
       <div class="cont-canvas">
@@ -130,7 +132,6 @@
 
       <!-- AQUI ESTA O CARD DE PESOS -->
 
-
       <div class="card mb-5" style="border: 0cap">
         <div class="card-body card_connected_comp">
           <div class="card-body p-0">
@@ -143,12 +144,12 @@
             </div>
 
             <form action="post" name="form-res" id="form-res" class="form">
-              <div class="input-group"  style="margin-right: 20px ;">
+              <div class="input-group" style="margin-right: 20px ;">
                 <span class="input-group-text" id="inputGroup-sizing-default">
                   <img src="./assets/formas/triangulo.png" class="mini-icon tri" />
                 </span>
-                <input value="400" readonly type="text" class="form-control"
-                  aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" style="background-color: rgb(185, 185, 185);"/>
+                <input value="400" readonly type="text" class="form-control" aria-label="Sizing example input"
+                  aria-describedby="inputGroup-sizing-default" style="background-color: rgb(185, 185, 185);" />
               </div>
               <div class="input-group" style="margin-right: 20px ;">
                 <span class="input-group-text" id="inputGroup-sizing-default"><img src="./assets/formas/quadrado.png"
@@ -178,26 +179,45 @@
         </div>
         <div class="modal-body rounded">
           <h3 class="text-center mx-auto">Confirme o inicio da atividade</h3>
-          <form action="/" method="post" id="login">
+
+          <div class="hide alerta" id="error">
+            <span>Informações inválidas, tente novamente!</span>
+            <button id="alertabutton">&times;</button>
+          </div>
+
+          <div class="col-8 mx-auto text_content" style="text-align: center;">
+            <p><strong>.</strong> Antes de comerçarmos, insira alguns dados para que possamos identificá-lo</p>
+          </div>
+          <!-- <form action="/" method="post" id="login"> -->
+          <div>
+
             <div class="col-8 mt-5 mx-auto">
-              <form id="form-participant" class="form-participant">
-                <label for="name">Insira seu nome completo:</label>
-                <input name="name" id="name" class="input-participant input-name form-control" placeholder="Nome Completo:"
-                  type="text" style="margin-top: 10px;" required />
-                <label for="dataNasc" style="margin-top: 10px;">Insira sua data de Nascimento:</label>
-                <input name="dataNasc" id="dataNasc" class="input-participant input-date form-control" type="date"
-                  placeholder="Data de Nascimento:" required />
+              <form id="form-participant">
+                <div class="form-group">
+                  <label for="name">Insira seu nome completo:</label>
+                  <input name="name" id="name" class="input-participant input-name form-control"
+                    placeholder="Nome Completo:" type="text" style="margin-top: 10px; width: 100%;" required />
+                </div>
+                <div class="form-group">
+                  <label for="dataNasc" style="margin-top: 10px;">Insira sua data de Nascimento:</label>
+                  <input name="dataNasc" id="dataNasc" class="input-participant input-date form-control" type="date"
+                    placeholder="Data de Nascimento:" style="width: 100%;" required />
+
+                </div>
               </form>
-              <input style="margin-top: 60px; width: 100%;" type="button" data-bs-dismiss="modal"
-                class="btn btn-danger mx-auto btn-lg" onclick="validation()" value="Estou Pronto" id="iniciar" />
+              <input style="margin-top: 60px; width: 100%;" type="button" class="btn btn-danger mx-auto btn-lg"
+                value="Confirmar início da atividade" id="iniciar" />
             </div>
-          </form>
+          </div>
+
+          <!-- </form> -->
         </div>
       </div>
     </div>
   </div>
 
-  <!-- modal tutorial -->
+  <!-- modal tutorial escrito -->
+
   <div id="TutorialModal" class="modal fade">
     <div class="modal-dialog border-rounded">
       <div class="modal-content strongbg">
@@ -208,22 +228,34 @@
         </div>
         <div class="modal-body rounded">
 
-          <h3 class="text-center mx-auto">Bosch Formas</h3>
+          <h3 class="text-center mx-auto">Processo Seletivo Bosch</h3>
           <form action="/" method="post" id="login">
-            <div class="col-10 mt-5 mx-auto text_content">
-              <p><strong>1</strong>. O objetivo do jogo é descobrir os valores de cada peça, sabe-se que o
-                <strong>triângulo vale 400.</strong>
+            <div class="col-10 mt-2 mb-2 mx-auto text_content">
+              <h5 class="mb-2 mx-auto" style="text-align: center; color: crimson;">Dinâmica Bosch Formas</h5>
+              <p><strong>1</strong>. O objetivo do jogo é descobrir os valores de cada peça que está sendo mostrada na
+                parte inferior da tela,
+                apenas uma das peças tem o valor pré-definido, indicado no campo abaixo das formas, como justificativa
+                para a orientação do descobrimento
+                do valor das outras peças restantes.
               </p>
-              <p><strong>2</strong>. Atualmente existem cinco(5) figuras de valor único e cada figura possui cinco(5)
-                exemplos disponíveis para uso.</p>
-              <p><strong>3</strong>. Para adivinhar o peso das peças, você pode usar a balança, porém há algumas regras
-                sobre seu uso:</p>
+              <p><strong>2</strong>. Você tem cinco exemplares de cada peça, apresentadas na parte inferior da tela
+                (por exemplo: cinco triângulos, cinco quadrados e assim por diante). O número de peças restantes é
+                mostrado assim que você utiliza
+                uma delas colocando-as na balança.</p>
+              <p><strong>3</strong>. A fim de dar um palpite sobre o peso de cada peça, você pode usar a balança,
+                colocando a peça desejada no prato
+                (esquerdo ou direito) desejado, porém há algumas regras
+                sobre o uso da balança:</p>
 
-              <p><strong>Regra 1</strong> - Ao inserir um peso na balança ele não pode ser retirado.</p>
-
-              <div class="good_luck">
+              <p><strong>Regra 1</strong> - Ao inserir uma peça na balança ela não pode ser retirada.</p>
+              <p><strong>Regra 2</strong> - Para verificar o resultado da situação da balança, você deve acionar o botão
+                PESAR, no canto esquerdo superior da tela.</p>
+              <p><strong>Regra 3</strong> - Sempre que o botão PESAR é acionado, uma nova tentativa é contabilizada à
+                sua jogada</p>
+              <p><strong>Regra 4</strong> - Fora do tutorial, a balança não pode ser reiniciada.</p>
+              <!-- <div class="good_luck">
                 <p><strong>Boa sorte candidato(a)!</strong></p>
-              </div>
+              </div> -->
             </div>
           </form>
 
@@ -231,6 +263,26 @@
       </div>
     </div>
   </div>
+
+  <!-- modal tutorial video -->
+
+  <div id="TutorialModal" class="modal fade">
+    <div class="modal-dialog border-rounded">
+      <div class="modal-content strongbg">
+
+
+        <div class="modal-header border-0">
+          <button type="button" class="btn btn-close " data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body rounded">
+          <!-- gifs aqui -->
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
 
 
 </body>
