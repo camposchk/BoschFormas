@@ -56,10 +56,10 @@ $(" #iniciar ").on("click", (e) => {
 
   var inputDate = new Date(dateInput.val())
 
-  if(inputDate < date.setDate("1930-12-12")) {
-    dateInput.addClass("error")
-    valid = false
-  }
+  // if(inputDate < date.setDate("1930-12-12")) {
+  //   dateInput.addClass("error")
+  //   valid = false
+  // }
 
   if(inputDate >= date) {
     dateInput.addClass("error")
