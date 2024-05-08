@@ -292,6 +292,9 @@ app.get("/finished", (req, res) => {
 app.get("/home", (req, res) => {
   res.render("Home");
 });
+app.get("/error", (req, res) => {
+  res.render("Error");
+});
 app.get("/started", (req, res) => {
   res.send(started);
 });
