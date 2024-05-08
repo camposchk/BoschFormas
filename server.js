@@ -294,10 +294,11 @@ app.post("/set-weigths/:target", (req, res) => {
 
 app.get("/game/:code", (req, res) => {
   const { code } = req.params;
-  if (!competitors[code])
-    return res.send("nao existe");
-  if (competitors[code].accessed) return res.send("ja era");
-  competitors[code].accessed = true
+  // TODO: Uncomment
+  // if (!competitors[code])
+  //   return res.send("nao existe");
+  // if (competitors[code].accessed) return res.send("ja era");
+  // competitors[code].accessed = true
 
   res.render("Game", { data: data, defaultWeigth: weights[2], code: code });
 });

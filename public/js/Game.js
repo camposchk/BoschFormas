@@ -1,17 +1,20 @@
 const finishAtv = "FINALIZAR";
 const code = window.location.href.split('/').slice(-1)[0]
-console.log(code)
 
 const nameInput = $('#form-res input[type="number"]')
+
+var startTime = null
+var tries = null
 
 nameInput.on( "focusout", function() {
   updateWeights()
 })
 
 function end() {
-  $.get(`http://${url}:3000/done`, function (data) {
-    console.log(data);
-    if (data) window.location.replace(`http://${url}:3000/finished`);
+  $.get(`http://${url}:3000/status/${code}`, function (data) {
+    startTime = data.startTime
+    tries = data.tries
+    if (data.finished) window.location.replace(`http://${url}:3000/finished`);
   });
 }
 
@@ -48,4 +51,22 @@ function updateWeights() {
       alert("ocorreu um erro")
     },
   });
+}
+
+function atualizarTempoRestanteFrontend() {
+  if (!startTime)
+    return;
+  const elapsedTime = (Date.now() - startTime) - pauseTime;
+
+  const remainingTime = Math.max(0, 3600000 - elapsedTime);
+
+  const horas = Math.floor(remainingTime / 3600000);
+  const minutos = Math.floor((remainingTime % 3600000) / 60000);
+  const segundos = Math.floor((remainingTime % 60000) / 1000);
+
+  const tempoFormatado = `${horas.toString().padStart(2, "0")}:${minutos
+    .toString()
+    .padStart(2, "0")}:${segundos.toString().padStart(2, "0")}`;
+
+  $("#tempoRestante").text(tempoFormatado);
 }
