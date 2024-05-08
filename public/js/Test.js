@@ -1,8 +1,10 @@
+var date = new Date();
 var btn_open_modal = document.getElementById("amarelo");
 var btnconfirm = document.getElementById("iniciar");
-const nameInput = $('#form-participant input[type="text"]')
-const dateInput = $('#form-participant input[type="date"]')
-var code = null
+const modal = $('#JanelaModal');
+const nameInput = $('#form-participant input[type="text"]');
+const dateInput = $('#form-participant input[type="date"]');
+var code = null;
 
 function waitOnQueue() {
   $.get(`http://${url}:3000/started`, function (data) {
@@ -11,40 +13,63 @@ function waitOnQueue() {
   });
 }
 
-nameInput.blur(function(){
-  if(!$(this).val() || $(this).val().trim().length < 1){
-      $(this).addClass("error");
-      error = true
-  } else{
-      $(this).removeClass("error");
+nameInput.blur(function () {
+  if (!$(this).val() || $(this).val().trim().length < 1) {
+    $(this).addClass("error");
+    error = true
+  } else {
+    $(this).removeClass("error");
   }
 });
 
-dateInput.blur(function(){
-  if(!$(this).val()){
-      $(this).addClass("error");
-      error = true
-  } else{
-      $(this).removeClass("error");
+dateInput.blur(function () {
+  if (!$(this).val()) {
+    $(this).addClass("error");
+    error = true
+  } else {
+    $(this).removeClass("error");
   }
 });
 
-function validation() {
-  let error = false
+
+$(" .alerta button ").on("click", (e) => {
+  $(" #error ").addClass("hide");
+});
+
+//JQUERY
+
+$(" #iniciar ").on("click", (e) => {
+  let valid = true
+
   if (!nameInput.val() || nameInput.val().trim().length < 1) {
     nameInput.addClass("error")
-    error = true
+    valid = false
   }
   else {
     nameInput.removeClass("error")
   }
-  if (!dateInput.val())
-  {
+  
+  if (!dateInput.val()) {
     dateInput.addClass("error")
-    error = true
+    valid = false
   }
 
-  if (error) return;
+  var inputDate = new Date(dateInput.val())
+
+  // if(inputDate < date.setDate("1930-12-12")) {
+  //   dateInput.addClass("error")
+  //   valid = false
+  // }
+
+  if(inputDate >= date) {
+    dateInput.addClass("error")
+    valid = false
+  }
+
+  if (!valid) {
+    $(" #error ").removeClass("hide");
+    return valid;
+  };
 
   btn_open_modal.disabled = false;
   if (btnconfirm.click) {
@@ -52,6 +77,10 @@ function validation() {
     btn_open_modal.style.backgroundColor = "#c9a802";
     btn_open_modal.style.color = "white";
     btn_open_modal.value = "Aguardando outros participantes...";
+    btnconfirm.disabled = true;
+    btnconfirm.value = "Confirmação Realizada";
+    $(" #iniciar ").addClass("btn-success").removeClass("btn-danger")
+    modal.modal('hide')
 
     $.ajax({
       url: `http://${url}:3000/ready`,
@@ -67,5 +96,9 @@ function validation() {
     });
 
   }
-  return false;
-}
+  return valid;
+})
+
+//tutorial frames 
+
+
