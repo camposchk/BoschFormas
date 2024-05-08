@@ -3,10 +3,14 @@ const code = window.location.href.split('/').slice(-1)[0]
 
 const nameInput = $('#form-res input[type="number"]')
 const tempoRestante = $("#tempoRestante")
+const tentativas = $("#tentativas")
 const timer = $("#timer")
+const tries = $("#tries")
+
+// TODO finish tries on screen
 
 var startTime = null
-var tries = null
+var triesCount = null
 
 nameInput.on( "focusout", function() {
   updateWeights()
@@ -19,9 +23,14 @@ function end() {
       timer.removeClass("d-none")
     else
       timer.addClass("d-none")
-    
 
-    tries = data.tries
+    triesCount = data.tries
+    if(!!triesCount)
+      tries.removeClass("d-none")
+    else
+      tries.addClass("d-none")
+    tentativas.text(triesCount)
+
     if (data.finished) window.location.replace(`http://${url}:3000/finished`);
   });
 }

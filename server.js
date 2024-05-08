@@ -298,7 +298,7 @@ app.get("/game/:code", (req, res) => {
   // if (competitors[code].accessed) return res.send("ja era");
   // competitors[code].accessed = true
 
-  res.render("Game", { data: data, defaultWeigth: weights[2], code, showTimer });
+  res.render("Game", { data: data, defaultWeigth: weights[2], code, showTimer, showTries });
 });
 app.get("/test", (req, res) => {
   res.render("Test", { data: data, defaultWeigth: testWeights[1] });

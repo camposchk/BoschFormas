@@ -27,6 +27,14 @@
         </a>
 
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+          <ul id="tries" class="navbar-nav ms-auto">
+            <li class="nav-item  <%= showTries ? "" : "d-none" %>">
+              <ul class="list-group list-group-horizontal">
+                <li class="list-group-item">Tentativas</li>
+                <li class="list-group-item"><span id="tentativas">-</span></li>
+              </ul>
+            </li>
+          </ul>
           <ul id="timer" class="navbar-nav ms-auto">
             <li class="nav-item  <%= showTimer ? "" : "d-none" %>">
               <ul class="list-group list-group-horizontal">
