@@ -34,12 +34,28 @@
       </div>
     </nav>
   </header>
+
   <div class="respostas">
     <div class="col-sm-9 d-flex flex-column justify-content-between">
+      <div class="d-flex justify-content-around flex-row col-sm-9 mx-auto">
+        <button class="btn btn-warning btn-send" type="button" id="pesar"
+          style="font-weight: bold; color: rgb(43, 43, 43)">
+          Pesar
+        </button>
+        <button class="btn btn-primary btn-send" onclick="arrangeBalances()" type="button"
+          style="font-weight: bold">
+          Ordenar peças
+        </button>
+        <button class="btn btn-send btn-ready" type="button" data-bs-toggle="modal" data-bs-target="#JanelaModal">
+          Finalizar
+        </button>
+      </div>
+
       <div class="cont-canvas">
         <canvas id="canvas"></canvas>
       </div>
-      <div class="row justify-content-center mt-4">
+
+      <div class="row justify-content-center mt-1">
         <div class="col-sm-12">
           <div class="d-flex justify-content-evenly pb-5 px-5 mx-5 list-items">
             <div forma="triangle" arrastos="5">
@@ -158,117 +174,57 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="col-sm-3 content">
-      <!-- lista de cars (pcs conectados) -->
+
+      <!-- AQUI ESTA O CARD DE PESOS -->
+
       <div class="card mb-5" style="border: 0cap">
         <div class="card-body card_connected_comp">
-          <div class="card-body">
-            <h4 class="card-title title">Insira o peso de cada forma:</h4>
-
-              <form action="post" name="form-res" id="form-res" class="form">
-                <div class="input-group mt-3 mb-3">
-                  <span class="input-group-text" id="inputGroup-sizing-default">
-                    <img
-                      src="../assets/formas/triangulo.png"
-                      class="mini-icon tri"
-                    />
-                  </span>
-                  <input
-                    style="width: 90px"
-                    value="<%=defaultWeigth%>"
-                    readonly
-                    type="number"
-                    class="form-control"
-                    aria-label="Sizing example input"
-                    aria-describedby="inputGroup-sizing-default"
-                    name="w1"
-                  />
-                </div>
-                <div class="input-group mb-3">
-                  <span class="input-group-text" id="inputGroup-sizing-default"
-                    ><img src="../assets/formas/quadrado.png" class="mini-icon"
-                  /></span>
-                  <input
-                    style="width: 90px"
-                    type="number"
-                    class="form-control"
-                    aria-label="Sizing example input"
-                    aria-describedby="inputGroup-sizing-default"
-                    name="w2"
-                  />
-                </div>
-                <div class="input-group mb-3">
-                  <span class="input-group-text" id="inputGroup-sizing-default"
-                    ><img src="../assets/formas/ellipse.png" class="mini-icon"
-                  /></span>
-                  <input
-                    style="width: 90px"
-                    type="number"
-                    class="form-control"
-                    aria-label="Sizing example input"
-                    aria-describedby="inputGroup-sizing-default"
-                    name="w3"
-                  />
-                </div>
-                <div class="input-group mb-3">
-                  <span class="input-group-text" id="inputGroup-sizing-default"
-                    ><img src="../assets/formas/star.png" class="mini-icon"
-                  /></span>
-                  <input
-                    style="width: 90px"
-                    type="number"
-                    class="form-control"
-                    aria-label="Sizing example input"
-                    aria-describedby="inputGroup-sizing-default"
-                    name="w4"
-                  />
-                </div>
-                <div class="input-group mb-3">
-                  <span class="input-group-text" id="inputGroup-sizing-default"
-                    ><img src="../assets/formas/pentagono.png" class="mini-icon"
-                  /></span>
-                  <input
-                    style="width: 90px"
-                    type="number"
-                    class="form-control"
-                    aria-label="Sizing example input"
-                    aria-describedby="inputGroup-sizing-default"
-                    name="w5"
-                  />
-                </div>
-              </form>
+          <div class="card-body p-0">
+            <div style="display: flex; flex-direction: row">
+              <h4 class="card-title title mx-auto justify-content-center">
+                Insira o peso de cada forma:
+              </h4>
             </div>
+
+            <form action="post" name="form-res" id="form-res" class="form">
+              <div class="input-group" style="margin-right: 20px">
+                <span class="input-group-text" id="inputGroup-sizing-default">
+                  <img src="../assets/formas/triangulo.png" class="mini-icon tri" />
+                </span>
+                <input value="<%=defaultWeigth%>" readonly type="number" class="form-control"
+                  aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" name="w1" />
+              </div>
+              <div class="input-group" style="margin-right: 20px">
+                <span class="input-group-text" id="inputGroup-sizing-default"><img src="../assets/formas/quadrado.png"
+                    class="mini-icon" /></span>
+                <input type="number" class="form-control" aria-label="Sizing example input"
+                  aria-describedby="inputGroup-sizing-default" name="w2" />
+              </div>
+              <div class="input-group" style="margin-right: 20px">
+                <span class="input-group-text" id="inputGroup-sizing-default"><img src="../assets/formas/ellipse.png"
+                    class="mini-icon" /></span>
+                <input type="number" class="form-control" aria-label="Sizing example input"
+                  aria-describedby="inputGroup-sizing-default" name="w3" />
+              </div>
+              <div class="input-group" style="margin-right: 20px">
+                <span class="input-group-text" id="inputGroup-sizing-default"><img src="../assets/formas/star.png"
+                    class="mini-icon" /></span>
+                <input type="number" class="form-control" aria-label="Sizing example input"
+                  aria-describedby="inputGroup-sizing-default" name="w4" />
+              </div>
+              <div class="input-group">
+                <span class="input-group-text" id="inputGroup-sizing-default"><img src="../assets/formas/pentagono.png"
+                    class="mini-icon" /></span>
+                <input type="number" class="form-control" aria-label="Sizing example input"
+                  aria-describedby="inputGroup-sizing-default" name="w5" />
+              </div>
+            </form>
           </div>
         </div>
-        <div style="display: flex; flex-direction: row;">
-          <button
-            class="btn btn-danger btn-send"
-            type="button"
-            onclick="reqWeights(getPlatesBal())"
-            style="margin-right: 5px;"
-          >
-            Pesar
-          </button>
-          <button
-            class="btn btn-light btn-send"
-            type="button"
-            onclick="arrangeBalances()"
-          >
-            Arranjar
-          </button>
-        </div>
-        <br/>
-        <button
-          class="btn btn-success btn-send"
-          type="button"
-          data-bs-toggle="modal"
-          data-bs-target="#JanelaModal"
-        >
-          Finalizar
-        </button>
       </div>
     </div>
+  </div>
+
 
   <!-- modal validação -->
   <div id="JanelaModal" class="modal fade">
@@ -291,11 +247,11 @@
                 <h5>Digite "FINALIZAR":</h5>
               </label>
               <div class="validation_position">
-                <input class="form-control mx-auto" type="text" id="validation" name="validation" />
+                <input style="width: 100%;" class="form-control mx-auto" type="text" id="validation" name="validation" />
               </div>
             </div>
             <div class="col-6 my-5 mx-auto">
-              <input type="button" class="btn btn-danger mx-auto btn-lg" onclick="finish()" value="Encerrar avaliação"
+              <input style="width: 100%;" type="button" class="btn btn-danger mx-auto btn-lg" onclick="finish()" value="Encerrar avaliação"
                 id="finalizar" />
             </div>
           </form>
@@ -310,22 +266,22 @@
 <script type="module" src="../js/canvas.js"></script>
 <script src="../js/morphshapes.js"></script>
 <script>
-  const reqWeights = (quantities) => {
-    $.ajax({
-      url: `http://${url}:3000/scales/${code}`,
-      type: "POST",
-      contentType: "application/json",
-      data: JSON.stringify({ quantities: quantities }),
-      success: function (response) {
-        tilt(response.results);
-      },
-      error: function (xhr, status, error) {
-        console.log("Error:", error);
-      },
-    });
-  };
-
   $(document).ready(function () {
+    const reqWeights = (quantities) => {
+      $.ajax({
+        url: `http://${url}:3000/scales/${code}`,
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({ quantities: quantities }),
+        success: function (response) {
+          tilt(response.results);
+        },
+        error: function (xhr, status, error) {
+          console.log("Error:", error);
+        },
+      });
+    };
+
     function makeDraggableAgain(element) {
       setTimeout(function () {
         element.draggable("option", "disabled", false);
@@ -368,6 +324,7 @@
         }
       },
     });
+    $("#pesar").on('click', () => {reqWeights(getPlatesBal())})
   });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
