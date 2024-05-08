@@ -199,12 +199,12 @@ setInterval(() => {
 
                 <div class="modal fade" id="${
                   value.code
-                }-modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                }-modal" tabindex="-1" aria-labelledby="${value.code}-Label"
                   aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                       <div class="modal-header" style="background-color: rgb(247, 247, 247)">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">
+                        <h1 class="modal-title fs-5" id="${value.code}-Label">
                           Respostas
                         </h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -312,5 +312,20 @@ function atualizarTempoRestanteFrontend() {
 
   $("#tempoRestante").text(tempoFormatado);
 }
+
+const buttonUpdate = $("#saveChanges")
+buttonUpdate.on('click', function() {
+  $.ajax({
+    url: `http://${url}:3000/set-weigths/game`,
+    type: "POST",
+    data: $("#form-update").serialize(),
+    success: function (response) {
+      
+    },
+    error: function (xhr, status, error) {
+      console.log("Error:", error);
+    },
+  });
+})
 
 atualizarTempoRestante()
