@@ -228,3 +228,8 @@ body {
 .list-items div:active {
   cursor: grabbing;
 }
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: invert(1); /* Inverte a cor das setas */
+}

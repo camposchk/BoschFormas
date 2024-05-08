@@ -137,6 +137,9 @@
           <div class="card-body p-0">
             <div style="display: flex; flex-direction: row;">
 
+              <button class="button_tutorial" type="button"
+                style="color: rgb(250, 250, 250); font-weight: bold; margin-left: 10px;" data-bs-toggle="modal"
+                data-bs-target="#TutorialModalVid"><i class="bi bi-play-circle"></i></button>
               <h4 class="card-title title mx-auto justify-content-center">Insira o peso de cada forma:</h4>
               <button class="button_tutorial" type="button"
                 style="color: rgb(250, 250, 250); font-weight: bold; margin-left: 10px;" data-bs-toggle="modal"
@@ -171,6 +174,7 @@
   </div>
 
   <!-- modal validação -->
+
   <div id="JanelaModal" class="modal fade">
     <div class="modal-dialog border-rounded">
       <div class="modal-content strongbg">
@@ -222,10 +226,10 @@
     <div class="modal-dialog border-rounded">
       <div class="modal-content strongbg">
 
-
         <div class="modal-header border-0">
           <button type="button" class="btn btn-close " data-bs-dismiss="modal"></button>
         </div>
+
         <div class="modal-body rounded">
 
           <h3 class="text-center mx-auto">Processo Seletivo Bosch</h3>
@@ -253,9 +257,9 @@
               <p><strong>Regra 3</strong> - Sempre que o botão PESAR é acionado, uma nova tentativa é contabilizada à
                 sua jogada</p>
               <p><strong>Regra 4</strong> - Fora do tutorial, a balança não pode ser reiniciada.</p>
-              <!-- <div class="good_luck">
+              <div class="good_luck">
                 <p><strong>Boa sorte candidato(a)!</strong></p>
-              </div> -->
+              </div>
             </div>
           </form>
 
@@ -271,6 +275,8 @@
       <div class="modal-content strongbg">
 
         <div class="modal-header border-0">
+          <span id="pageNumber" class="ms-5" style="font-weight: bold; font-size: large;"></span>
+          <h4 id="modalTitle" class="ms-5">Tutorial da fase de teste:</h4>
           <button type="button" class="btn btn-close " data-bs-dismiss="modal"></button>
         </div>
 
@@ -394,6 +400,21 @@
   $(document).ready(function () {
     // Exibir o modal ao carregar a página
     $('#TutorialModalVid').modal('show');
+  });
+
+  $(document).ready(function () {
+    var carousel = $("#carouselExample");
+    var pageCount = carousel.find(".carousel-item").length;
+    var currentPage = carousel.find(".carousel-item.active").index() + 1;
+
+    // Exibir a contagem de páginas atual
+    $("#pageNumber").text(currentPage + "/" + pageCount);
+
+    // Atualizar a contagem de páginas quando o slide mudar
+    carousel.on("slid.bs.carousel", function () {
+      currentPage = carousel.find(".carousel-item.active").index() + 1;
+      $("#pageNumber").text(currentPage + "/" + pageCount);
+    });
   });
 </script>
 
