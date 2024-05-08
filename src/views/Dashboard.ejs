@@ -37,7 +37,7 @@
           </button>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="optionsDropdown">
             <li>
-              <form class="px-4 py-3">
+              <form id="options" class="px-4 py-3">
                   <div class="form-check">
                     <input type="checkbox" class="form-check-input" name="timer" id="showTimer" <%= showTimer ? "checked" : "" %>>
                       <label class="form-check-label" for="showTimer">
@@ -232,12 +232,12 @@
                 </ul>
                 <div class="tab-content" id="myTabContent">
                   <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-                    <form action="post" name="form-update" id="form-update">
+                    <form action="post" name="form-update-game" id="form-update-game">
                       <div class="input-group my-3">
                         <span class="input-group-text" id="inputGroup-sizing-default" style="color: red;">Fixo</span>
                         <input
                           type="number"
-                          value="<%= currWeigths[2] %>"
+                          value="<%= currWeigths.weights[2] %>"
                           class="form-control"
                           name="w1"
                         />
@@ -246,7 +246,7 @@
                         <span class="input-group-text" id="inputGroup-sizing-default">1</span>
                         <input
                           type="number"
-                          value="<%= currWeigths[0] %>"
+                          value="<%= currWeigths.weights[0] %>"
                           class="form-control"
                           name="w2"
                         />
@@ -255,7 +255,7 @@
                         <span class="input-group-text" id="inputGroup-sizing-default">2</span>
                         <input
                           type="number"
-                          value="<%= currWeigths[1] %>"
+                          value="<%= currWeigths.weights[1] %>"
                           class="form-control"
                           name="w3"
                         />
@@ -264,7 +264,7 @@
                         <span class="input-group-text" id="inputGroup-sizing-default">3</span>
                         <input
                           type="number"
-                          value="<%= currWeigths[3] %>"
+                          value="<%= currWeigths.weights[3] %>"
                           class="form-control"
                           name="w4"
                         />
@@ -273,7 +273,7 @@
                         <span class="input-group-text" id="inputGroup-sizing-default">4</span>
                         <input
                           type="number"
-                          value="<%= currWeigths[4] %>"
+                          value="<%= currWeigths.weights[4] %>"
                           class="form-control"
                           name="w5"
                         />
@@ -281,12 +281,12 @@
                     </form>
                   </div>
                   <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-                    <form action="post" name="form-update" id="form-update">
+                    <form action="post" name="form-update-test" id="form-update-test">
                       <div class="input-group my-3">
                         <span class="input-group-text" id="inputGroup-sizing-default" style="color: red;">Fixo</span>
                         <input
                           type="number"
-                          value="<%= currWeigths[2] %>"
+                          value="<%= currWeigths.testWeights[1] %>"
                           class="form-control"
                           name="w1"
                         />
@@ -295,7 +295,7 @@
                         <span class="input-group-text" id="inputGroup-sizing-default">1</span>
                         <input
                           type="number"
-                          value="<%= currWeigths[0] %>"
+                          value="<%= currWeigths.testWeights[0] %>"
                           class="form-control"
                           name="w2"
                         />
@@ -304,7 +304,7 @@
                         <span class="input-group-text" id="inputGroup-sizing-default">2</span>
                         <input
                           type="number"
-                          value="<%= currWeigths[1] %>"
+                          value="<%= currWeigths.testWeights[2] %>"
                           class="form-control"
                           name="w3"
                         />

@@ -272,20 +272,18 @@ app.post("/set-weigths/:target", (req, res) => {
   
   if (target == "test")
   {
-    testWeights[1] = w3 || testWeights[1];
-    testWeights[0] = w2 || testWeights[0];
-    testWeights[2] = w1 || testWeights[2];
+    testWeights[1] = Number(w1) || testWeights[1];
+    testWeights[0] = Number(w2) || testWeights[0];
+    testWeights[2] = Number(w3) || testWeights[2];
     return res.send("Pesos do test atualizados");
   }
   if (target == "game")
   {
-    console.log(weights)
     weights[2] = Number(w1) || weights[2];
     weights[0] = Number(w2) || weights[0];
     weights[1] = Number(w3) || weights[1];
     weights[3] = Number(w4) || weights[3];
     weights[4] = Number(w5) || weights[4];
-    console.log(weights)
     return res.send("Pesos do jogo atualizados");
   }
   
@@ -300,13 +298,13 @@ app.get("/game/:code", (req, res) => {
   // if (competitors[code].accessed) return res.send("ja era");
   // competitors[code].accessed = true
 
-  res.render("Game", { data: data, defaultWeigth: weights[2], code: code });
+  res.render("Game", { data: data, defaultWeigth: weights[2], code, showTimer });
 });
 app.get("/test", (req, res) => {
   res.render("Test", { data: data, defaultWeigth: testWeights[1] });
 });
 app.get("/dashboard", (req, res) => {
-  res.render("Dashboard", { data: competitors, url: data.url, currWeigths: weights, showTimer, showTries });
+  res.render("Dashboard", { data: competitors, url: data.url, currWeigths: {weights, testWeights}, showTimer, showTries });
 });
 app.get("/finished", (req, res) => {
   res.render("Finished");
