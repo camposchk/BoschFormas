@@ -321,10 +321,23 @@ function atualizarTempoRestanteFrontend() {
 }
 
 $("#saveChanges").on('click', function() {
+
   $.ajax({
     url: `http://${url}:3000/set-weigths/game`,
     type: "POST",
-    data: $("#form-update").serialize(),
+    data: $("#form-update-game").serialize(),
+    success: function (response) {
+      
+    },
+    error: function (xhr, status, error) {
+      console.log("Error:", error);
+    },
+  });
+
+  $.ajax({
+    url: `http://${url}:3000/set-weigths/test`,
+    type: "POST",
+    data: $("#form-update-test").serialize(),
     success: function (response) {
       
     },
