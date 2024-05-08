@@ -49,7 +49,6 @@ body {
   height: 36px;
 }
 
-
 .input-name{
   width: 100%;
 }
@@ -64,23 +63,7 @@ body {
 
 .form-control{
   width: 90px;
-
 }
-
-
-/* .input-participant {
-  background-color: rgb(247, 247, 247);
-  border-style: solid;
-  border-color: var(--mediugray-color);
-  border-width: 1px;
-  border-radius: 5px;
-  height: 35px;
-  padding: 0px 10px 0px 10px;
-} */
-
-/* .input-group {
-  height: 10px;
-} */
 
 .trap {
   position: absolute;
@@ -97,17 +80,17 @@ body {
   height: 80px;
 }
 
-.btn-ready{
+.btn-ready {
   background-color: rgb(58, 167, 72);
   color: aliceblue;
 }
 
-.btn-ready:hover{
+.btn-ready:hover {
   background-color: rgb(46, 134, 58);
   color: aliceblue;
 }
 
-.button_tutorial{
+.button_tutorial {
   border: none;
   background-color: transparent;
 }
@@ -234,5 +217,5 @@ body {
 }
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
-    filter: invert(1); /* Inverte a cor das setas */
+    filter: invert(1);
 }
