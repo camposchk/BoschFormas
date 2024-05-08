@@ -320,12 +320,25 @@ function atualizarTempoRestanteFrontend() {
   $("#tempoRestante").text(tempoFormatado);
 }
 
-const buttonUpdate = $("#saveChanges")
-buttonUpdate.on('click', function() {
+$("#saveChanges").on('click', function() {
   $.ajax({
     url: `http://${url}:3000/set-weigths/game`,
     type: "POST",
     data: $("#form-update").serialize(),
+    success: function (response) {
+      
+    },
+    error: function (xhr, status, error) {
+      console.log("Error:", error);
+    },
+  });
+})
+
+$("#options input").on('click', function() {
+  $.ajax({
+    url: `http://${url}:3000/setOptions`,
+    type: "POST",
+    data: $("#options").serialize(),
     success: function (response) {
       
     },

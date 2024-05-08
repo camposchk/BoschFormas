@@ -38,28 +38,19 @@
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="optionsDropdown">
             <li>
               <form class="px-4 py-3">
-                <div class="mb-3">
                   <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="dropdownCheck1">
-                    <label class="form-check-label" for="dropdownCheck1">
+                    <input type="checkbox" class="form-check-input" name="timer" id="showTimer" <%= showTimer ? "checked" : "" %>>
+                      <label class="form-check-label" for="showTimer">
                       Mostrar tempo
                     </label>
                   </div>
                   <div class="dropdown-divider"></div>
                   <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="dropdownCheck2">
-                    <label class="form-check-label" for="dropdownCheck2">
+                    <input type="checkbox" class="form-check-input" name="tries" id="showTries" <%= showTries ? "checked" : "" %>>
+                      <label class="form-check-label" for="showTries">
                       Mostrar tentativas
                     </label>
                   </div>
-                  <div class="dropdown-divider"></div>
-                  <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="dropdownCheck3">
-                    <label class="form-check-label" for="dropdownCheck3">
-                      Mostrar peças
-                    </label>
-                  </div>
-                </div>
               </form>
             </li>
           </ul>

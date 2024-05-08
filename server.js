@@ -24,6 +24,8 @@ var started = false;
 const competitors = {};
 var testWeights = [100, 200, 500];
 var weights = [100, 200, 400, 800, 1600];
+var showTimer = false
+var showTries = false
 
 app.post("/ready", async (req, res) => {
   const { name, dataNasc, w1, w2, w3, w4, w5 } = req.body;
@@ -178,7 +180,7 @@ app.get("/competitors", (req, res) => {
   res.json(competitors);
 });
 
-let startTime;
+let startTime = null;
 let timer;
 let startPause;
 let pauseTime = 0;
@@ -245,6 +247,25 @@ app.post("/finish", (req, res) => {
   res.send("Atividade finalizada.");
 });
 
+app.post("/setOptions", (req, res) => {
+  const { timer, tries } = req.body;
+  showTimer = timer == "on";
+  showTries = tries == "on";
+
+  res.send({showTimer, showTries});
+});
+
+app.get("/status/:code", (req, res) => {
+  const { code } = req.params;
+  var comp = competitors[code]
+  if (!comp) {
+    return res.status(404).send({success: false, error: {message: "Competidor não encontrado."}});
+  }
+
+  res.send({finished: finished, startTime: showTimer ? startTime : null, tries: showTries ? comp.tentativas : null});
+});
+
+
 app.post("/set-weigths/:target", (req, res) => {
   const { w1, w2, w3, w4, w5 } = req.body;
   const { target } = req.params;  
@@ -273,10 +294,11 @@ app.post("/set-weigths/:target", (req, res) => {
 
 app.get("/game/:code", (req, res) => {
   const { code } = req.params;
-  if (!competitors[code])
-    return res.send("nao existe");
-  if (competitors[code].accessed) return res.send("ja era");
-  competitors[code].accessed = true
+  // TODO: Uncomment
+  // if (!competitors[code])
+  //   return res.send("nao existe");
+  // if (competitors[code].accessed) return res.send("ja era");
+  // competitors[code].accessed = true
 
   res.render("Game", { data: data, defaultWeigth: weights[2], code: code });
 });
@@ -284,7 +306,7 @@ app.get("/test", (req, res) => {
   res.render("Test", { data: data, defaultWeigth: testWeights[1] });
 });
 app.get("/dashboard", (req, res) => {
-  res.render("Dashboard", { data: competitors, url: data.url, currWeigths: weights });
+  res.render("Dashboard", { data: competitors, url: data.url, currWeigths: weights, showTimer, showTries });
 });
 app.get("/finished", (req, res) => {
   res.render("Finished");
@@ -294,9 +316,6 @@ app.get("/home", (req, res) => {
 });
 app.get("/started", (req, res) => {
   res.send(started);
-});
-app.get("/done", (req, res) => {
-  res.send(finished);
 });
 
 app.use((req, res, next) => {
