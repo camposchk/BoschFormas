@@ -53,11 +53,14 @@ setTimeout(function () {
 var tweenStar1 = KUTE.to("#star", { path: "#five" }, { duration: 500 });
 var tweenStar2 = KUTE.to("#star", { path: "#star" }, { duration: 500 });
 
-tweenStar1.start();
-
-setTimeout(function () {
-  tweenStar2.start();
-}, 1200);
+if(tweenStar1.element)
+{
+  tweenStar1.start();
+  
+  setTimeout(function () {
+    tweenStar2.start();
+  }, 1200);
+}
 
 var tweenPentagono1 = KUTE.to(
   "#pentagon",
@@ -70,11 +73,14 @@ var tweenPentagono2 = KUTE.to(
   { duration: 500 }
 );
 
-tweenPentagono1.start();
-
-setTimeout(function () {
-  tweenPentagono2.start();
-}, 1200);
+if(tweenPentagono1.element)
+{
+  tweenPentagono1.start();
+  
+  setTimeout(function () {
+    tweenPentagono2.start();
+  }, 1200);
+}
 
 function animate(arrastos, forma) {
   var mapeamento = {
