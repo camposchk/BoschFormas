@@ -34,14 +34,14 @@
               <div class="dropdown-menu">
                 <form id="options" class="px-4 py-3">
                     <div class="form-check">
-                      <input type="checkbox" class="form-check-input" name="timer" id="showTimer">
+                      <input type="checkbox" class="form-check-input" name="timer" id="showTimer" <%= showTimer ? "checked" : "" %>>
                       <label class="form-check-label" for="showTimer">
                         Mostrar tempo
                       </label>
                     </div>
                     <div class="dropdown-divider"></div>
                     <div class="form-check">
-                      <input type="checkbox" class="form-check-input" name="tries" id="showTries">
+                      <input type="checkbox" class="form-check-input" name="tries" id="showTries" <%= showTries ? "checked" : "" %>>
                       <label class="form-check-label" for="showTries">
                         Mostrar tentativas
                       </label>

@@ -305,7 +305,7 @@ app.get("/test", (req, res) => {
   res.render("Test", { data: data, defaultWeigth: testWeights[1] });
 });
 app.get("/dashboard", (req, res) => {
-  res.render("Dashboard", { data: competitors, url: data.url, currWeigths: weights });
+  res.render("Dashboard", { data: competitors, url: data.url, currWeigths: weights, showTimer, showTries });
 });
 app.get("/finished", (req, res) => {
   res.render("Finished");
