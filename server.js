@@ -22,7 +22,8 @@ app.use(express.static("public"));
 
 var started = false;
 const competitors = {};
-const weights = [100, 200, 400, 800, 1600];
+var testWeights = [100, 200, 500];
+var weights = [100, 200, 400, 800, 1600];
 
 app.post("/ready", async (req, res) => {
   const { name, dataNasc, w1, w2, w3, w4, w5 } = req.body;
@@ -111,16 +112,19 @@ app.post("/testscales", (req, res) => {
 
   if (!quantities) return res.status(400).send({ message: "vazio" });
   
+  // TODO: fix
+  let temp = [testWeights[2], testWeights[0], testWeights[1]]
   let results = []
   for (let i = 0; i < quantities.length; i++) {
     const bal = quantities[i];
     let plate1 = 0;
     let plate2 = 0;
     
-    for (let j = 0; j < 5; j++) {
-      plate1 += bal[j] * weights[j];
-      plate2 += bal[j + 5] * weights[j];
+    for (let j = 0; j < 3; j++) {
+      plate1 += bal[j] * temp[j];
+      plate2 += bal[j + 5] * temp[j];
     }
+
     if (plate1 > plate2) results.push(-1);
     else if (plate1 === plate2) results.push(0);
     else results.push(1);
@@ -148,9 +152,17 @@ app.post("/scales/:code", (req, res) => {
     let plate1 = 0;
     let plate2 = 0;
 
+    let temp = [
+      competitors[code].realScore[4],
+      competitors[code].realScore[3],
+      competitors[code].realScore[0],
+      competitors[code].realScore[2],
+      competitors[code].realScore[1],
+    ]
+
     for (let j = 0; j < 5; j++) {
-      plate1 += bal[j] * weights[competitors[code].realScore[j]];
-      plate2 += bal[j+5] * weights[competitors[code].realScore[j]];
+      plate1 += bal[j] * weights[temp[j]];
+      plate2 += bal[j+5] * weights[temp[j]];
       competitors[code].pieces += bal[j] + bal[j+5];
     }
 
@@ -225,9 +237,38 @@ app.get("/check-timer", (req, res) => {
 
 app.post("/finish", (req, res) => {
   finished = true;
-  saveExcel();
-
+  try {
+    saveExcel();    
+  } catch (error) {
+    res.status(500).send("Atividade finalizada, porém, o excel falhou.");
+  }
   res.send("Atividade finalizada.");
+});
+
+app.post("/set-weigths/:target", (req, res) => {
+  const { w1, w2, w3, w4, w5 } = req.body;
+  const { target } = req.params;  
+  
+  if (target == "test")
+  {
+    testWeights[1] = w3 || testWeights[1];
+    testWeights[0] = w2 || testWeights[0];
+    testWeights[2] = w1 || testWeights[2];
+    return res.send("Pesos do test atualizados");
+  }
+  if (target == "game")
+  {
+    console.log(weights)
+    weights[2] = Number(w1) || weights[2];
+    weights[0] = Number(w2) || weights[0];
+    weights[1] = Number(w3) || weights[1];
+    weights[3] = Number(w4) || weights[3];
+    weights[4] = Number(w5) || weights[4];
+    console.log(weights)
+    return res.send("Pesos do jogo atualizados");
+  }
+  
+  return res.send("Inválido")
 });
 
 app.get("/game/:code", (req, res) => {
@@ -237,13 +278,13 @@ app.get("/game/:code", (req, res) => {
   if (competitors[code].accessed) return res.send("ja era");
   competitors[code].accessed = true
 
-  res.render("Game", { data: data, code: code });
+  res.render("Game", { data: data, defaultWeigth: weights[2], code: code });
 });
 app.get("/test", (req, res) => {
-  res.render("Test", { data: data });
+  res.render("Test", { data: data, defaultWeigth: testWeights[1] });
 });
 app.get("/dashboard", (req, res) => {
-  res.render("Dashboard", { data: competitors, url: data.url });
+  res.render("Dashboard", { data: competitors, url: data.url, currWeigths: weights });
 });
 app.get("/finished", (req, res) => {
   res.render("Finished");

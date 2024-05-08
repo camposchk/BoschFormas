@@ -144,12 +144,12 @@
                   Respostas
                 </button>
 
-                <div class="modal fade" id="<%=value.code%>-modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                <div class="modal fade" id="<%=value.code%>-modal" tabindex="-1" aria-labelledby="<%=value.code%>-Label"
                   aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                       <div class="modal-header" style="background-color: rgb(247, 247, 247)">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">
+                        <h1 class="modal-title fs-5" id="<%=value.code%>-Label">
                           Respostas
                         </h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -220,6 +220,91 @@
           </div>
         </div>
         <%}%>
+
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#changeWeigthModal">
+          Launch demo modal
+        </button>
+        
+        <!-- Modal -->
+        <div class="modal fade" id="changeWeigthModal" tabindex="-1" aria-labelledby="changeWeigthModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="changeWeigthModalLabel">Alterar Pesos</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form action="post" name="form-update" id="form-update" class="form">
+                  <div class="input-group my-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">
+                      <img
+                        src="../assets/formas/triangulo.png"
+                        class="mini-icon tri"
+                      />
+                    </span>
+                    <input
+                      type="number"
+                      value="<%= currWeigths[2] %>"
+                      class="form-control"
+                      name="w1"
+                    />
+                  </div>
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default"
+                      ><img src="../assets/formas/quadrado.png" class="mini-icon"
+                    /></span>
+                    <input
+                      type="number"
+                      value="<%= currWeigths[0] %>"
+                      class="form-control"
+                      name="w2"
+                    />
+                  </div>
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default"
+                      ><img src="../assets/formas/ellipse.png" class="mini-icon"
+                    /></span>
+                    <input
+                      type="number"
+                      value="<%= currWeigths[1] %>"
+                      class="form-control"
+                      name="w3"
+                    />
+                  </div>
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default"
+                      ><img src="../assets/formas/star.png" class="mini-icon"
+                    /></span>
+                    <input
+                      type="number"
+                      value="<%= currWeigths[3] %>"
+                      class="form-control"
+                      name="w4"
+                    />
+                  </div>
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default"
+                      ><img src="../assets/formas/pentagono.png" class="mini-icon"
+                    /></span>
+                    <input
+                      type="number"
+                      value="<%= currWeigths[4] %>"
+                      class="form-control"
+                      name="w5"
+                    />
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary" id="saveChanges">Salvar Alterações</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        
     </div>
   </main>
 
