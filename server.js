@@ -275,7 +275,9 @@ app.get("/game/:code", (req, res) => {
   const { code } = req.params;
   if (!competitors[code])
     return res.send("nao existe");
-  if (competitors[code].accessed) return res.send("ja era");
+  if (competitors[code].accessed) {
+    return res.render("Error");
+  }
   competitors[code].accessed = true
 
   res.render("Game", { data: data, defaultWeigth: weights[2], code: code });
@@ -292,9 +294,6 @@ app.get("/finished", (req, res) => {
 app.get("/home", (req, res) => {
   res.render("Home");
 });
-app.get("/error", (req, res) => {
-  res.render("Error");
-});
 app.get("/started", (req, res) => {
   res.send(started);
 });
@@ -302,6 +301,9 @@ app.get("/done", (req, res) => {
   res.send(finished);
 });
 
+app.use((req, res, next) => {
+  res.status(404).render("Error", { message: "Página não encontrada" });
+});
 app.use((req, res, next) => {
   console.log("Dados recebidos:", req.body);
   next();
