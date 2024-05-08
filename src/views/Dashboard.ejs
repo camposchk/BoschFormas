@@ -25,48 +25,49 @@
           <img src="./assets/Images/logo.png" alt="IconeBosch" width="160px" height="36px" id="bosch_icon"
             class="d-none d-md-flex" />
         </a>
-        <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
-          <ul class="navbar-nav">
-            <li class="nav-item dropdown">
-              <button class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                Opções
-              </button>
-              <div class="dropdown-menu">
-                <form class="px-4 py-3">
-                  <div class="mb-3">
-                    <div class="form-check">
-                      <input type="checkbox" class="form-check-input" id="dropdownCheck">
-                      <label class="form-check-label" for="dropdownCheck">
-                        Mostrar tempo
-                      </label>
-                    </div>
-                    <div class="dropdown-divider"></div>
-                    <div class="form-check">
-                      <input type="checkbox" class="form-check-input" id="dropdownCheck">
-                      <label class="form-check-label" for="dropdownCheck">
-                        Mostrar tentativas
-                      </label>
-                    </div>
-                    <div class="dropdown-divider"></div>
-                    <div class="form-check">
-                      <input type="checkbox" class="form-check-input" id="dropdownCheck">
-                      <label class="form-check-label" for="dropdownCheck">
-                        Mostrar peças
-                      </label>
-                    </div>
-                </form>
-              </div>
+
+      <div class="d-flex justify-content-end align-items-center">
+        <button type="button" class="btn btn-danger me-3" data-bs-toggle="modal" data-bs-target="#changeWeigthModal" id="changeWeightButton">
+          Alterar pesos
+        </button>
+
+        <div class="dropdown"  id="optionsButton">
+          <button class="btn btn-light dropdown-toggle" type="button" id="optionsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            Opções
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="optionsDropdown">
+            <li>
+              <form class="px-4 py-3">
+                <div class="mb-3">
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="dropdownCheck1">
+                    <label class="form-check-label" for="dropdownCheck1">
+                      Mostrar tempo
+                    </label>
+                  </div>
+                  <div class="dropdown-divider"></div>
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="dropdownCheck2">
+                    <label class="form-check-label" for="dropdownCheck2">
+                      Mostrar tentativas
+                    </label>
+                  </div>
+                  <div class="dropdown-divider"></div>
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="dropdownCheck3">
+                    <label class="form-check-label" for="dropdownCheck3">
+                      Mostrar peças
+                    </label>
+                  </div>
+                </div>
+              </form>
             </li>
           </ul>
         </div>
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-            <li class="nav-item"></li>
-          </ul>
-        </div>
       </div>
-    </nav>
-  </header>
+    </div>
+  </nav>
+</header>
 
   <main>
     <div class="infos">
@@ -76,7 +77,7 @@
           <li class="list-group-item"><span id="tempoRestante">1:00:00</span></li>
         </ul>
         <button id="toggleButtonStart" type="button" class="btn btn-success mx-1" onclick="toggleActivityStart()">Iniciar Prova</button>
-        <button id="toggleButtonPause" type="button" class="d-none btn btn-success mx-1" onclick="toggleActivityPause()">Pausar Prova</button>
+        <button id="toggleButtonPause" type="button" class="d-none btn btn-warning mx-1" onclick="toggleActivityPause()">Pausar Prova</button>
       </div>  
 
       <div class="counters">
@@ -220,10 +221,6 @@
           </div>
         </div>
         <%}%>
-
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#changeWeigthModal">
-          Launch demo modal
-        </button>
         
         <!-- Modal -->
         <div class="modal fade" id="changeWeigthModal" tabindex="-1" aria-labelledby="changeWeigthModalLabel" aria-hidden="true">
@@ -234,70 +231,101 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <form action="post" name="form-update" id="form-update" class="form">
-                  <div class="input-group my-3">
-                    <span class="input-group-text" id="inputGroup-sizing-default">
-                      <img
-                        src="../assets/formas/triangulo.png"
-                        class="mini-icon tri"
-                      />
-                    </span>
-                    <input
-                      type="number"
-                      value="<%= currWeigths[2] %>"
-                      class="form-control"
-                      name="w1"
-                    />
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true" style="color: black;">Game</button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false" style="color: black;">Teste</button>
+                  </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                  <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+                    <form action="post" name="form-update" id="form-update" class="form">
+                      <div class="input-group my-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default" style="color: red;">Fixo</span>
+                        <input
+                          type="number"
+                          value="<%= currWeigths[2] %>"
+                          class="form-control"
+                          name="w1"
+                        />
+                      </div>
+                      <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">1</span>
+                        <input
+                          type="number"
+                          value="<%= currWeigths[0] %>"
+                          class="form-control"
+                          name="w2"
+                        />
+                      </div>
+                      <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">2</span>
+                        <input
+                          type="number"
+                          value="<%= currWeigths[1] %>"
+                          class="form-control"
+                          name="w3"
+                        />
+                      </div>
+                      <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">3</span>
+                        <input
+                          type="number"
+                          value="<%= currWeigths[3] %>"
+                          class="form-control"
+                          name="w4"
+                        />
+                      </div>
+                      <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">4</span>
+                        <input
+                          type="number"
+                          value="<%= currWeigths[4] %>"
+                          class="form-control"
+                          name="w5"
+                        />
+                      </div>
+                    </form>
                   </div>
-                  <div class="input-group mb-3">
-                    <span class="input-group-text" id="inputGroup-sizing-default"
-                      ><img src="../assets/formas/quadrado.png" class="mini-icon"
-                    /></span>
-                    <input
-                      type="number"
-                      value="<%= currWeigths[0] %>"
-                      class="form-control"
-                      name="w2"
-                    />
+                  <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+                    <form action="post" name="form-update" id="form-update" class="form">
+                      <div class="input-group my-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default" style="color: red;">Fixo</span>
+                        <input
+                          type="number"
+                          value="<%= currWeigths[2] %>"
+                          class="form-control"
+                          name="w1"
+                        />
+                      </div>
+                      <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">1</span>
+                        <input
+                          type="number"
+                          value="<%= currWeigths[0] %>"
+                          class="form-control"
+                          name="w2"
+                        />
+                      </div>
+                      <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">2</span>
+                        <input
+                          type="number"
+                          value="<%= currWeigths[1] %>"
+                          class="form-control"
+                          name="w3"
+                        />
+                      </div>
+                    </form>
                   </div>
-                  <div class="input-group mb-3">
-                    <span class="input-group-text" id="inputGroup-sizing-default"
-                      ><img src="../assets/formas/ellipse.png" class="mini-icon"
-                    /></span>
-                    <input
-                      type="number"
-                      value="<%= currWeigths[1] %>"
-                      class="form-control"
-                      name="w3"
-                    />
-                  </div>
-                  <div class="input-group mb-3">
-                    <span class="input-group-text" id="inputGroup-sizing-default"
-                      ><img src="../assets/formas/star.png" class="mini-icon"
-                    /></span>
-                    <input
-                      type="number"
-                      value="<%= currWeigths[3] %>"
-                      class="form-control"
-                      name="w4"
-                    />
-                  </div>
-                  <div class="input-group mb-3">
-                    <span class="input-group-text" id="inputGroup-sizing-default"
-                      ><img src="../assets/formas/pentagono.png" class="mini-icon"
-                    /></span>
-                    <input
-                      type="number"
-                      value="<%= currWeigths[4] %>"
-                      class="form-control"
-                      name="w5"
-                    />
-                  </div>
-                </form>
+                </div>
+               
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary" id="saveChanges">Salvar Alterações</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-light" id="saveChanges">Salvar Alterações</button>
               </div>
             </div>
           </div>

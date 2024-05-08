@@ -18,7 +18,14 @@ function toggleActivityStart() {
   var button = document.getElementById("toggleButtonStart");
   if(hideBt) {
     document.getElementById("toggleButtonPause").classList.remove("d-none");
+    document.getElementById("changeWeightButton").classList.add("d-none");
+    document.getElementById("optionsButton").classList.add("d-none");
     hideBt = false
+  } else {
+    document.getElementById("toggleButtonPause").classList.add("d-none");
+    document.getElementById("changeWeightButton").classList.remove("d-none");
+    document.getElementById("optionsButton").classList.remove("d-none");
+    hideBt = true
   }
 
   if (button.classList.contains("btn-success")) {
@@ -38,14 +45,14 @@ function toggleActivityPause() {
   var button = document.getElementById("toggleButtonPause");
   pauseTimer()
 
-  if (button.classList.contains("btn-success")) {
-      button.classList.remove("btn-success");
-      button.classList.add("btn-danger");
+  if (button.classList.contains("btn-warning")) {
+      button.classList.remove("btn-warning");
+      button.classList.add("btn-primary");
       button.innerHTML = "Retomar Prova";
       paused = true
     } else {
-      button.classList.remove("btn-danger");
-      button.classList.add("btn-success");
+      button.classList.remove("btn-primary");
+      button.classList.add("btn-warning");
       button.innerHTML = "Pausar Prova";
       paused = false
   }
