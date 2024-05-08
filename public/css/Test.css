@@ -389,3 +389,7 @@ body {
 .list-items div:active {
   cursor: grabbing;
 }
+
+.list-items div.waiting {
+  cursor: not-allowed;
+}

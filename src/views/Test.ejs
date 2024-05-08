@@ -381,51 +381,52 @@
     };
 
     $(document).ready(function () {
-      $(".list-items div").draggable({
+    function makeDraggableAgain(element) {
+        setTimeout(function () {
+            element.draggable("option", "disabled", false);
+            element.removeClass("waiting");
+        }, 1900); 
+    }
+
+    $(".list-items div").draggable({
         helper: "clone",
         containment: "body",
         scroll: false,
         revert: true,
-      });
-
-      $("#canvas").droppable({
-        drop: function (event, ui) {
-          var formaArrastada = ui.draggable.attr("forma");
-          var addedTo = addFig(event, formaArrastada);
-          reqWeigths(getPlatesBal());
-
-          if(addedTo){
-            // console.log("Forma arrastada: " + formaArrastada);
-  
-            var arrastos = parseInt(ui.draggable.attr("arrastos"));
-  
-            arrastos--;
-  
-            ui.draggable.attr("arrastos", arrastos);
-            // console.log("Arrastos do " + formaArrastada + " = " + arrastos);
-            animate(arrastos, formaArrastada);
-  
-            if (arrastos === 0) {
-              ui.draggable.animate(
-                  {
-                    // Defina as propriedades CSS que você deseja animar
-                    width: 0,
-                    height: 0,
-                    opacity: 0, // Opcional: torna a forma transparente enquanto encolhe
-                  },
-                  500, // Duração da animação em milissegundos
-                  function () {
-                    // Opcional: remova a forma após a animação
-                    ui.draggable.remove();
-                  }
-                );
-            }
-          }
-        },
-      });
-
-      $("#reset").on("click", emptyBalances);
     });
+
+    $("#canvas").droppable({
+        drop: function (event, ui) {
+            var formaArrastada = ui.draggable.attr("forma");
+            var addedTo = addFig(event, formaArrastada);
+            reqWeigths(getPlatesBal());
+
+            if (addedTo) {
+                var arrastos = parseInt(ui.draggable.attr("arrastos"));
+                arrastos--;
+                ui.draggable.attr("arrastos", arrastos);
+                animate(arrastos, formaArrastada);
+
+                if (arrastos === 0) {
+                    ui.draggable.animate({
+                        width: 0,
+                        height: 0,
+                        opacity: 0,
+                    }, 500, function () {
+                        ui.draggable.remove();
+                    });
+                }
+
+                ui.draggable.draggable("option", "disabled", true);
+                ui.draggable.addClass("waiting");
+
+                makeDraggableAgain(ui.draggable);
+            }
+        },
+    });
+    $("#reset").on("click", emptyBalances);
+});
+
   </script>
   <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
