@@ -25,7 +25,7 @@ function end() {
       timer.addClass("d-none")
 
     triesCount = data.tries
-    if(!!triesCount)
+    if(typeof triesCount === 'number' && isFinite(triesCount))
       tries.removeClass("d-none")
     else
       tries.addClass("d-none")

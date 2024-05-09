@@ -27,16 +27,16 @@
         </a>
 
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-          <ul id="tries" class="navbar-nav ms-auto">
-            <li class="nav-item  <%= showTries ? "" : "d-none" %>">
+          <ul id="tries" class="navbar-nav ms-auto<%= showTries ? "" : " d-none" %>">
+            <li class="nav-item">
               <ul class="list-group list-group-horizontal">
                 <li class="list-group-item">Tentativas</li>
                 <li class="list-group-item"><span id="tentativas">-</span></li>
               </ul>
             </li>
           </ul>
-          <ul id="timer" class="navbar-nav ms-auto">
-            <li class="nav-item  <%= showTimer ? "" : "d-none" %>">
+          <ul id="timer" class="navbar-nav ms-auto<%= showTimer ? "" : " d-none" %>">
+            <li class="nav-item">
               <ul class="list-group list-group-horizontal">
                 <li class="list-group-item">Tempo Restante</li>
                 <li class="list-group-item"><span id="tempoRestante">--:--</span></li>
@@ -337,12 +337,16 @@
         }
       },
     });
-    $("#pesar").on('click', () => {reqWeights(getPlatesBal())})
+    $("#pesar").on('click', () => {
+      reqWeights(getPlatesBal());
+      triesCount += 1
+      tentativas.text(triesCount)
+    })
   });
 </script>
+<script src="../js/Game.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
   integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script src="../js/Game.js"></script>
 <script src="../js/jquery.js"></script>
 
 </html>
