@@ -19,12 +19,12 @@ function toggleActivityStart() {
   if(hideBt) {
     document.getElementById("toggleButtonPause").classList.remove("d-none");
     document.getElementById("changeWeightButton").classList.add("d-none");
-    document.getElementById("optionsButton").classList.add("d-none");
+    // document.getElementById("optionsButton").classList.add("d-none");
     hideBt = false
   } else {
     document.getElementById("toggleButtonPause").classList.add("d-none");
     document.getElementById("changeWeightButton").classList.remove("d-none");
-    document.getElementById("optionsButton").classList.remove("d-none");
+    // document.getElementById("optionsButton").classList.remove("d-none");
     hideBt = true
   }
 
