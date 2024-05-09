@@ -313,9 +313,9 @@ app.post("/set-weigths/:target", (req, res) => {
 app.get("/game/:code", (req, res) => {
   const { code } = req.params;
   if (!competitors[code])
-    return res.render("Não Existe");
+    return res.render("Error", {title: "Não encontrado", message: "Jogador não encontrado"});
   if (competitors[code].accessed) {
-    return res.render("Error");
+    return res.render("Error", {title: "Já Acessado", message: "Solicite ajuda de um dos instrutores da avaliação"});
   }
   competitors[code].accessed = true
 
@@ -338,12 +338,9 @@ app.get("/started", (req, res) => {
 });
 
 app.use((req, res, next) => {
-  res.status(404).render("Error", { message: "Página não encontrada" });
+  res.status(404).render("Error", { title: "Erro 404", message: "Página não encontrada" });
 });
 
-app.use((req, res, next) => {
-  res.status(404).render("Error", { message: "Página não encontrada" });
-});
 app.use((req, res, next) => {
   console.log("Dados recebidos:", req.body);
   next();

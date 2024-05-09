@@ -60,30 +60,17 @@
     </style>
 
     <main>
-        <% if (typeof message !=='undefined' && message==="Página não encontrada" ) { %>
+        
             <div class="row justify-content-center text-center" id="erro404">
                 <div class="card col-3 final-card">
                     <div class="card-body">
-                        <h1 class="card-title">ERRO 404</h1>
+                        <h1 class="card-title"><%= title %></h1>
                         <p class="card-text">
-                            Página não encontrada
+                            <%= message %>
                         </p>
                     </div>
                 </div>
             </div>
-            <% } else { %>
-                <div class="row justify-content-center text-center" id="attPage">
-                    <div class="card col-5 final-card">
-                        <div class="card-body">
-                            <h2 class="card-title">ATUALIZAÇÃO DE PÁGINA NÃO PERMITIDA</h2>
-                            <p class="card-text">
-                                Solicite ajuda de um dos instrutores da avaliação
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <% } %>
-
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
