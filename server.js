@@ -292,11 +292,12 @@ app.post("/set-weigths/:target", (req, res) => {
 
 app.get("/game/:code", (req, res) => {
   const { code } = req.params;
-  // TODO: Uncomment
-  // if (!competitors[code])
-  //   return res.send("nao existe");
-  // if (competitors[code].accessed) return res.send("ja era");
-  // competitors[code].accessed = true
+  if (!competitors[code])
+    return res.send("nao existe");
+  if (competitors[code].accessed) {
+    return res.render("Error");
+  }
+  competitors[code].accessed = true
 
   res.render("Game", { data: data, defaultWeigth: weights[2], code, showTimer });
 });
@@ -316,6 +317,13 @@ app.get("/started", (req, res) => {
   res.send(started);
 });
 
+app.use((req, res, next) => {
+  res.status(404).render("Error", { message: "Página não encontrada" });
+});
+
+app.use((req, res, next) => {
+  res.status(404).render("Error", { message: "Página não encontrada" });
+});
 app.use((req, res, next) => {
   console.log("Dados recebidos:", req.body);
   next();

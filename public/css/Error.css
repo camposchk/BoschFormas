@@ -1,0 +1,44 @@
+body {
+    background-color: rgba(240, 239, 239, 0.808);
+}
+
+@font-face {
+    font-family: "Bosch Sans";
+    src: local(Bosch) url(../assets/fonts/boschsans-medium.woff);
+}
+
+.detail {
+    position: absolute;
+    background: url(../assets/Images/rainbow.svg);
+    height: 6px;
+    width: 100%;
+    margin: none;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#bosch_icon {
+    display: flex;
+    margin-left: 13px;
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+
+.span2 {
+    font-family: "Bosch Sans";
+    padding: 1%;
+    margin-bottom: 5px;
+    margin-left: 20px;
+    color: red;
+    font-weight: bolder;
+}
+
+.final-card {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.text-center {
+    text-align: center;
+}
