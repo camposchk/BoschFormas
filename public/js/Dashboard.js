@@ -15,7 +15,14 @@ var modals = {};
 //   myInput.focus();
 // });
 
+const buttonReset = $("#toggleButtonReset")
 function resetActivity() {
+  if (confirmReset == 0)
+  buttonReset.addClass("btn-warning").removeClass("btn-success")
+  if (confirmReset == 1)
+    buttonReset.addClass("btn-danger").removeClass("btn-warning")
+
+
   if (confirmReset < 2){
     confirmReset++
     return
