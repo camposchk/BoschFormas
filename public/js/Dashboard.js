@@ -9,10 +9,29 @@ var pauseTime = 0;
 var finished = 0;
 var ongoing = 0;
 var paused = false
+var confirmReset = 0
 var modals = {};
 // myModal.addEventListener("shown.bs.modal", () => {
 //   myInput.focus();
 // });
+
+function resetActivity() {
+  if (confirmReset < 2){
+    confirmReset++
+    return
+  }
+
+  $.ajax({
+    url: `http://${url}:3000/reset`,
+    type: "POST",
+    success: function (response) {
+    },
+    error: function (xhr, status, error) {
+    },
+  });
+
+  location.reload();
+}
 
 function toggleActivityStart() {
   var button = document.getElementById("toggleButtonStart");

@@ -5,6 +5,7 @@ const ExcelJS = require("exceljs");
 const cors = require("cors");
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const { shuffle } = require('./utils');
+const { restart } = require("nodemon");
 require("dotenv").config();
 
 const data = { url: process.env.CURR_IP };
@@ -21,11 +22,12 @@ app.set("view engine", "ejs");
 app.use(express.static("public"));
 
 var started = false;
-const competitors = {};
+var competitors = {};
 var testWeights = [100, 200, 500];
 var weights = [100, 200, 400, 800, 1600];
 var showTimer = false
 var showTries = false
+var reset = false
 
 app.post("/ready", async (req, res) => {
   const { name, dataNasc, w1, w2, w3, w4, w5 } = req.body;
@@ -114,7 +116,6 @@ app.post("/testscales", (req, res) => {
 
   if (!quantities) return res.status(400).send({ message: "vazio" });
   
-  // TODO: fix
   let temp = [testWeights[2], testWeights[0], testWeights[1]]
   let results = []
   for (let i = 0; i < quantities.length; i++) {
@@ -154,12 +155,13 @@ app.post("/scales/:code", (req, res) => {
     let plate1 = 0;
     let plate2 = 0;
 
+    console.log(bal)
     let temp = [
+      competitors[code].realScore[1],
+      competitors[code].realScore[2],
+      competitors[code].realScore[0],
       competitors[code].realScore[4],
       competitors[code].realScore[3],
-      competitors[code].realScore[0],
-      competitors[code].realScore[2],
-      competitors[code].realScore[1],
     ]
 
     for (let j = 0; j < 5; j++) {
@@ -167,6 +169,7 @@ app.post("/scales/:code", (req, res) => {
       plate2 += bal[j+5] * weights[temp[j]];
       competitors[code].pieces += bal[j] + bal[j+5];
     }
+    console.log(plate1, plate2)
 
     if (plate1 > plate2) results.push(-1);
     else if (plate1 === plate2) results.push(0);
@@ -193,6 +196,7 @@ app.post("/start-timer", (req, res) => {
   }
 
   startTime = Date.now();
+  reset = false
 
   timer = setTimeout(() => {
     console.log("Tempo encerrado.");
@@ -247,6 +251,20 @@ app.post("/finish", (req, res) => {
   res.send("Atividade finalizada.");
 });
 
+app.post("/reset", (req, res) => {
+  started = false
+  startTime = null
+  timer = null
+  startPause = null
+  pauseTime = 0
+  finished = false
+  competitors = {}
+
+  reset = true
+
+  res.send("Atividade finalizada.");
+});
+
 app.post("/setOptions", (req, res) => {
   const { timer, tries } = req.body;
   showTimer = timer == "on";
@@ -262,7 +280,7 @@ app.get("/status/:code", (req, res) => {
     return res.status(404).send({success: false, error: {message: "Competidor não encontrado."}});
   }
 
-  res.send({finished: finished, startTime: showTimer ? startTime : null, tries: showTries ? comp.tentativas : null});
+  res.send({finished: finished, startTime: showTimer ? startTime : null, tries: showTries ? comp.tentativas : null, reset});
 });
 
 
@@ -279,11 +297,13 @@ app.post("/set-weigths/:target", (req, res) => {
   }
   if (target == "game")
   {
+    console.log(weights)
     weights[2] = Number(w1) || weights[2];
     weights[0] = Number(w2) || weights[0];
     weights[1] = Number(w3) || weights[1];
     weights[3] = Number(w4) || weights[3];
     weights[4] = Number(w5) || weights[4];
+    console.log(weights)
     return res.send("Pesos do jogo atualizados");
   }
   
@@ -293,7 +313,7 @@ app.post("/set-weigths/:target", (req, res) => {
 app.get("/game/:code", (req, res) => {
   const { code } = req.params;
   if (!competitors[code])
-    return res.send("nao existe");
+    return res.render("Não Existe");
   if (competitors[code].accessed) {
     return res.render("Error");
   }

@@ -16,7 +16,7 @@ nameInput.on( "focusout", function() {
   updateWeights()
 })
 
-function end() {
+function end() {  
   $.get(`http://${url}:3000/status/${code}`, function (data) {
     startTime = data.startTime
     if(startTime)
@@ -32,6 +32,10 @@ function end() {
     tentativas.text(triesCount)
 
     if (data.finished) window.location.replace(`http://${url}:3000/finished`);
+  }).fail(function (jqXHR, textStatus, errorThrown) {
+    console.log(jqXHR.status)
+    
+  // window.location.replace(`http://${url}:3000/test`);
   });
 }
 
