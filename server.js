@@ -24,7 +24,7 @@ app.use(express.static("public"));
 var started = false;
 var competitors = {};
 var testWeights = [100, 200, 500];
-var weights = [100, 200, 400, 800, 1600];
+var weights = [100, 200, 300, 500, 800];
 var showTimer = false
 var showTries = false
 var reset = false
